@@ -335,7 +335,7 @@ The above copyright notice and this permission notice shall be included in all c
             </div>
         </div>
     </div>
-        <footer class="footer footer-black  footer-white ">
+        <!-- <footer class="footer footer-black  footer-white ">
     <div class="container-fluid">
         <div class="row">
             <nav class="footer-nav">
@@ -364,7 +364,8 @@ The above copyright notice and this permission notice shall be included in all c
             </div>
         </div>
     </div>
-</footer>    </div>
+</footer>     -->
+</div>
 </div>        <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
         <a href="#" data-toggle="dropdown">

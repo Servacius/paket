@@ -5,6 +5,6 @@
     <div class="main-panel">
         @include('layouts.navbars.navs.auth')
         @yield('content')
-        @include('layouts.footer')
+        <!-- @include('layouts.footer') -->
     </div>
 </div>

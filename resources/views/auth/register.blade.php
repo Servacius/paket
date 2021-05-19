@@ -7,7 +7,7 @@
     <div class="content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-5 col-md-5 ml-auto">
+                <!-- <div class="col-lg-5 col-md-5 ml-auto">
                     <div class="info-area info-horizontal mt-5">
                         <div class="icon icon-primary">
                             <i class="nc-icon nc-tv-2"></i>
@@ -41,7 +41,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-lg-4 col-md-6 mr-auto">
                     <div class="card card-signup text-center">
                         <div class="card-header ">

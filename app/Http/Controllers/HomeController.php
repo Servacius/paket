@@ -23,4 +23,34 @@ class HomeController extends Controller
     {
         return view('pages.dashboard');
     }
+    
+    /**
+     * Show the application admin dashboard.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function adminHome()
+    {
+        return view('pages.adminHome');
+    }
+
+    /**
+     * Show the application petugas dashboard.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function petugasHome()
+    {
+        return view('pages.petugasHome');
+    }
+
+    /**
+     * Show the application karyawan dashboard.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function karyawanHome()
+    {
+        return view('pages.karyawanHome');
+    }
 }

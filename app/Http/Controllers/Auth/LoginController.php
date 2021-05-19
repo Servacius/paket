@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,31 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {   
+        $input = $request->all();
+        
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+   
+        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        {
+            // dd("berhasil");
+            if (auth()->user()->role_id == 1) {
+                return redirect()->route('admin.home');
+            }elseif(auth()->user()->role_id == 2){
+                return redirect()->route('karyawan.home');
+            }elseif (auth()->user()->role_id == 3) {
+                return redirect()->route('petugas.home');
+            }
+        }else{
+            dd("gagal");
+            return redirect()->route('login')
+                ->with('error','Email Address or Password Are Wrong.');
+        }
     }
 }

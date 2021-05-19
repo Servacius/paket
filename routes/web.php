@@ -20,6 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('admin/home', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+Route::get('petugas/home', [App\Http\Controllers\HomeController::class, 'petugasHome'])->name('petugas.home')->middleware('is_petugas');
+Route::get('karyawan/home', [App\Http\Controllers\HomeController::class, 'karyawanHome'])->name('karyawan.home')->middleware('is_karyawan');
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
