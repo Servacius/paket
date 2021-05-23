@@ -1,6 +1,12 @@
 <div class="wrapper">
-
-    @include('layouts.navbars.auth')
+    @if (auth()->user()->role_id === 1)
+        @include('layouts.navbars.auth')
+    @elseif(auth()->user()->role_id === 2)
+        @include('layouts.navbars.auth_karyawan')
+    @elseif(auth()->user()->role_id === 3)
+        @include('layouts.navbars.auth_petugas')
+    @endif
+    
 
     <div class="main-panel">
         @include('layouts.navbars.navs.auth')

@@ -31,6 +31,7 @@ class HomeController extends Controller
      */
     public function adminHome()
     {
+        // dd("nyampe cuk");
         return view('pages.adminHome');
     }
 

@@ -51,7 +51,6 @@ class LoginController extends Controller
    
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         {
-            // dd("berhasil");
             if (auth()->user()->role_id == 1) {
                 return redirect()->route('admin.home');
             }elseif(auth()->user()->role_id == 2){
@@ -60,7 +59,6 @@ class LoginController extends Controller
                 return redirect()->route('petugas.home');
             }
         }else{
-            dd("gagal");
             return redirect()->route('login')
                 ->with('error','Email Address or Password Are Wrong.');
         }

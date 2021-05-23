@@ -366,7 +366,8 @@ The above copyright notice and this permission notice shall be included in all c
     </div>
 </footer>     -->
 </div>
-</div>        <div class="fixed-plugin">
+</div>        
+<!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
         <a href="#" data-toggle="dropdown">
             <i class="fa fa-cog fa-2x"> </i>
@@ -420,7 +421,7 @@ The above copyright notice and this permission notice shall be included in all c
             </li>
         </ul>
     </div>
-</div>        
+</div>         -->
     <!--   Core JS Files   -->
     <script src="{{ asset('paper') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('paper') }}/js/core/popper.min.js"></script>

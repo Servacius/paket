@@ -47,7 +47,7 @@ The above copyright notice and this permission notice shall be included in all c
     
     @auth()
         @include('layouts.page_templates.auth')
-        @include('layouts.navbars.fixed-plugin')
+        <!-- @include('layouts.navbars.fixed-plugin') -->
     @endauth
     
     @guest
@@ -70,7 +70,7 @@ The above copyright notice and this permission notice shall be included in all c
     <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
     <script src="{{ asset('paper') }}/demo/demo.js"></script>
     <!-- Sharrre libray -->
-    <script src="../assets/demo/jquery.sharrre.js"></script>
+    <script src="{{ asset('paper') }}/demo/jquery.sharrre.js"></script>
     
     @stack('scripts')
 

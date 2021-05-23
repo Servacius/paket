@@ -1,13 +1,13 @@
 <div class="sidebar" data-color="white" data-active-color="danger">
     <div class="logo">
-        <a href="../admin/home" class="simple-text logo-small">
+        <a href="../karyawan/home" class="simple-text logo-small">
             {{ __('Dashboard Admin') }}
         </a>
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="{{ $elementActive == 'dashboard' ? 'active' : '' }}">
-                <a href="../admin/home">
+            <li class="{{ $elementActive == 'karyawandashboard' ? 'active' : '' }}">
+                <a href="../karyawan/home">
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
@@ -17,16 +17,10 @@
                     <p>{{ __('List Semua Paket') }}</p>
                 </a>
             </li>
-            <li class="{{ $elementActive == 'user' ? 'active' : '' }}">
+            <li class="{{ $elementActive == 'barangku' ? 'active' : '' }}">
                 <!-- <a href="{{ route('page.index', 'dashboard') }}"> -->
                 <a href="#">
-                    <p>{{ __('User') }}</p>
-                </a>
-            </li>
-            <li class="{{ $elementActive == 'report' ? 'active' : '' }}">
-                <!-- <a href="{{ route('page.index', 'dashboard') }}"> -->
-                <a href="#">
-                    <p>{{ __('Report') }}</p>
+                    <p>{{ __('Barangku') }}</p>
                 </a>
             </li>
             <li class="{{ $elementActive == 'user' || $elementActive == 'profile' ? 'active' : '' }}">

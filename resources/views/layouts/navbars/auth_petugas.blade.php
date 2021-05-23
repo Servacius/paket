@@ -1,13 +1,13 @@
 <div class="sidebar" data-color="white" data-active-color="danger">
     <div class="logo">
-        <a href="../admin/home" class="simple-text logo-small">
-            {{ __('Dashboard Admin') }}
+        <a href="../petugas/home" class="simple-text logo-small">
+            {{ __('Dashboard Petugas') }}
         </a>
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="{{ $elementActive == 'dashboard' ? 'active' : '' }}">
-                <a href="../admin/home">
+            <li class="{{ $elementActive == 'petugasdashboard' ? 'active' : '' }}">
+                <a href="../petugas/home">
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
@@ -17,16 +17,16 @@
                     <p>{{ __('List Semua Paket') }}</p>
                 </a>
             </li>
-            <li class="{{ $elementActive == 'user' ? 'active' : '' }}">
+            <li class="{{ $elementActive == 'tambahbarang' ? 'active' : '' }}">
                 <!-- <a href="{{ route('page.index', 'dashboard') }}"> -->
                 <a href="#">
-                    <p>{{ __('User') }}</p>
+                    <p>{{ __('Tambah Barang') }}</p>
                 </a>
             </li>
-            <li class="{{ $elementActive == 'report' ? 'active' : '' }}">
+            <li class="{{ $elementActive == 'notifikasipetugas' ? 'active' : '' }}">
                 <!-- <a href="{{ route('page.index', 'dashboard') }}"> -->
                 <a href="#">
-                    <p>{{ __('Report') }}</p>
+                    <p>{{ __('Notifikasi Petugas') }}</p>
                 </a>
             </li>
             <li class="{{ $elementActive == 'user' || $elementActive == 'profile' ? 'active' : '' }}">

@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
+                'id' => 1,
                 'nik' => 'A001',
                 'password' => Hash::make('secret'),
                 'role_id' => 1,
@@ -31,9 +32,10 @@ class UsersTableSeeder extends Seeder
                 'deleted_at' => NULL
             ],
             [
+                'id' => 2,
                 'nik' => 'K001',
                 'password' => Hash::make('secret'),
-                'role_id' => 1,
+                'role_id' => 2,
                 'name' => 'Daniel Manullang',
                 'email' => 'daniel@paket.com',
                 'no_telp' => '081122999119',
@@ -47,9 +49,10 @@ class UsersTableSeeder extends Seeder
             ]
             ,
             [
+                'id' => 3,
                 'nik' => 'P001',
                 'password' => Hash::make('secret'),
-                'role_id' => 1,
+                'role_id' => 3,
                 'name' => 'Udin Kong',
                 'email' => 'udingkong@paket.com',
                 'no_telp' => '08112442219',
