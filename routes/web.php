@@ -41,10 +41,11 @@ Route::get('petugas/home', [HomeController::class, 'petugasHome'])->name('petuga
 
 /*
 |--------------------------------------------------------------------------
-| Karyawan routes.
+| Karyawan routes. Routes naming follows rules in:
+| https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
 |--------------------------------------------------------------------------
 */
-Route::get('karyawan/home', [KaryawanController::class, 'index'])->name('karyawan.home');
+Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan.home');
 
 /*
 |--------------------------------------------------------------------------
