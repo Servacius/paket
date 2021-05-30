@@ -1,8 +1,13 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
+### Laravel 8 specific
+node_modules/
+public/build
+public/css
+public/hot
+public/js
+public/mix-manifest.json
+public/storage
+storage/*.key
+vendor/
 .env
 .env.backup
 .phpunit.result.cache
@@ -11,3 +16,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+### IDE configuration ###
+.idea
+.vscode

@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,28 +19,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('admin/home', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
-Route::get('petugas/home', [App\Http\Controllers\HomeController::class, 'petugasHome'])->name('petugas.home')->middleware('is_petugas');
-Route::get('karyawan/home', [App\Http\Controllers\HomeController::class, 'karyawanHome'])->name('karyawan.home')->middleware('is_karyawan');
-Auth::routes();
+Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('home', [HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => 'auth'], function () {
-	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+/*
+|--------------------------------------------------------------------------
+| Administrator routes.
+|--------------------------------------------------------------------------
+*/
+Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+
+/*
+|--------------------------------------------------------------------------
+| Petugas routes.
+|--------------------------------------------------------------------------
+*/
+Route::get('petugas/home', [HomeController::class, 'petugasHome'])->name('petugas.home')->middleware('is_petugas');
+
+/*
+|--------------------------------------------------------------------------
+| Karyawan routes.
+|--------------------------------------------------------------------------
+*/
+Route::get('karyawan/home', [KaryawanController::class, 'index'])->name('karyawan.home');
+
+/*
+|--------------------------------------------------------------------------
+| General auth routes.
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function () {
+	Route::resource('user', UserController::class)->except(['show']);
+
+	Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+	Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+	Route::put('profile/password', [ProfileController::class, 'password'])->name('profile.password');
+
+	Route::get('{page}', [PageController::class, 'index'])->name('page.index');
 });
-
-Route::group(['middleware' => 'auth'], function () {
-	Route::get('{page}', ['as' => 'page.index', 'uses' => 'App\Http\Controllers\PageController@index']);
-});
-

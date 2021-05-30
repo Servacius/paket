@@ -16,10 +16,10 @@ class IsPetugas
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role_id == 3){
+        if (auth()->user()->role_id == 3) {
             return $next($request);
         }
-   
-        return redirect('home')->with('error',"Kamu tidak memiliki akses petugas.");
+
+        return redirect('home')->with('error', "Kamu tidak memiliki akses sebagai petugas.");
     }
 }
