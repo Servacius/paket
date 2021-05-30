@@ -32,6 +32,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+	Route::get('autocomplete', [App\Http\Controllers\UserController::class, 'autocomplete'])->name('autocomplete');
+
+	// Petugas
+	Route::get('tambah-barang', ['as' => 'petugas.addBarang', 'uses' => 'App\Http\Controllers\PetugasController@add']);
+	Route::put('tambah-barang', ['as' => 'petugas.addBarang', 'uses' => 'App\Http\Controllers\PetugasController@addBarang']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
