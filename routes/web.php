@@ -58,5 +58,10 @@ Route::middleware(['auth'])->group(function () {
 	Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 	Route::put('profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
+	Route::get('autocomplete', [UserController::class, 'autocomplete'])->name('autocomplete');
+
+	Route::get('tambah-barang', [PetugasController::class, 'add'])->name('petugas.addBarang');
+	Route::put('tambah-barang', [PetugasController::class, 'addBarang'])->name('petugas.addBarang');
+
 	Route::get('{page}', [PageController::class, 'index'])->name('page.index');
 });
