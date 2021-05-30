@@ -16,10 +16,10 @@ class IsKaryawan
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role_id == 2){
+        if (isset(auth()->user()->role_id) && auth()->user()->role_id == 2) {
             return $next($request);
         }
-   
-        return redirect('home')->with('error',"Anda tidak memiliki akses karyawan.");
+
+        return redirect('home')->with('error', "Anda tidak memiliki akses sebagai karyawan.");
     }
 }

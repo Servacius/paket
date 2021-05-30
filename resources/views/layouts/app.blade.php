@@ -26,7 +26,7 @@ The above copyright notice and this permission notice shall be included in all c
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <!-- Extra details for Live View on GitHub Pages -->
-    
+
     <title>
         {{ __('Aplikasi Paket') }}
     </title>
@@ -40,20 +40,23 @@ The above copyright notice and this permission notice shall be included in all c
     <link href="{{ asset('paper') }}/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('paper') }}/demo/demo.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css"
+        rel="stylesheet">
 
 </head>
 
 <body class="{{ $class }}">
-    
+
     @auth()
-        @include('layouts.page_templates.auth')
-        <!-- @include('layouts.navbars.fixed-plugin') -->
+    @include('layouts.page_templates.auth')
+    {{-- Currently we do not need this. --}}
+    {{-- @include('layouts.navbars.fixed-plugin') --}}
     @endauth
-    
+
     @guest
-        @include('layouts.page_templates.guest')
+    @include('layouts.page_templates.guest')
     @endguest
 
     <!--   Core JS Files   -->
@@ -73,18 +76,20 @@ The above copyright notice and this permission notice shall be included in all c
     <script src="{{ asset('paper') }}/demo/demo.js"></script>
     <!-- Sharrre libray -->
     <script src="{{ asset('paper') }}/demo/jquery.sharrre.js"></script>
+    <!-- JQuery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    
+
     <!-- datepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
-    $('.date').datepicker({  
+        $('.date').datepicker({
        format: 'mm-dd-yyyy'
      });
     </script>
 
     <!-- name dropdown -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js">
+    </script>
     <script type="text/javascript">
         var path = "{{ route('autocomplete') }}";
         $('input.typeahead').typeahead({
@@ -106,14 +111,15 @@ The above copyright notice and this permission notice shall be included in all c
 
     <!-- image preview -->
     <script type="text/javascript">
-        $('#image').change(function(){    
+        $('#image').change(function(){
             let reader = new FileReader();
-            reader.onload = (e) => { 
-                $('#preview-image').attr('src', e.target.result); 
+            reader.onload = (e) => {
+                $('#preview-image').attr('src', e.target.result);
             }
             reader.readAsDataURL(this.files[0]);
         });
     </script>
+
     @stack('scripts')
 
     @include('layouts.navbars.fixed-plugin-js')

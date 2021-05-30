@@ -17,13 +17,22 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Routing\Redirector
      */
     public function index()
     {
-        return view('pages.dashboard');
+        if (auth()->user()->role_id == 1) {
+            return redirect()->route('admin.home');
+        } elseif (auth()->user()->role_id == 2) {
+            return redirect()->route('karyawan.home');
+        } elseif (auth()->user()->role_id == 3) {
+            return redirect()->route('petugas.home');
+        }
+
+        return redirect()->route('login')
+            ->with('error', 'Pasangan email dan password salah. Silahkan coba lagi.');
     }
-    
+
     /**
      * Show the application admin dashboard.
      *

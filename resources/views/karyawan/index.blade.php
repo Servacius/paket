@@ -1,12 +1,12 @@
 @extends('layouts.app', [
 'class' => '',
-'elementActive' => 'karyawandashboard'
+'elementActive' => 'beranda'
 ])
 
 @section('content')
-<div class="content d-xl-flex align-items-center justify-content-center">
-    <div class="row col-8">
-        <div class="col-md-6">
+<div class="content">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-body ">
                     <div class="row">
@@ -18,13 +18,20 @@
                         <div class="col-7 col-md-8">
                             <div class="numbers">
                                 <p class="card-category">List Semua Paket</p>
+                                <p class="card-title">...<p>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-angle-right"></i> Cek Sekarang
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-body ">
                     <div class="row">
@@ -36,8 +43,15 @@
                         <div class="col-7 col-md-8">
                             <div class="numbers">
                                 <p class="card-category">Barangku</p>
+                                <p class="card-title">...<p>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-angle-right"></i> Cek Sekarang
                     </div>
                 </div>
             </div>

@@ -41,26 +41,25 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-    {   
+    {
         $input = $request->all();
-        
+
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-   
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
-        {
+
+        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             if (auth()->user()->role_id == 1) {
                 return redirect()->route('admin.home');
-            }elseif(auth()->user()->role_id == 2){
+            } elseif (auth()->user()->role_id == 2) {
                 return redirect()->route('karyawan.home');
-            }elseif (auth()->user()->role_id == 3) {
+            } elseif (auth()->user()->role_id == 3) {
                 return redirect()->route('petugas.home');
             }
-        }else{
-            return redirect()->route('login')
-                ->with('error','Email Address or Password Are Wrong.');
         }
+
+        return redirect()->route('login')
+            ->with('error', 'Pasangan email dan password salah. Silahkan coba lagi.');
     }
 }
