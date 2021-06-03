@@ -7,7 +7,7 @@
 <div class="content">
     <div class="row">
         @foreach ($pakets as $paket)
-        @include('card_not_taken', ['paket' => $paket])
+        @include('card_unpicked_up', ['paket' => $paket])
         @endforeach
     </div>
 </div>

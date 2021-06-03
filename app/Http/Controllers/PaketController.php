@@ -30,7 +30,7 @@ class PaketController extends Controller
             return $this->indexNotTakenPaket();
         }
 
-        return $this->indexAllPaket();
+        return $this->indexUnpickedUpPaket();
     }
 
     /**
@@ -50,7 +50,7 @@ class PaketController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function indexNotTakenPaket()
+    public function indexUnpickedUpPaket()
     {
         // Get data paket order by tanggal sampai DESC.
         $pakets = Paket::where('tanggal_diambil', null)
@@ -97,7 +97,7 @@ class PaketController extends Controller
             array_push($paketDetails, $paketDetail);
         }
 
-        return view('paket.index_not_taken')->with(compact(['pakets' => $paketDetails]));
+        return view('paket.index_unpicked_up')->with(compact(['pakets' => $paketDetails]));
     }
 
     /**
