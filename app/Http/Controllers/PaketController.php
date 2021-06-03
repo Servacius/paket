@@ -27,7 +27,7 @@ class PaketController extends Controller
     {
         $nikKaryawan = $request->query('nik_karyawan');
         $pakets = Paket::where('nik_karyawan', $nikKaryawan)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('tanggal_sampai', 'desc')
             ->get();
 
         return view('paket.index')->with(compact('pakets'));
