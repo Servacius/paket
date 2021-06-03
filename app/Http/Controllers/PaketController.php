@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paket;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PaketController extends Controller
@@ -25,12 +26,78 @@ class PaketController extends Controller
      */
     public function index(Request $request)
     {
-        $nikKaryawan = $request->query('nik_karyawan');
-        $pakets = Paket::where('nik_karyawan', $nikKaryawan)
-            ->orderBy('created_at', 'desc')
+        if ($request->query('status') == 'not-taken') {
+            return $this->indexNotTakenPaket();
+        }
+
+        return $this->indexAllPaket();
+    }
+
+    /**
+     * Display a listing of all paket.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function indexAllPaket()
+    {
+        $pakets = Paket::orderBy('tanggal_sampai', 'desc')->get();
+
+        return view('paket.index_all')->with(compact('pakets'));
+    }
+
+    /**
+     * Display a listing of not taken paket.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function indexNotTakenPaket()
+    {
+        // Get data paket order by tanggal sampai DESC.
+        $pakets = Paket::where('tanggal_diambil', null)
+            ->orderBy('tanggal_sampai', 'desc')
             ->get();
 
-        return view('paket.index')->with(compact('pakets'));
+        // Collect and prevent duplicate ids of karyawan.
+        $karyawanIDs = array();
+        foreach ($pakets as $paket) {
+            if ($karyawanIDs[$paket->nik_karyawan]) {
+                continue;
+            }
+
+            $karyawanIDs[$paket->nik_karyawan] = true;
+        }
+
+        // Get data user karyawan by ids.
+        $niks = array();
+        foreach ($karyawanIDs as $nik => $exist) {
+            array_push($niks, $nik);
+        }
+        $users = User::whereIn('nik', $niks)->get();
+
+        $karyawans = array();
+        foreach ($users as $user) {
+            $karyawans[$user->nik] = $user;
+        }
+
+        // Mapping paket and its user karyawan.
+        $paketDetails = array();
+        foreach ($pakets as $paket) {
+            if ($karyawans[$paket->nik_karyawan] == null) {
+                continue;
+            }
+
+            $paketDetail = array();
+            $paketDetail["id"] = $paket->id;
+            $paketDetail["nik_karyawan"] = $paket->nik_karyawan;
+            $paketDetail["name_karyawan"] = $karyawans[$paket->nik_karyawan]->name;
+            $paketDetail["name_paket"] = $paket->name;
+            $paketDetail["no_telp"] = $karyawans[$paket->nik_karyawan]->no_telp;
+            $paketDetail["tanggal_sampai"] = $paket->tanggal_sampai;
+            $paketDetail["picture"] = $paket->picture;
+            array_push($paketDetails, $paketDetail);
+        }
+
+        return view('paket.index_not_taken')->with(compact(['pakets' => $paketDetails]));
     }
 
     /**

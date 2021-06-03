@@ -18,13 +18,13 @@
                 </a>
             </li>
             <li class="{{ $elementActive == 'listSemuaPaket' ? 'active' : '' }}">
-                <a href="{{ route('paket.index', ['nik_karyawan' => auth()->user()->id]) }}">
+                <a href="{{ route('paket.index']) }}">
                     <i class="nc-icon nc-basket"></i>
                     <p>{{ __('List Semua Paket') }}</p>
                 </a>
             </li>
             <li class="{{ $elementActive == 'paketku' ? 'active' : '' }}">
-                <a href="#">
+                <a href="{{ route('paket.index', ['status' => 'not-taken']) }}">
                     <i class="nc-icon nc-app"></i>
                     <p>{{ __('Paketku') }}</p>
                 </a>

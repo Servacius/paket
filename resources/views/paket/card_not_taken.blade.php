@@ -1,0 +1,20 @@
+<div class="col-12">
+    <div class="card card-nav-tabs">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="{{ asset('storage/' . $paket->picture) }}" style="width:100%; height:8rem;" />
+                </div>
+                <div class="col-md-7">
+                    <p class="card-text"><b>Nama Penerima:</b> {{ $paket->name_karyawan }}
+                    </p>
+                    <p class="card-text"><b>No. Telp Penerima:</b> {{ $paket->no_telp }}
+                    </p>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a href="#" class="btn btn-primary" style="margin-top: 0rem;">Lihat Detail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
