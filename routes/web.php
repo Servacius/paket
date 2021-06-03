@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 
@@ -45,7 +45,15 @@ Route::get('petugas/home', [HomeController::class, 'petugasHome'])->name('petuga
 | https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
 |--------------------------------------------------------------------------
 */
-Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan.home');
+Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
+
+/*
+|--------------------------------------------------------------------------
+| Paket routes. Routes naming follows rules in:
+| https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
+|--------------------------------------------------------------------------
+*/
+Route::get('paket', [PaketController::class, 'index'])->name('paket.index');
 
 /*
 |--------------------------------------------------------------------------
