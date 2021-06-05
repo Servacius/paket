@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li class="{{ $elementActive == 'listSemuaPaket' ? 'active' : '' }}">
-                <a href="{{ route('paket.index']) }}">
+                <a href="{{ route('paket.index') }}">
                     <i class="nc-icon nc-basket"></i>
                     <p>{{ __('List Semua Paket') }}</p>
                 </a>

@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,11 @@ use App\Http\Controllers\UserController;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/clear-cache', function () {
+	Artisan::call('config:cache');
+	Artisan::call('cache:clear');
+	return redirect()->route('home');
+});
 
 Route::get('home', [HomeController::class, 'index'])->name('home');
 
@@ -54,6 +60,7 @@ Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan.ind
 |--------------------------------------------------------------------------
 */
 Route::get('paket', [PaketController::class, 'index'])->name('paket.index');
+Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail');
 
 /*
 |--------------------------------------------------------------------------
