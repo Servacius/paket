@@ -12,7 +12,8 @@
                     </p>
                 </div>
                 <div class="col-md-3 text-right">
-                    <a href="#" class="btn btn-primary" style="margin-top: 0rem;">Lihat Detail</a>
+                    <a href="{{ route('paket.detail', ['id' => $paket->id]) }}" class="btn btn-primary"
+                        style="margin-top: 0rem;">Lihat Detail</a>
                 </div>
             </div>
         </div>
