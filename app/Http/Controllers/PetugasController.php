@@ -10,7 +10,7 @@ class PetugasController extends Controller
     {
         return view('petugas.add');
     }
-    
+
     public function addBarang(Request $request)
     {
         dd($request);
