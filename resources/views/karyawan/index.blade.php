@@ -1,57 +1,44 @@
 @extends('layouts.app', [
 'class' => '',
-'elementActive' => 'beranda'
+'activePage' => 'dashboard',
+'titlePage' => __('Dashboard')
 ])
 
 @section('content')
 <div class="content">
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-body ">
-                    <div class="row">
-                        <div class="col-5 col-md-4">
-                            <div class="icon-big text-center icon-warning">
-                                <i class="nc-icon nc-basket text-warning"></i>
-                            </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">view_list</i>
                         </div>
-                        <div class="col-7 col-md-8">
-                            <div class="numbers">
-                                <p class="card-category">List Semua Paket</p>
-                                <p class="card-title">...<p>
-                            </div>
-                        </div>
+                        <p class="card-category">Lihat Semua Paket</p>
+                        <h3 class="card-title">{{ "..." }}</h3>
                     </div>
-                </div>
-                <div class="card-footer ">
-                    <hr>
-                    <div class="stats">
-                        <i class="fa fa-angle-right"></i> Cek Sekarang
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">check</i>
+                            <a href="" class="font-weight-bold text-warning">Cek Sekarang</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-body ">
-                    <div class="row">
-                        <div class="col-5 col-md-4">
-                            <div class="icon-big text-center icon-warning">
-                                <i class="nc-icon nc-app text-success"></i>
-                            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">shopping_bag</i>
                         </div>
-                        <div class="col-7 col-md-8">
-                            <div class="numbers">
-                                <p class="card-category">Paketku</p>
-                                <p class="card-title">...<p>
-                            </div>
-                        </div>
+                        <p class="card-category">Paketku</p>
+                        <h3 class="card-title">{{ "..." }}</h3>
                     </div>
-                </div>
-                <div class="card-footer ">
-                    <hr>
-                    <div class="stats">
-                        <i class="fa fa-angle-right"></i> Cek Sekarang
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">check</i>
+                            <a href="" class="font-weight-bold text-success">Cek Sekarang</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,12 +46,3 @@
     </div>
 </div>
 @endsection
-
-@push('scripts')
-<script>
-    $(document).ready(function() {
-            // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-            demo.initChartsPages();
-        });
-</script>
-@endpush

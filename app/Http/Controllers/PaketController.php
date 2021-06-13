@@ -31,7 +31,7 @@ class PaketController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->query('status') == 'not-taken') {
+        if ($request->query('status') == 'unpickedup') {
             return $this->indexUnpickedUpPaket();
         }
 

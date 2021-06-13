@@ -1,23 +1,17 @@
 @extends('layouts.app', [
 'class' => '',
-'elementActive' => 'paketku'
+'activePage' => 'paketku',
+'titlePage' => 'Paketku'
 ])
 
 @section('content')
 <div class="content">
-    <div class="row">
-        @foreach ($pakets as $paket)
-        @include('card_unpicked_up', ['paket' => $paket])
-        @endforeach
+    <div class="container-fluid">
+        <div class="row">
+            @foreach ($pakets as $paket)
+            @include('card_unpicked_up', ['paket' => $paket])
+            @endforeach
+        </div>
     </div>
 </div>
 @endsection
-
-@push('scripts')
-<script>
-    $(document).ready(function() {
-            // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-            demo.initChartsPages();
-        });
-</script>
-@endpush

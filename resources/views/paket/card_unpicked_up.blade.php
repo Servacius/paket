@@ -1,5 +1,5 @@
 <div class="col-12">
-    <div class="card card-nav-tabs">
+    <div class="card card-nav-tabs" style="margin-top: 0px;">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-2">
