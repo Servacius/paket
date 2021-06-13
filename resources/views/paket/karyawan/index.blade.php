@@ -1,7 +1,7 @@
 @extends('layouts.app', [
 'class' => '',
-'activePage' => 'paketku',
-'titlePage' => 'Paketku'
+'activePage' => 'listSemuaPaket',
+'titlePage' => __('List Semua Paket'),
 ])
 
 @section('content')
@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row">
             @foreach ($pakets as $paket)
-            @include('card_unpicked_up', ['paket' => $paket])
+            @include('paket/karyawan/card', ['paket' => $paket])
             @endforeach
         </div>
     </div>

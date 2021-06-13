@@ -47,7 +47,7 @@ class PaketController extends Controller
     {
         $pakets = Paket::orderBy('tanggal_sampai', 'desc')->get();
 
-        return view('paket.index_all', [
+        return view('paket.karyawan.index', [
             'pakets' => $pakets
         ]);
     }
@@ -107,7 +107,7 @@ class PaketController extends Controller
             array_push($paketDetails, $paketDetail);
         }
 
-        return view('paket.index_unpicked_up', [
+        return view('paket.karyawan.index_unpicked_up', [
             'pakets' => $paketDetails
         ]);
     }
@@ -180,7 +180,7 @@ class PaketController extends Controller
             $paketDetail->cara_penerimaan = ($penerimaan != null) ? $penerimaan->name : "";
         }
 
-        return view('paket.detail', [
+        return view('paket.karyawan.detail', [
             'paketDetail' => $paketDetail
         ]);
     }

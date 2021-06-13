@@ -11,11 +11,11 @@
             <div class="col-md-12">
                 <div class="card" style="margin-top: 8px;">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">{{ __('Detail Paket ') . 'IDPaket' }}</h4>
+                        <h4 class="card-title">{{ __('Detail Paket ') . $paketDetail->id }}</h4>
                     </div>
                     <div class="card-body text-right">
                         <div class="row">
-                            <div class="col-md-4 offset-lg-4 text-center" style="margin-bottom:16px;">
+                            <div class="col-md-4 offset-lg-4 text-center" style="margin-bottom: 16px;">
                                 <img src="{{ ($paketDetail->picture == "") ? asset('default-image.jpeg') : asset('storage/' . $paketDetail->picture) }}"
                                     style="width:15rem; height:11rem;">
                             </div>
@@ -48,7 +48,8 @@
                                 <div class="form-group">
                                     <input type="email" name="email" class="form-control" style="background-color:#fff;"
                                         placeholder="Email"
-                                        value="{{ ($paketDetail->email == "") ? "-" : $paketDetail->email }}" readonly />
+                                        value="{{ ($paketDetail->email == "") ? "-" : $paketDetail->email }}"
+                                        readonly />
                                 </div>
                             </div>
                         </div>
@@ -66,8 +67,8 @@
                             <label class="col-sm-2 col-form-label">{{ __('Direktorat :') }}</label>
                             <div class="col-sm-9">
                                 <div class="form-group">
-                                    <input type="text" name="direktorat" class="form-control" style="background-color:#fff;"
-                                        placeholder="Direktorat"
+                                    <input type="text" name="direktorat" class="form-control"
+                                        style="background-color:#fff;" placeholder="Direktorat"
                                         value="{{ ($paketDetail->direktorat == "") ? "-" : $paketDetail->direktorat }}"
                                         readonly />
                                 </div>
@@ -79,7 +80,8 @@
                                 <div class="form-group">
                                     <input type="text" name="divisi" class="form-control" style="background-color:#fff;"
                                         placeholder="Divisi"
-                                        value="{{ ($paketDetail->divisi == "") ? "-" : $paketDetail->divisi }}" readonly />
+                                        value="{{ ($paketDetail->divisi == "") ? "-" : $paketDetail->divisi }}"
+                                        readonly />
                                 </div>
                             </div>
                         </div>
@@ -87,8 +89,8 @@
                             <label class="col-sm-2 col-form-label">{{ __('Departemen :') }}</label>
                             <div class="col-sm-9">
                                 <div class="form-group">
-                                    <input type="text" name="departemen" class="form-control" style="background-color:#fff;"
-                                        placeholder="Departemen"
+                                    <input type="text" name="departemen" class="form-control"
+                                        style="background-color:#fff;" placeholder="Departemen"
                                         value="{{ ($paketDetail->department == "") ? "-" : $paketDetail->department }}"
                                         readonly />
                                 </div>
@@ -122,7 +124,8 @@
                                     @if ($paketDetail == "ya")
                                     <div class="form-check form-check-radio form-check-inline">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioOptionYa" value="ya" checked disabled> Ya
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadioOptionYa" value="ya" checked disabled> Ya
                                             <span class="circle">
                                                 <span class="check"></span>
                                             </span>
@@ -130,7 +133,8 @@
                                     </div>
                                     <div class="form-check form-check-radio form-check-inline">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioOptionTidak" value="tidak" disabled> Tidak
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadioOptionTidak" value="tidak" disabled> Tidak
                                             <span class="circle">
                                                 <span class="check"></span>
                                             </span>
@@ -139,7 +143,8 @@
                                     @else
                                     <div class="form-check form-check-radio form-check-inline">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioOptionYa" value="ya" disabled> Ya
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadioOptionYa" value="ya" disabled> Ya
                                             <span class="circle">
                                                 <span class="check"></span>
                                             </span>
@@ -147,7 +152,8 @@
                                     </div>
                                     <div class="form-check form-check-radio form-check-inline">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioOptionTidak" value="tidak" checked disabled> Tidak
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadioOptionTidak" value="tidak" checked disabled> Tidak
                                             <span class="circle">
                                                 <span class="check"></span>
                                             </span>
@@ -193,6 +199,7 @@
                                     </div>
                                     <div class="col-md-5 text-center">
                                         <a href="#" class="btn btn-success btn-block btn-round" role="button"
+                                            data-toggle="modal" data-target="#modalPenerimaanDiantar"
                                             aria-pressed="true">Diantar</a>
                                     </div>
                                 </div>
@@ -206,6 +213,7 @@
 </div>
 
 <!-- List of modals -->
-@include('paket/modal_penerimaan_ambil_sendiri', ['paketDetail' => $paketDetail]);
+@include('paket/karyawan/modal_penerimaan_diantar', ['paketDetail' => $paketDetail]);
+@include('paket/karyawan/modal_penerimaan_ambil_sendiri', ['paketDetail' => $paketDetail]);
 
 @endsection
