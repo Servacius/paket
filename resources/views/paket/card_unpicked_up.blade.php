@@ -12,7 +12,7 @@
                     </p>
                 </div>
                 <div class="col-md-3 text-right">
-                    <a href="{{ route('paket.detail', ['id' => $paket->id]) }}" class="btn btn-primary"
+                    <a href="{{ route('paket.detail', ['id' => $paket->id]) }}" class="btn btn-primary btn-round"
                         style="margin-top: 0rem;">Lihat Detail</a>
                 </div>
             </div>

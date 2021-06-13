@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card" style="margin-top: 0px;">
+                <div class="card" style="margin-top: 8px;">
                     <div class="card-header card-header-primary">
                         <h4 class="card-title">{{ __('Detail Paket ') . 'IDPaket' }}</h4>
                     </div>
@@ -187,6 +187,7 @@
                                 <div class="form-row">
                                     <div class="col-md-7 text-center">
                                         <a href="#" class="btn btn-primary btn-block btn-round" role="button"
+                                            data-toggle="modal" data-target="#modalPenerimaanAmbilSendiri"
                                             aria-pressed="true">Ambil
                                             Sendiri</a>
                                     </div>
@@ -203,4 +204,8 @@
         </div>
     </div>
 </div>
+
+<!-- List of modals -->
+@include('paket/modal_penerimaan_ambil_sendiri', ['paketDetail' => $paketDetail]);
+
 @endsection

@@ -61,6 +61,7 @@ Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan.ind
 */
 Route::get('paket', [PaketController::class, 'index'])->name('paket.index');
 Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail');
+Route::put('paket/{id}', [PaketController::class, 'update'])->name('paket.update');
 
 /*
 |--------------------------------------------------------------------------
