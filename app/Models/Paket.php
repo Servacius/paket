@@ -9,6 +9,8 @@ class Paket extends Model
 {
     use HasFactory;
 
+    const STATUS_UNPICKED_UP = "unpickedup";
+
     /**
      * Table of Paket model.
      *

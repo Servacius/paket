@@ -31,7 +31,7 @@ class PaketController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->query('status') == 'unpickedup') {
+        if ($request->query('status') == Paket::STATUS_UNPICKED_UP) {
             return $this->indexUnpickedUpPaket();
         }
 
@@ -59,8 +59,14 @@ class PaketController extends Controller
      */
     public function indexUnpickedUpPaket()
     {
+        // Filter used to get paket.
+        $filter = [
+            'nik_karyawan' => auth()->user()->nik,
+            'tanggal_diambil' => null,
+        ];
+
         // Get data paket order by tanggal sampai DESC.
-        $pakets = Paket::where('tanggal_diambil', null)
+        $pakets = Paket::where($filter)
             ->orderBy('tanggal_sampai', 'desc')
             ->get();
 
@@ -163,7 +169,7 @@ class PaketController extends Controller
             $unit = ($user->unit_id > 0) ? Unit::where($user->unit_id) : null;
             $penerimaan = ($paket->penerimaan_id > 0) ? Penerimaan::where($paket->penerimaan_id) : null;
 
-            $paketDetail->id = $paket->id;
+            $paketDetail->id = $id;
             $paketDetail->nik_penerima = $paket->nik_karyawan;
             $paketDetail->nama_penerima = $user->name;
             $paketDetail->email = $user->email;
@@ -178,11 +184,20 @@ class PaketController extends Controller
             $paketDetail->tanggal_sampai = (strtotime($paket->tanggal_sampai) <= 0 || strtotime($paket->tanggal_sampai) == false) ? "" : $paket->tanggal_sampai;
             $paketDetail->tanggal_ambil = (strtotime($paket->tanggal_diambil) <= 0 || strtotime($paket->tanggal_diambil) == false) ? "" : $paket->tanggal_diambil;
             $paketDetail->cara_penerimaan = ($penerimaan != null) ? $penerimaan->name : "";
+
+            return view('paket.karyawan.detail', [
+                'paketDetail' => $paketDetail
+            ]);
         }
 
-        return view('paket.karyawan.detail', [
-            'paketDetail' => $paketDetail
-        ]);
+        return redirect()
+            ->route('paket.index', ['status' => 'unpickedup'])
+            ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
+
+        /** Uncomment if the block code above failed. **/
+        // return redirect()
+        //     ->back()
+        //     ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
     }
 
     private function defaultPaketDetail()
@@ -230,7 +245,6 @@ class PaketController extends Controller
     public function update(Request $request, $id)
     {
         //
-        dd();
     }
 
     /**

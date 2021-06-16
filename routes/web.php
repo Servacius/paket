@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
@@ -61,7 +62,15 @@ Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan.ind
 */
 Route::get('paket', [PaketController::class, 'index'])->name('paket.index');
 Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail');
-Route::put('paket/{id}', [PaketController::class, 'update'])->name('paket.update');
+// Route::put('paket/{id}', [PaketController::class, 'update'])->name('paket.update');
+
+/*
+|--------------------------------------------------------------------------
+| Penerimaan routes. Routes naming follows rules in:
+| https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
+|--------------------------------------------------------------------------
+*/
+Route::post('penerimaan', [PenerimaanController::class, 'store'])->name('penerimaan.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +88,4 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::get('tambah-barang', [PetugasController::class, 'add'])->name('petugas.addBarang');
 	Route::put('tambah-barang', [PetugasController::class, 'addBarang'])->name('petugas.addBarang');
-
-	Route::get('{page}', [PageController::class, 'index'])->name('page.index');
 });

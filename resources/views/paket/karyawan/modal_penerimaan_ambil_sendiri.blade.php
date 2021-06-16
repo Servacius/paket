@@ -10,17 +10,18 @@
             </div>
             <div class="modal-body">
                 Apakah Anda Yakin Memilih Cara Penerimaan "Ambil Sendiri"?
+                <form action="{{ route('penerimaan.store') }}" id="formUpdatePenerimaanAmbilSendiri" method="POST"
+                    style="display: none;">
+                    @csrf
+                    <input name="cara_penerimaan" type="hidden" value="ambil_sendiri">
+                    <input name="paket_id" type="hidden" value="{{ $paketDetail->id }}">
+                </form>
             </div>
             <div class="modal-footer">
-                <form class="dropdown-item" action="{{ route('paket.update', ['id' => '34']) }}"
-                    id="formUpdatePenerimaanAmbilSendiri" method="POST" style="display: none;">
-                    @method('PUT')
-                    @csrf
-                    <input name="penerimaan" type="hidden" value="ambil_sendiri">
-                </form>
                 <button type="button" class="btn btn-primary btn-round"
                     onclick="document.getElementById('formUpdatePenerimaanAmbilSendiri').submit();">Ya</button>
-                <button type="button" class="btn btn-default btn-round" data-dismiss="modal">Tidak</button>
+                <button type="button" class="btn btn-default btn-round" data-dismiss="modal"
+                    data-backdrop="false">Tidak</button>
             </div>
         </div>
     </div>

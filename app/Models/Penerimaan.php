@@ -9,6 +9,9 @@ class Penerimaan extends Model
 {
     use HasFactory;
 
+    const PENERIMAAN_AMBIL_SENDIRI = "ambil_sendiri";
+    const PENERIMAAN_DIANTAR = "diantar";
+
     /**
      * Table of Penerimaan model.
      *

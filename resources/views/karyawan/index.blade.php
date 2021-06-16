@@ -20,7 +20,7 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">check</i>
-                            <a href="" class="font-weight-bold text-warning">Cek Sekarang</a>
+                            <a href="{{ route('paket.index') }}" class="font-weight-bold text-warning">Cek Sekarang</a>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,8 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">check</i>
-                            <a href="" class="font-weight-bold text-success">Cek Sekarang</a>
+                            <a href="{{ route('paket.index', ['status' => 'unpickedup']) }}"
+                                class="font-weight-bold text-success">Cek Sekarang</a>
                         </div>
                     </div>
                 </div>
