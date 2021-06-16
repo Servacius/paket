@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserRole;
+
 class HomeController extends Controller
 {
     /**
@@ -21,15 +23,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->role_id == 1) {
-            return redirect()->route('admin.home');
-        } elseif (auth()->user()->role_id == 2) {
-            return redirect()->route('karyawan.index');
-        } elseif (auth()->user()->role_id == 3) {
-            return redirect()->route('petugas.index');
+        switch (auth()->user()->role_id) {
+            case UserRole::ROLE_ID_ADMINISTRATOR:
+                return view('admin.home');
+
+            case UserRole::ROLE_ID_KARYAWAN:
+                return view('karyawan.index');
+
+            case UserRole::ROLE_ID_PETUGAS:
+                return view('petugas.index');
         }
 
-        return redirect()->route('login')
+        return redirect()
+            ->route('login')
             ->withErrors(['Pasangan email dan password salah. Silahkan coba lagi.']);
     }
 

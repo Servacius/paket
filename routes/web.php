@@ -28,16 +28,22 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index']);
 Route::get('/clear-cache', function () {
 	Artisan::call('config:cache');
 	Artisan::call('cache:clear');
-	return redirect()->route('home');
+	return redirect()->route('index');
 });
 
-Route::get('home', [HomeController::class, 'index'])->name('home');
+/*
+|--------------------------------------------------------------------------
+| Index routes.
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [HomeController::class, 'index']);
+Route::get('index', [HomeController::class, 'index'])->name('index');
 
 /*
 |--------------------------------------------------------------------------
@@ -45,20 +51,6 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 |--------------------------------------------------------------------------
 */
 Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
-
-/*
-|--------------------------------------------------------------------------
-| Petugas routes.
-|--------------------------------------------------------------------------
-*/
-Route::get('petugas', [PetugasController::class, 'index'])->name('petugas.index');
-
-/*
-|--------------------------------------------------------------------------
-| Karyawan routes.
-|--------------------------------------------------------------------------
-*/
-Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
 
 /*
 |--------------------------------------------------------------------------

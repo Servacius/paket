@@ -9,6 +9,7 @@ use App\Models\Paket;
 use App\Models\Penerimaan;
 use App\Models\Unit;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 
 class PaketController extends Controller
@@ -21,7 +22,7 @@ class PaketController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('is_karyawan');
+        // $this->middleware('is_karyawan');
     }
 
     /**
@@ -31,6 +32,10 @@ class PaketController extends Controller
      */
     public function index(Request $request)
     {
+        if (auth()->user()->cannot('view', Paket::class)) {
+            abort(403);
+        }
+
         if ($request->query('status') == Paket::STATUS_UNPICKED_UP) {
             return $this->indexUnpickedUpPaket();
         }
@@ -45,9 +50,14 @@ class PaketController extends Controller
      */
     public function indexAllPaket()
     {
+        if (auth()->user()->cannot('viewAll', Paket::class)) {
+            abort(403);
+        }
+
         $pakets = Paket::orderBy('tanggal_sampai', 'desc')->get();
 
-        return view('paket.karyawan.index', [
+        $role = (new UserRole())->getRole(auth()->user()->role_id);
+        return view(sprintf('paket.%s.index', $role), [
             'pakets' => $pakets
         ]);
     }
@@ -59,6 +69,10 @@ class PaketController extends Controller
      */
     public function indexUnpickedUpPaket()
     {
+        if (auth()->user()->cannot('viewUnpickedUp', Paket::class)) {
+            abort(403);
+        }
+
         // Filter used to get paket.
         $filter = [
             'nik_karyawan' => auth()->user()->nik,
@@ -158,6 +172,10 @@ class PaketController extends Controller
      */
     public function detail($id)
     {
+        if (auth()->user()->cannot('detail', Paket::class)) {
+            abort(403);
+        }
+
         $paketDetail = $this->defaultPaketDetail();
 
         $paket = Paket::find($id);

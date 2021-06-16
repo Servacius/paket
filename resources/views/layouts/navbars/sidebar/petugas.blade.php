@@ -13,13 +13,13 @@
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('petugas.index') }}">
+                <a class="nav-link" href="{{ route('index') }}">
                     <i class="material-icons">dashboard</i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
             <li class="nav-item{{ $activePage == 'listSemuaPaket' ? ' active' : '' }}">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('paket.index') }}">
                     <i class="material-icons">view_list</i>
                     <p>{{ __('List Semua Paket') }}</p>
                 </a>
