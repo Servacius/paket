@@ -7,6 +7,17 @@
       <h3>{{ __('Log in untuk melihat daftar penerimaan paket Anda.') }} </h3>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+      @if ($errors->any())
+        <div class="col-md-12">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {!! $errors->first() !!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      @endif
+
       <form class="form" method="POST" action="{{ route('login') }}">
         @csrf
 

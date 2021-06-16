@@ -30,7 +30,7 @@ class HomeController extends Controller
         }
 
         return redirect()->route('login')
-            ->with('error', 'Pasangan email dan password salah. Silahkan coba lagi.');
+            ->withErrors(['Pasangan email dan password salah. Silahkan coba lagi.']);
     }
 
     /**
