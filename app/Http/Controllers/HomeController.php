@@ -26,7 +26,7 @@ class HomeController extends Controller
         } elseif (auth()->user()->role_id == 2) {
             return redirect()->route('karyawan.index');
         } elseif (auth()->user()->role_id == 3) {
-            return redirect()->route('petugas.home');
+            return redirect()->route('petugas.index');
         }
 
         return redirect()->route('login')

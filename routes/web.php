@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KaryawanController;
-use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PenerimaanController;
+use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
@@ -19,6 +19,13 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Routes naming in this file follows rules in:
+| https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
+|--------------------------------------------------------------------------
 */
 
 Auth::routes();
@@ -44,20 +51,18 @@ Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home
 | Petugas routes.
 |--------------------------------------------------------------------------
 */
-Route::get('petugas/home', [HomeController::class, 'petugasHome'])->name('petugas.home')->middleware('is_petugas');
+Route::get('petugas', [PetugasController::class, 'index'])->name('petugas.index');
 
 /*
 |--------------------------------------------------------------------------
-| Karyawan routes. Routes naming follows rules in:
-| https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
+| Karyawan routes.
 |--------------------------------------------------------------------------
 */
 Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
 
 /*
 |--------------------------------------------------------------------------
-| Paket routes. Routes naming follows rules in:
-| https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
+| Paket routes.
 |--------------------------------------------------------------------------
 */
 Route::get('paket', [PaketController::class, 'index'])->name('paket.index');
@@ -66,8 +71,7 @@ Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail
 
 /*
 |--------------------------------------------------------------------------
-| Penerimaan routes. Routes naming follows rules in:
-| https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller
+| Penerimaan routes.
 |--------------------------------------------------------------------------
 */
 Route::post('penerimaan', [PenerimaanController::class, 'store'])->name('penerimaan.store');
