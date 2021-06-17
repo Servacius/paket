@@ -3,12 +3,15 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-2">
-                    <img src="{{ asset('storage/' . $paket->picture) }}" style="width:100%; height:8rem;" />
+                    <img src="{{ asset('storage/images/' . $paket->picture) }}" style="width:100%; height:8rem;" />
                 </div>
                 <div class="col-md-7">
                     <p class="card-text"><b>Nama Penerima:</b> {{ $paket->name_karyawan }}
                     </p>
                     <p class="card-text"><b>No. Telp Penerima:</b> {{ $paket->no_telp }}
+                    </p>
+                    <p class="card-text"><b>Cara Penerimaan:</b>
+                        {{ ($paket->cara_penerimaan == "") ? "-" : $paket->cara_penerimaan }}
                     </p>
                 </div>
                 <div class="col-md-3 text-right">

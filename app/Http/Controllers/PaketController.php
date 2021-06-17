@@ -10,7 +10,10 @@ use App\Models\Penerimaan;
 use App\Models\Unit;
 use App\Models\User;
 use App\Models\UserRole;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class PaketController extends Controller
 {
@@ -87,7 +90,7 @@ class PaketController extends Controller
         // Collect and prevent duplicate ids of karyawan.
         $karyawanIDs = array();
         foreach ($pakets as $paket) {
-            if ($karyawanIDs[$paket->nik_karyawan]) {
+            if (Arr::exists($karyawanIDs, $paket->nik_karyawan)) {
                 continue;
             }
 
@@ -123,6 +126,13 @@ class PaketController extends Controller
             $paketDetail->no_telp = $karyawans[$paket->nik_karyawan]->no_telp;
             $paketDetail->tanggal_sampai = $paket->tanggal_sampai;
             $paketDetail->picture = $paket->picture;
+            $paketDetail->cara_penerimaan = "";
+            if ($paket->penerimaan_id > 0) {
+                $penerimaan = Penerimaan::find($paket->penerimaan_id);
+                if ($penerimaan != null) {
+                    $paketDetail->cara_penerimaan = (new Penerimaan())->getPenerimaanText($penerimaan->name);
+                }
+            }
 
             array_push($paketDetails, $paketDetail);
         }
@@ -157,7 +167,46 @@ class PaketController extends Controller
         if (auth()->user()->cannot('create', Paket::class)) {
             abort(403);
         }
-        //
+
+        $request->validate([
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        // time now
+        $now = Carbon::now();
+
+        $userPenerima = User::where('nik', $request->nik_penerima)->first();
+        $userPetugas = User::where('nik', $request->nik_petugas)->first();
+
+        // new paket
+        $paket = new Paket();
+        $paket->name = "Paket untuk: " . $userPenerima->name;
+        $paket->nik_petugas = $userPetugas->nik;
+        $paket->nik_karyawan = $userPenerima->nik;
+        $paket->jenis_barang = $request->jenis_barang;
+        $paket->barang_berbahaya = ($request->barang_berbahaya === 'ya') ? 1 : 0;
+        $paket->tanggal_sampai = $now->toDateTimeString();
+        $paket->tanggal_diambil = null;
+        $paket->created_at = $now->toDateTimeString();
+        $paket->updated_at = null;
+        $paket->deleted_at = null;
+
+
+        if ($request->file('picture')) {
+            $imagePath = $request->file('picture');
+            $imageName = $imagePath->getClientOriginalName();
+            $imageName = $userPenerima->nik . "-" . strtotime('now') . '-' . $imageName;
+
+            // Store image to storage/images folder in public.
+            $request->file('picture')->storeAs('images', $imageName, 'public');
+
+            $paket->picture = $imageName;
+        }
+
+        $paket->save();
+
+        return redirect()
+            ->route('paket.index');
     }
 
     /**
@@ -188,11 +237,11 @@ class PaketController extends Controller
         $paket = Paket::find($id);
         if ($paket != null) {
             $user = User::where('nik', $paket->nik_karyawan)->first();
-            $direktorat = ($user->direktorat_id > 0) ? Direktorat::where($user->direktorat_id) : null;
-            $divisi = ($user->divisi_id > 0) ? Divisi::where($user->divisi_id) : null;
-            $department = ($user->department_id > 0) ? Department::where($user->department_id) : null;
-            $unit = ($user->unit_id > 0) ? Unit::where($user->unit_id) : null;
-            $penerimaan = ($paket->penerimaan_id > 0) ? Penerimaan::where($paket->penerimaan_id) : null;
+            $direktorat = ($user->direktorat_id > 0) ? Direktorat::find($user->direktorat_id) : null;
+            $divisi = ($user->divisi_id > 0) ? Divisi::find($user->divisi_id) : null;
+            $department = ($user->department_id > 0) ? Department::find($user->department_id) : null;
+            $unit = ($user->unit_id > 0) ? Unit::find($user->unit_id) : null;
+            $penerimaan = ($paket->penerimaan_id > 0) ? Penerimaan::find($paket->penerimaan_id) : null;
 
             $paketDetail->id = $id;
             $paketDetail->nik_penerima = $paket->nik_karyawan;
@@ -206,22 +255,21 @@ class PaketController extends Controller
             $paketDetail->jenis_barang = $paket->jenis_barang;
             $paketDetail->picture = $paket->picture;
             $paketDetail->barang_berbahaya = ($paket->barang_berbahaya == 1) ? "ya" : "tidak";
-            $paketDetail->tanggal_sampai = (strtotime($paket->tanggal_sampai) <= 0 || strtotime($paket->tanggal_sampai) == false) ? "" : $paket->tanggal_sampai;
-            $paketDetail->tanggal_ambil = (strtotime($paket->tanggal_diambil) <= 0 || strtotime($paket->tanggal_diambil) == false) ? "" : $paket->tanggal_diambil;
-            $paketDetail->cara_penerimaan = ($penerimaan != null) ? $penerimaan->name : "";
+            $paketDetail->tanggal_sampai = (strtotime($paket->tanggal_sampai) <= 0 || strtotime($paket->tanggal_sampai) == false) ? "" : (new DateTime($paket->tanggal_sampai))->format('d-m-Y');
+            $paketDetail->tanggal_ambil = (strtotime($paket->tanggal_diambil) <= 0 || strtotime($paket->tanggal_diambil) == false) ? "" : (new DateTime($paket->tanggal_diambil))->format('d-m-Y');
+            $paketDetail->cara_penerimaan = "";
+            if ($penerimaan != null) {
+                $paketDetail->cara_penerimaan = (new Penerimaan())->getPenerimaanText($penerimaan->name);
+            }
 
             return view('paket.karyawan.detail', [
                 'paketDetail' => $paketDetail
             ]);
         }
 
-        return view('paket.karyawan.detail', [
-            'paketDetail' => $paketDetail
-        ]);
-
-        // return redirect()
-        //     ->route('paket.index', ['status' => 'unpickedup'])
-        //     ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
+        return redirect()
+            ->route('paket.index', ['status' => 'unpickedup'])
+            ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
 
         /** Uncomment if the block code above failed. **/
         // return redirect()

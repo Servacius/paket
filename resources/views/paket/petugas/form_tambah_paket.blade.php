@@ -9,8 +9,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{ route('paket.store') }}" id="formCreateNewPaket" method="POST">
+                <form action="{{ route('paket.store') }}" id="formCreateNewPaket" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
+                    <input name="nik_petugas" type="hidden" value="{{ auth()->user()->nik }}">
                     <div class="card" style="margin-top: 8px;">
                         <div class="card-header card-header-success">
                             <h4 class="card-title">{{ __('Form Tambah Paket Baru') }}</h4>
@@ -22,8 +24,8 @@
                                         <div class="col-md-4 offset-lg-4 text-center">
                                             <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                                 <div class="fileinput-new thumbnail img-raised">
-                                                    <img src="http://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png"
-                                                        alt="...">
+                                                    <img src="{{ asset('default-image.jpeg') }}" alt="..."
+                                                        style="width: 15rem; height: 11rem;">
                                                 </div>
                                                 <div class="fileinput-preview fileinput-exists thumbnail img-raised">
                                                 </div>
@@ -40,9 +42,9 @@
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 16px;">
-                                        <label class="col-sm-2 col-form-label"
+                                        <label class="col-sm-3 col-form-label"
                                             style="margin-block: auto;">{{ __('Nama Penerima :') }}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <select class="form-control " id="userSearch" name="nama_penerima"
                                                     style="padding-left: 0px"></select>
@@ -50,9 +52,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label" style="margin-block: auto;">
+                                        <label class="col-sm-3 col-form-label" style="margin-block: auto;">
                                             {!! __('NIK Penerima<sup class="text-danger">*</sup> :') !!}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="nik_penerima"
                                                     id="nikPenerima" style="padding-left: 8px;" />
@@ -60,9 +62,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label"
+                                        <label class="col-sm-3 col-form-label"
                                             style="margin-block: auto;">{{ __('Email :') }}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="email" class="form-control" name="email" id="email"
                                                     style="padding-left: 8px;" />
@@ -70,9 +72,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label" style="margin-block: auto;">
+                                        <label class="col-sm-3 col-form-label" style="margin-block: auto;">
                                             {!! __('No. Telepon Penerima<sup class="text-danger">*</sup> :') !!}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="telp" id="telp"
                                                     style="padding-left: 8px;" />
@@ -80,9 +82,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label"
+                                        <label class="col-sm-3 col-form-label"
                                             style="margin-block: auto;">{{ __('Direktorat :') }}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="direktorat"
                                                     id="direktorat" style="padding-left: 8px;" />
@@ -90,9 +92,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label"
+                                        <label class="col-sm-3 col-form-label"
                                             style="margin-block: auto;">{{ __('Divisi :') }}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="divisi"
                                                     style="padding-left: 8px;" />
@@ -100,9 +102,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label"
+                                        <label class="col-sm-3 col-form-label"
                                             style="margin-block: auto;">{{ __('Departement :') }}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="department"
                                                     id="department" style="padding-left: 8px;" />
@@ -110,9 +112,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label"
+                                        <label class="col-sm-3 col-form-label"
                                             style="margin-block: auto;">{{ __('Unit :') }}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="unit" id="unit"
                                                     style="padding-left: 8px;" />
@@ -120,9 +122,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label" style="margin-block: auto;">
+                                        <label class="col-sm-3 col-form-label" style="margin-block: auto;">
                                             {!! __('Jenis Barang<sup class="text-danger">*</sup> :') !!}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="jenis_barang"
                                                     style="padding-left: 8px;" />
@@ -130,9 +132,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label">
+                                        <label class="col-sm-3 col-form-label">
                                             {!! __('Barang Berbahaya<sup class="text-danger">*</sup> :') !!}</label>
-                                        <div class="col-sm-10 text-left">
+                                        <div class="col-sm-9 text-left">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio form-check-inline">
                                                     <label class="form-check-label">
@@ -159,12 +161,13 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label"
+                                        <label class="col-sm-3 col-form-label"
                                             style="margin-block: auto;">{{ __('Tanggal Barang Sampai :') }}</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="tanggal_sampai"
-                                                    id="datepickerTanggalSampai" style="padding-left: 8px;" />
+                                                <input type="text" class="form-control datetimepicker"
+                                                    name="tanggal_sampai" id="datepickerTanggalSampai"
+                                                    style="padding-left: 8px;" />
                                             </div>
                                         </div>
                                     </div>

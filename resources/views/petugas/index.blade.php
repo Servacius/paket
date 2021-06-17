@@ -1,7 +1,7 @@
 @extends('layouts.app', [
 'class' => '',
 'activePage' => 'dashboard',
-'titlePage' => __('Dashboard')
+'titlePage' => __('Sistem Penerimaan Paket Barang')
 ])
 
 @section('content')
@@ -37,7 +37,8 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">check</i>
-                            <a href="{{ route('paket.create') }}" class="font-weight-bold text-success">Cek Sekarang</a>
+                            <a href="{{ route('paket.create') }}" class="font-weight-bold text-success">Tambah
+                                Sekarang</a>
                         </div>
                     </div>
                 </div>

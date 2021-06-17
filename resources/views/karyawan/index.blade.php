@@ -1,7 +1,7 @@
 @extends('layouts.app', [
 'class' => '',
 'activePage' => 'dashboard',
-'titlePage' => __('Dashboard')
+'titlePage' => __('Sistem Penerimaan Paket Barang')
 ])
 
 @section('content')

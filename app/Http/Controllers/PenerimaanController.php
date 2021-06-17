@@ -48,7 +48,7 @@ class PenerimaanController extends Controller
      */
     public function store(Request $request)
     {
-        $catatan = "";
+        $catatan = json_encode("");
         if ($request->cara_penerimaan === Penerimaan::PENERIMAAN_DIANTAR) {
             $app = app();
             $detailPenerimaan = $app->make('stdClass');
@@ -67,6 +67,8 @@ class PenerimaanController extends Controller
         $penerimaan->name = $request->cara_penerimaan;
         $penerimaan->catatan = $catatan;
         $penerimaan->created_at = $now->toDateTimeString();
+        $penerimaan->updated_at = null;
+        $penerimaan->deleted_at = null;
         $penerimaan->save();
         $lastInsertID = $penerimaan->id;
 
