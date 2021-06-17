@@ -49,24 +49,4 @@ class HomeController extends Controller
         // dd("nyampe cuk");
         return view('pages.adminHome');
     }
-
-    /**
-     * Show the application petugas dashboard.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function petugasHome()
-    {
-        return view('pages.petugasHome');
-    }
-
-    /**
-     * Show the application karyawan dashboard.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function karyawanHome()
-    {
-        return view('pages.karyawanHome');
-    }
 }

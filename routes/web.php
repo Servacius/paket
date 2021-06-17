@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PetugasController;
@@ -54,10 +53,20 @@ Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home
 
 /*
 |--------------------------------------------------------------------------
+| Administrator routes.
+|--------------------------------------------------------------------------
+*/
+Route::get('user/search', [UserController::class, 'search'])->name('user.search');
+Route::get('user/{id}/response', [UserController::class, 'detail'])->name('user.detail.response');
+
+/*
+|--------------------------------------------------------------------------
 | Paket routes.
 |--------------------------------------------------------------------------
 */
 Route::get('paket', [PaketController::class, 'index'])->name('paket.index');
+Route::get('paket/create', [PaketController::class, 'create'])->name('paket.create');
+Route::post('paket', [PaketController::class, 'store'])->name('paket.store');
 Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail');
 // Route::put('paket/{id}', [PaketController::class, 'update'])->name('paket.update');
 

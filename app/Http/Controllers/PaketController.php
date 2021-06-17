@@ -22,12 +22,12 @@ class PaketController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware('is_karyawan');
     }
 
     /**
      * Display a listing of the paket.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
     public function index(Request $request)
@@ -133,13 +133,17 @@ class PaketController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new paket.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        if (auth()->user()->cannot('create', Paket::class)) {
+            abort(403);
+        }
+
+        return view('paket.petugas.form_tambah_paket');
     }
 
     /**
@@ -150,6 +154,9 @@ class PaketController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->user()->cannot('create', Paket::class)) {
+            abort(403);
+        }
         //
     }
 
@@ -208,9 +215,13 @@ class PaketController extends Controller
             ]);
         }
 
-        return redirect()
-            ->route('paket.index', ['status' => 'unpickedup'])
-            ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
+        return view('paket.karyawan.detail', [
+            'paketDetail' => $paketDetail
+        ]);
+
+        // return redirect()
+        //     ->route('paket.index', ['status' => 'unpickedup'])
+        //     ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
 
         /** Uncomment if the block code above failed. **/
         // return redirect()

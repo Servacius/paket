@@ -65,7 +65,7 @@ class PaketPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role_id === UserRole::ROLE_ID_PETUGAS;
     }
 
     /**

@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li class="nav-item{{ $activePage == 'tambahPaket' ? ' active' : '' }}">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('paket.create') }}">
                     <i class="material-icons">add_circle</i>
                     <p>{{ __('Tambah Paket') }}</p>
                 </a>

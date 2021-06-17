@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Department;
+use App\Models\Direktorat;
+use App\Models\Divisi;
+use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -32,5 +34,70 @@ class UserController extends Controller
             ->get();
 
         return response()->json($data);
+    }
+
+    /**
+     * Search user by keyword.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $users = [];
+
+        if ($request->has('q')) {
+            $search = $request->q;
+            $users = User::select('id', 'name')
+                ->where('name', 'LIKE', "%$search%")
+                ->get();
+        }
+
+        return response()->json($users);
+    }
+
+    /**
+     * Get detail user by id.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id)
+    {
+        $user = User::find($id);
+        if ($user == null) {
+            return null;
+        }
+
+        $direktorat = ($user->direktorat_id > 0) ? Direktorat::find($user->direktorat_id) : null;
+        $divisi = ($user->divisi_id > 0) ? Divisi::find($user->divisi_id) : null;
+        $department = ($user->department_id > 0) ? Department::find($user->department_id) : null;
+        $unit = ($user->unit_id > 0) ? Unit::find($user->unit_id) : null;
+
+        $app = app();
+        $userDetail = $app->make('stdClass');
+        $userDetail->id = $id;
+        $userDetail->name = $user->name;
+        $userDetail->nik = $user->nik;
+        $userDetail->email = $user->email;
+        $userDetail->telp = $user->no_telp;
+        $userDetail->direktorat = "";
+        if ($direktorat != null) {
+            $userDetail->direktorat = $direktorat->name;
+        }
+        $userDetail->divisi = "";
+        if ($divisi != null) {
+            $userDetail->divisi = $divisi->name;
+        }
+        $userDetail->department = "";
+        if ($department != null) {
+            $userDetail->department = $department->name;
+        }
+        $userDetail->unit = "";
+        if ($unit != null) {
+            $userDetail->unit = $unit->name;
+        }
+
+        return response()->json($userDetail);
     }
 }

@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-sm-2 col-form-label">{{ __('Departemen :') }}</label>
+                            <label class="col-sm-2 col-form-label">{{ __('Departement :') }}</label>
                             <div class="col-sm-9">
                                 <div class="form-group">
                                     <input type="text" class="form-control" style="background-color:#fff;"

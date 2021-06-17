@@ -37,7 +37,7 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">check</i>
-                            <a href="" class="font-weight-bold text-success">Cek Sekarang</a>
+                            <a href="{{ route('paket.create') }}" class="font-weight-bold text-success">Cek Sekarang</a>
                         </div>
                     </div>
                 </div>
