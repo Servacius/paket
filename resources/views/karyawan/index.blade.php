@@ -14,13 +14,16 @@
                         <div class="card-icon">
                             <i class="material-icons">view_list</i>
                         </div>
-                        <p class="card-category">Lihat Semua Paket</p>
-                        <h3 class="card-title">{{ "..." }}</h3>
+                        <p class="card-category">Total Paket</p>
+                        <h2 class="card-title font-weight-bold">{{ $dataPaket->count_all }}</h2>
+                        <h6 class="card-title font-weight-normal">
+                            {{ $dataPaket->count_all - $dataPaket->count_all_pickedup . ' paket belum diambil' }}</h6>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">check</i>
-                            <a href="{{ route('paket.index') }}" class="font-weight-bold text-warning">Cek Sekarang</a>
+                            <a href="{{ route('paket.index') }}" class="font-weight-bold text-warning">Lihat Semua Paket
+                                Sekarang</a>
                         </div>
                     </div>
                 </div>
@@ -32,13 +35,15 @@
                             <i class="material-icons">shopping_bag</i>
                         </div>
                         <p class="card-category">Paketku</p>
-                        <h3 class="card-title">{{ "..." }}</h3>
+                        <h2 class="card-title font-weight-bold">{{ $dataPaket->count_user }}</h2>
+                        <h6 class="card-title font-weight-normal">
+                            {{ $dataPaket->count_user - $dataPaket->count_user_pickedup . ' paket belum diambil' }}</h6>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">check</i>
                             <a href="{{ route('paket.index', ['status' => 'unpickedup']) }}"
-                                class="font-weight-bold text-success">Cek Sekarang</a>
+                                class="font-weight-bold text-success">Lihat Paketku Sekarang</a>
                         </div>
                     </div>
                 </div>

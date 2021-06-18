@@ -1,7 +1,7 @@
 @extends('layouts.app', [
 'class' => '',
 'activePage' => 'tambahPaket',
-'titlePage' => 'Tambah Paket'
+'titlePage' => 'Sistem Penerimaan Paket Barang'
 ])
 
 @section('content')
@@ -173,12 +173,11 @@
                                     </div>
                                     <div class="row" style="margin-top: 4rem;">
                                         <div class="col-md-6 text-left">
-                                            <a href="{{ route('paket.index') }}" class="btn btn-default btn-round"
-                                                role="button" aria-pressed="true">Kembali</a>
+                                            <a href="{{ route('paket.index') }}" class="btn btn-default" role="button"
+                                                aria-pressed="true">Kembali</a>
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <input class="submit btn btn-success btn-round" type="submit"
-                                                value="Tambah" />
+                                            <input class="submit btn btn-success" type="submit" value="Tambah" />
                                         </div>
                                     </div>
                                 </div>

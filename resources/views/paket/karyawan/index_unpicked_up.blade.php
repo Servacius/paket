@@ -1,27 +1,38 @@
 @extends('layouts.app', [
 'class' => '',
 'activePage' => 'paketku',
-'titlePage' => 'Paketku'
+'titlePage' => 'Sistem Penerimaan Paket Barang'
 ])
 
 @section('content')
-<div class="content">
+<div class="content" style="padding-top: 0px;">
     <div class="container-fluid">
         <div class="row">
-            @if ($errors->any())
-            <div class="col-12">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {!! $errors->first() !!}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-            @endif
+            <div class="col-md-12">
+                <h3>
+                    <b>Paketku</b>
+                    <br>
+                    <small class="font-weight-light">Daftar Paket Anda yang Belum Diambil/Diantar</small>
+                </h3>
+                <br>
 
-            @foreach ($pakets as $paket)
-            @include('paket/karyawan/card_unpicked_up', ['paket' => $paket])
-            @endforeach
+                @if ($errors->any())
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="material-icons">close</i>
+                            </button>
+                            <span>{!! $errors->first() !!}</span>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @foreach ($pakets as $paket)
+                @include('paket/karyawan/card_unpicked_up', ['paket' => $paket])
+                @endforeach
+            </div>
         </div>
     </div>
 </div>

@@ -20,8 +20,8 @@
                                     <label class="col-sm-3 col-form-label">{{ __('Tanggal Pengantaran :') }}</label>
                                     <div class="col-sm-9">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="tanggal_pengantaran"
-                                                id="datepickerTanggalPengantaran" />
+                                            <input type="text" class="form-control datetimepicker"
+                                                name="tanggal_pengantaran" id="datepickerTanggalPengantaran" />
                                         </div>
                                     </div>
                                 </div>

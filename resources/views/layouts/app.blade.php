@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ __('Material Dashboard Laravel - Free Frontend Preset for Laravel') }}</title>
+    <title>{{ __('Sistem Penerimaan Paket Barang') }}</title>
 
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('material') }}/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('material') }}/img/favicon.png">
@@ -18,7 +18,7 @@
     <!-- CSS for Material Dashboard -->
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <link href="{{ asset('material') }}/css/material-select2.css" rel="stylesheet" />
-    <link href="{{ asset('material') }}/css/material-error.css" rel="stylesheet" />
+    <link href="{{ asset('material') }}/css/material-text.css" rel="stylesheet" />
 
     <!-- CSS for Datepicker -->
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css"> --}}

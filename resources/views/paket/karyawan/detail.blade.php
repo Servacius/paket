@@ -1,7 +1,7 @@
 @extends('layouts.app', [
 'class' => '',
 'activePage' => '',
-'titlePage' => 'Detail Paket'
+'titlePage' => 'Sistem Penerimaan Paket Barang'
 ])
 
 @section('content')
@@ -10,8 +10,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card" style="margin-top: 8px;">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title">{{ __('Informasi Lengkap Penerimaan Paket ID: ') . $paketDetail->id}}
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">{{ __('Detail Informasi Paket dengan ID: ') . $paketDetail->id}}
                         </h4>
                     </div>
                     <div class="card-body text-left">
@@ -200,20 +200,19 @@
                                 <div class="row" style="margin-top: 4rem;">
                                     <div class="col-md-8 text-left">
                                         <a href="{{ route('paket.index', ['status' => 'unpickedup']) }}"
-                                            class="btn btn-default btn-round" role="button"
-                                            aria-pressed="true">Kembali</a>
+                                            class="btn btn-default" role="button" aria-pressed="true">Kembali</a>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-row">
                                             <div class="col-md-7 text-center">
-                                                <button class="btn btn-primary btn-block btn-round" role="button"
+                                                <button class="btn btn-primary btn-block" role="button"
                                                     data-toggle="modal" data-target="#modalPenerimaanAmbilSendiri"
                                                     aria-pressed="true"
                                                     {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Ambil
                                                     Sendiri</button>
                                             </div>
                                             <div class="col-md-5 text-center">
-                                                <button class="btn btn-success btn-block btn-round" role="button"
+                                                <button class="btn btn-success btn-block" role="button"
                                                     data-toggle="modal" data-target="#modalPenerimaanDiantar"
                                                     aria-pressed="true"
                                                     {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Diantar</button>
@@ -229,8 +228,7 @@
         </div>
     </div>
 </div>
-@endsection
-
 <!-- List of modals -->
 @include('paket/karyawan/modal_penerimaan_diantar', ['paketDetail' => $paketDetail])
 @include('paket/karyawan/modal_penerimaan_ambil_sendiri', ['paketDetail' => $paketDetail])
+@endsection

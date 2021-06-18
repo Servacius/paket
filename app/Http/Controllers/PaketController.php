@@ -122,16 +122,26 @@ class PaketController extends Controller
             $paketDetail->id = $paket->id;
             $paketDetail->nik_karyawan = $paket->nik_karyawan;
             $paketDetail->name_karyawan = $karyawans[$paket->nik_karyawan]->name;
-            $paketDetail->name_paket = $paket->name;
+            $paketDetail->nama_paket = $paket->name;
+            $paketDetail->jenis_barang = $paket->jenis_barang;
             $paketDetail->no_telp = $karyawans[$paket->nik_karyawan]->no_telp;
-            $paketDetail->tanggal_sampai = $paket->tanggal_sampai;
+            $paketDetail->tanggal_sampai = (new DateTime($paket->tanggal_sampai))->format('d-m-Y');
             $paketDetail->picture = $paket->picture;
+            $paketDetail->tanggal_pengantaran = "";
             $paketDetail->cara_penerimaan = "";
+            $paketDetail->selisih_waktu_sampai = 0;
+
+            // Set cara penerimaan paket dan selisih waktu sampai.
             if ($paket->penerimaan_id > 0) {
                 $penerimaan = Penerimaan::find($paket->penerimaan_id);
-                if ($penerimaan != null) {
-                    $paketDetail->cara_penerimaan = (new Penerimaan())->getPenerimaanText($penerimaan->name);
+                $paketDetail->cara_penerimaan = ($penerimaan != null) ? $penerimaan->name : Penerimaan::PENERIMAAN_AMBIL_SENDIRI;
+                if ($paketDetail->cara_penerimaan == Penerimaan::PENERIMAAN_DIANTAR) {
+                    $catatan = json_decode($penerimaan->catatan);
+                    $paketDetail->tanggal_pengantaran = $catatan->tanggal_pengantaran;
                 }
+
+                $now = Carbon::createFromFormat('d-m-Y', date('d-m-Y'));
+                $paketDetail->selisih_waktu_sampai = $now->diffInDays($paketDetail->tanggal_sampai);
             }
 
             array_push($paketDetails, $paketDetail);
@@ -270,11 +280,6 @@ class PaketController extends Controller
         return redirect()
             ->route('paket.index', ['status' => 'unpickedup'])
             ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
-
-        /** Uncomment if the block code above failed. **/
-        // return redirect()
-        //     ->back()
-        //     ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
     }
 
     private function defaultPaketDetail()
