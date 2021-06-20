@@ -267,30 +267,6 @@ class PaketController extends Controller
     }
 
     /**
-     * Fetch max 5 notifications.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function notifications()
-    {
-        $paketIDs = [];
-
-        $pakets = Paket::select('id')
-            ->whereNull('tanggal_diambil')
-            ->whereNotNull('penerimaan_id')
-            ->orderByDesc('tanggal_sampai')
-            ->limit(5)
-            ->get();
-
-        foreach ($pakets as $paket) {
-            array_push($paketIDs, $paket->id);
-        }
-
-        return response()->json($paketIDs);
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  array  $filter

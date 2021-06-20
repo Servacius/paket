@@ -21,21 +21,28 @@
             </p>
           </a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <i class="material-icons">notifications</i>
-            <span class="notification" id="totalNotifications"></span>
-            <p class="d-lg-none d-md-block">
-              {{ __('Notifikasi') }}
-            </p>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <div id="notifications"></div>
-            <a class="dropdown-item font-weight-bold"
-              href="{{ route('paket.index', ['penerimaan' => 'true']) }}">{{ __('Cek Selengkapnya') }}</a>
-          </div>
-        </li>
+        @if (auth()->user()->role_id == 2 || auth()->user()->role_id == 3)
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons">notifications</i>
+              <span class="notification" id="totalNotifications"></span>
+              <p class="d-lg-none d-md-block">
+                {{ __('Notifikasi') }}
+              </p>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <div id="notifications"></div>
+              @if (auth()->user()->role_id == 2)
+                <a class="dropdown-item btn btn-warning font-weight-normal text-white"
+                  href="{{ route('paket.index', ['unpickedup' => 'true']) }}">{{ __('Cek Selengkapnya') }}</a>
+              @elseif (auth()->user()->role_id == 3)
+                <a class="dropdown-item btn btn-warning font-weight-normal text-white"
+                  href="{{ route('paket.index', ['penerimaan' => 'true']) }}">{{ __('Cek Selengkapnya') }}</a>
+              @endif
+            </div>
+          </li>
+        @endif
         <li class="nav-item dropdown">
           <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -59,6 +66,17 @@
 @push('js')
 <script>
   $(document).ready(function () {
+    var roleID = '{{ auth()->user()->role_id }}';
+    console.dir(roleID);
+
+    if (roleID == 2) {
+      showNotifikasiKaryawan();
+    } else if (roleID == 3) {
+      showNotifikasiPetugas();
+    }
+  });
+
+  function showNotifikasiKaryawan() {
     var elementTotalNotifications = document.getElementById("totalNotifications");
     var elementNotifications = document.getElementById("notifications");
     var url = '{{ route("notifikasi") }}';
@@ -67,25 +85,56 @@
         method: 'GET',
         url: url,
     })
-    .done(function (paketIDs) {
-      console.dir(paketIDs);
-      for (var i = 0; i < paketIDs.length; i++) {
+    .done(function (notifications) {
+      console.dir('data notifikasi: ' + notifications);
+
+      for (var i = 0; i < notifications.length; i++) {
         const a = document.createElement("a");
-        const node = document.createTextNode('Cara penerimaan paket dengan ID ' + paketIDs[i] + ' telah dikonfirmasi.');
+        const node = document.createTextNode(notifications[i].tanggal_sampai + ' - Anda memiliki paket baru, segera lakukan konfirmasi cara penerimaan.');
 
         var detailURL = '{{ route("paket.detail", ["id" => ":paketID"]) }}';
-        detailURL = detailURL.replace(':paketID', paketIDs[i]);
+        detailURL = detailURL.replace(':paketID', notifications[i].id);
 
         a.appendChild(node);
-        a.title = 'Cara penerimaan paket dengan ID ' + paketIDs[i] + ' telah dikonfirmasi.';
+        a.title = notifications[i].tanggal_sampai + ' - Anda memiliki paket baru, segera lakukan konfirmasi cara penerimaan.';
         a.href = detailURL;
         a.classList = ['dropdown-item'];
 
         elementNotifications.appendChild(a);
       }
 
-      elementTotalNotifications.textContent = "" + paketIDs.length;
+      elementTotalNotifications.textContent = "" + notifications.length;
     });
-  });
+  }
+
+  function showNotifikasiPetugas() {
+    var elementTotalNotifications = document.getElementById("totalNotifications");
+    var elementNotifications = document.getElementById("notifications");
+    var url = '{{ route("notifikasi") }}';
+
+    $.ajax({
+        method: 'GET',
+        url: url,
+    })
+    .done(function (notifications) {
+      console.dir('data notifikasi: ' + notifications);
+      for (var i = 0; i < notifications.length; i++) {
+        const a = document.createElement("a");
+        const node = document.createTextNode('Cara penerimaan paket dengan ID ' + notifications[i].id + ' telah dikonfirmasi.');
+
+        var detailURL = '{{ route("paket.detail", ["id" => ":paketID"]) }}';
+        detailURL = detailURL.replace(':paketID', notifications[i].id);
+
+        a.appendChild(node);
+        a.title = 'Cara penerimaan paket dengan ID ' + notifications[i].id + ' telah dikonfirmasi.';
+        a.href = detailURL;
+        a.classList = ['dropdown-item'];
+
+        elementNotifications.appendChild(a);
+      }
+
+      elementTotalNotifications.textContent = "" + notifications.length;
+    });
+  }
 </script>
 @endpush
