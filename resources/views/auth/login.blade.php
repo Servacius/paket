@@ -1,4 +1,5 @@
-@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'login', 'title' => __('Sistem Penerimaan Paket Barang')])
+@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'login', 'title' => __('Sistem Penerimaan
+Paket Barang')])
 
 @section('content')
 <div class="container" style="height: auto;">
@@ -7,20 +8,9 @@
       <h3>{{ __('Log in untuk melihat daftar penerimaan paket Anda.') }} </h3>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-      @if ($errors->any())
-        <div class="col-md-12">
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {!! $errors->first() !!}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        </div>
-      @endif
 
-      <form class="form" method="POST" action="{{ route('login') }}">
+      <form class="form" id="loginForm" method="POST" action="{{ route('login') }}">
         @csrf
-
         <div class="card card-login card-hidden mb-3">
           <div class="card-header card-header-primary text-center">
             <h4 class="card-title"><strong>{{ __('Login') }}</strong></h4>
@@ -33,13 +23,14 @@
                     <i class="material-icons">email</i>
                   </span>
                 </div>
-                <input type="email" name="email" class="form-control" placeholder="{{ __('Email...') }}" value="{{ old('email', '') }}" required>
+                <input type="text" name="nik" class="form-control" placeholder="{{ __('NIK...') }}"
+                  value="{{ old('nik', '') }}" required>
               </div>
-              @if ($errors->has('email'))
+              {{-- @if ($errors->has('email'))
                 <div id="email-error" class="error text-danger pl-3" for="email" style="display: block;">
                   <strong>{{ $errors->first('email') }}</strong>
-                </div>
-              @endif
+            </div>
+            @endif --}}
             </div>
             <div class="bmd-form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
               <div class="input-group">
@@ -48,13 +39,14 @@
                     <i class="material-icons">lock_outline</i>
                   </span>
                 </div>
-                <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('Password...') }}" value="{{ !$errors->has('password') ? "" : "" }}" required>
+                <input type="password" name="password" id="password" class="form-control"
+                  placeholder="{{ __('Password...') }}" value="{{ !$errors->has('password') ? "" : "" }}" required>
               </div>
-              @if ($errors->has('password'))
+            {{-- @if ($errors->has('password'))
                 <div id="password-error" class="error text-danger pl-3" for="password" style="display: block;">
                   <strong>{{ $errors->first('password') }}</strong>
-                </div>
-              @endif
+          </div>
+          @endif --}}
             </div>
           </div>
           <div class="card-footer justify-content-center">
@@ -62,22 +54,49 @@
           </div>
         </div>
       </form>
-      <!-- We don't need this for now -->
-      {{-- <div class="row">
+
+  <!-- We don't need this for now -->
+  {{-- <div class="row">
         <div class="col-6">
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}" class="text-light">
-                    <small>{{ __('Forgot password?') }}</small>
-                </a>
-            @endif
-        </div>
-        <div class="col-6 text-right">
-            <a href="{{ route('register') }}" class="text-light">
-                <small>{{ __('Create new account') }}</small>
-            </a>
-        </div>
-      </div> --}}
+  <small>{{ __('Forgot password?') }}</small>
+  </a>
+  @endif
+</div>
+<div class="col-6 text-right">
+  <a href="{{ route('register') }}" class="text-light">
+    <small>{{ __('Create new account') }}</small>
+  </a>
+</div>
+</div> --}}
     </div>
   </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+  $(document).ready(function () {
+    var isError = '{{ $errors->any() }}';
+    if (isError) {
+        var message = '{!! $errors->first() !!}';
+        showNotification('top', 'center', message);
+    }
+  });
+
+  function showNotification(from, align, message) {
+      $.notify({
+          icon: "",
+          message: message
+      },{
+          type: 'danger',
+          timer: 4000,
+          placement: {
+              from: from,
+              align: align
+          }
+      });
+  };
+</script>
+@endpush

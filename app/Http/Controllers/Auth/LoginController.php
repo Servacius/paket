@@ -45,11 +45,12 @@ class LoginController extends Controller
         $input = $request->all();
 
         $this->validate($request, [
-            'email' => 'required|email',
+            // 'email' => 'required|email',
+            'nik' => 'required',
             'password' => 'required',
         ]);
 
-        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+        if (auth()->attempt(array('nik' => $input['nik'], 'password' => $input['password']))) {
             switch (auth()->user()->role_id) {
                 case UserRole::ROLE_ID_ADMINISTRATOR:
                     return redirect()->route('admin.home');
@@ -64,6 +65,6 @@ class LoginController extends Controller
 
         return redirect()
             ->route('login')
-            ->withErrors(['Pasangan email dan password salah. Silahkan coba lagi.']);
+            ->withErrors(['Pasangan NIK dan password salah. Silahkan coba lagi.']);
     }
 }
