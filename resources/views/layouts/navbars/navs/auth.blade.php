@@ -20,22 +20,19 @@
             </p>
           </a>
         </li>
-        {{-- <li class="nav-item dropdown">
+        <li class="nav-item dropdown">
           <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">notifications</i>
-            <span class="notification">5</span>
+            <span class="notification" id="totalNotifications"></span>
             <p class="d-lg-none d-md-block">
-              {{ __('Some Actions') }}
+              {{ __('Notifikasi') }}
             </p>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">{{ __('Mike John responded to your email') }}</a>
-            <a class="dropdown-item" href="#">{{ __('You have 5 new tasks') }}</a>
-            <a class="dropdown-item" href="#">{{ __('You\'re now friend with Andrew') }}</a>
-            <a class="dropdown-item" href="#">{{ __('Another Notification') }}</a>
-            <a class="dropdown-item" href="#">{{ __('Another One') }}</a>
+            <div id="notifications"></div>
+            <a class="dropdown-item font-weight-bold" href="{{ route('paket.index', ['penerimaan' => 'true']) }}">{{ __('Cek Selengkapnya') }}</a>
           </div>
-        </li> --}}
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">person</i>
@@ -53,3 +50,37 @@
     </div>
   </div>
 </nav>
+
+@push('js')
+    <script>
+      $(document).ready(function () {
+        var elementTotalNotifications = document.getElementById("totalNotifications");
+        var elementNotifications = document.getElementById("notifications");
+        var url = '{{ route("notifikasi") }}';
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+        })
+        .done(function (paketIDs) {
+          console.dir(paketIDs);
+          for (var i = 0; i < paketIDs.length; i++) {
+            const a = document.createElement("a");
+            const node = document.createTextNode('Cara penerimaan paket dengan ID ' + paketIDs[i] + ' telah dikonfirmasi.');
+
+            var detailURL = '{{ route("paket.detail", ["id" => ":paketID"]) }}';
+            detailURL = detailURL.replace(':paketID', paketIDs[i]);
+
+            a.appendChild(node);
+            a.title = 'Cara penerimaan paket dengan ID ' + paketIDs[i] + ' telah dikonfirmasi.';
+            a.href = detailURL;
+            a.classList = ['dropdown-item'];
+
+            elementNotifications.appendChild(a);
+          }
+
+          elementTotalNotifications.textContent = "" + paketIDs.length;
+        });
+      });
+    </script>
+@endpush

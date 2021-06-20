@@ -31,16 +31,22 @@
         var isError = '{{ $errors->any() }}';
         if (isError) {
             var message = '{!! $errors->first() !!}';
-            showNotification('top', 'center', message);
+            showNotification('top', 'center', message, 'danger');
+        }
+
+        var isSuccess = '{{ session()->has("success") }}';
+        if (isSuccess) {
+            var message = '{!! session()->get("success") !!}';
+            showNotification('top', 'center', message, 'success');
         }
     });
 
-    function showNotification(from, align, message){
+    function showNotification(from, align, message, type){
         $.notify({
             icon: "",
             message: message
         },{
-            type: 'danger',
+            type: type,
             timer: 4000,
             placement: {
                 from: from,

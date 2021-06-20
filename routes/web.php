@@ -69,6 +69,8 @@ Route::get('paket/create', [PaketController::class, 'create'])->name('paket.crea
 Route::post('paket', [PaketController::class, 'store'])->name('paket.store');
 Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail');
 
+Route::get('notifikasi', [PaketController::class, 'notifications'])->name('notifikasi');
+
 /*
 |--------------------------------------------------------------------------
 | Penerimaan routes.

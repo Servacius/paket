@@ -23,3 +23,9 @@ i.material-icons.md-48 {
     box-shadow: 0px 0px 2px #888;
     border-radius: 50%;
 }
+
+.bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+    background: #fff;
+    color: #000;
+    border-color: #999;
+}

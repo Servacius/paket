@@ -136,7 +136,7 @@ class PaketController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                'picture' => 'required|image|mimes:jpeg,png,jpg|max:2048'
             ],
             [
                 'required' => 'Gambar paket tidak boleh kosong.',
@@ -193,7 +193,8 @@ class PaketController extends Controller
         $paket->save();
 
         return redirect()
-            ->route('paket.index');
+            ->route('paket.index')
+            ->with('success', 'Paket berhasil ditambahkan.');
     }
 
     /**
@@ -263,6 +264,30 @@ class PaketController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Fetch max 5 notifications.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function notifications()
+    {
+        $paketIDs = [];
+
+        $pakets = Paket::select('id')
+            ->whereNull('tanggal_diambil')
+            ->whereNotNull('penerimaan_id')
+            ->orderByDesc('tanggal_sampai')
+            ->limit(5)
+            ->get();
+
+        foreach ($pakets as $paket) {
+            array_push($paketIDs, $paket->id);
+        }
+
+        return response()->json($paketIDs);
     }
 
     /**

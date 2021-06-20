@@ -244,7 +244,6 @@
             url: url,
         })
         .done(function (userDetail) {
-            console.dir(userDetail);
             document.getElementById('nikPenerima').value = userDetail.nik;
             document.getElementById('email').value = userDetail.email;
             document.getElementById('telp').value = userDetail.telp;
@@ -283,6 +282,9 @@
                 },
                 email: {
                     email: true
+                },
+                picture: {
+                    required: true
                 }
             },
             messages: {
@@ -300,6 +302,9 @@
                 },
                 email: {
                     email: "Format Email tidak valid."
+                },
+                picture: {
+                    required: "Gambar tidak boleh kosong."
                 }
             },
             errorPlacement: function(error, element) {
@@ -307,7 +312,9 @@
                     error.insertAfter( element.parents('.form-group') );
                 } else if ( element.is(":text") ) {
                     error.insertAfter( element.parents('.form-group') );
-                }  else { // This is the default behavior
+                } else if ( element.is(":file") ) {
+                    error.insertAfter( element.parents('.fileinput') );
+                } else { // This is the default behavior
                     error.insertAfter( element );
                 }
             }
