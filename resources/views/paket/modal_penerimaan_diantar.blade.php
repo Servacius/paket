@@ -29,7 +29,7 @@
                                     <label class="col-sm-3 col-form-label">{{ __('Waktu Pengantaran :') }}</label>
                                     <div class="col-sm-9">
                                         <div class="form-group">
-                                            <select class="form-control selectpicker" data-style="btn btn-link"
+                                            <select class="form-control selectpicker" data-style="btn"
                                                 name="waktu_pengantaran" id="selectWaktuPengantaran" title="">
                                                 <option>09:00 - 11:00 WIB</option>
                                                 <option>14:00 - 16:00 WIB</option>

@@ -33,7 +33,8 @@ class HomeController extends Controller
                 return view('karyawan.index', ['dataPaket' => $dataPaket]);
 
             case UserRole::ROLE_ID_PETUGAS:
-                return view('petugas.index');
+                $dataPaket = $this->getDataPaket(UserRole::ROLE_ID_PETUGAS);
+                return view('petugas.index', ['dataPaket' => $dataPaket]);
         }
 
         return redirect()
@@ -66,6 +67,7 @@ class HomeController extends Controller
         $dataPaket->count_all_pickedup = 0;
         $dataPaket->count_user = 0;
         $dataPaket->count_user_pickedup = 0;
+        $dataPaket->count_all_notifikasi = 0;
 
         switch ($role) {
             case UserRole::ROLE_ID_KARYAWAN:
@@ -79,6 +81,18 @@ class HomeController extends Controller
                 $dataPaket->count_all_pickedup = $allPaketPickedup;
                 $dataPaket->count_user = $userPaket;
                 $dataPaket->count_user_pickedup = $userPaketPickedup;
+                // die();
+
+                break;
+
+            case UserRole::ROLE_ID_PETUGAS:
+                $allPaket = Paket::all()->count();
+                $allPaketPickedup = Paket::whereNotNull('tanggal_diambil')->count();
+                $allConfirmedCaraPenerimaan = Paket::whereNotNull('penerimaan_id')->count();
+
+                $dataPaket->count_all = $allPaket;
+                $dataPaket->count_all_pickedup = $allPaketPickedup;
+                $dataPaket->count_all_notifikasi = $allConfirmedCaraPenerimaan;
 
                 break;
 

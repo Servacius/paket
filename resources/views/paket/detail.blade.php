@@ -10,17 +10,20 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card" style="margin-top: 8px;">
-                    <div class="card-header card-header-info">
-                        <h4 class="card-title">{{ __('Detail Informasi Paket dengan ID: ') . $paketDetail->id}}
-                        </h4>
-                    </div>
+                    <h4 class="card-header card-header-info">
+                        <b>{{ __('Detail Informasi Paket dengan ID: ') . $paketDetail->id}}</b>
+                    </h4>
                     <div class="card-body text-left">
                         <div class="row">
                             <div class="col-md-10 offset-md-1">
                                 <div class="row">
                                     <div class="col-md-4 offset-lg-4 text-center" style="margin-bottom: 16px;">
-                                        <img src="{{ ($paketDetail->picture == "") ? asset('default-image.jpeg') : asset('storage/images/' . $paketDetail->picture) }}"
-                                            style="width:15rem; height:11rem;">
+                                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail" style="width: 15rem; height: 11rem;">
+                                                <img src="{{ ($paketDetail->gambar == "") ? asset('default-image.jpeg') : asset('storage/images/' . $paketDetail->gambar) }}"
+                                                    alt="..." style="max-width: 100%; max-height: 100%;">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 16px;">
@@ -66,7 +69,7 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control"
                                                 style="background-color:#fff; padding-left: 8px;"
-                                                value="{{ ($paketDetail->telp == "") ? "-" : $paketDetail->telp }}"
+                                                value="{{ ($paketDetail->no_telepon == "") ? "-" : $paketDetail->no_telepon }}"
                                                 readonly />
                                         </div>
                                     </div>
@@ -126,7 +129,7 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control"
                                                 style="background-color:#fff; padding-left: 8px;"
-                                                value="{{ ($paketDetail->jenis_barang == "") ? "-" : $paketDetail->jenis_barang }}"
+                                                value="{{ ($paketDetail->jenis_paket == "") ? "-" : $paketDetail->jenis_paket }}"
                                                 readonly />
                                         </div>
                                     </div>
@@ -173,18 +176,33 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <label class="col-sm-3 col-form-label"
-                                        style="margin-block: auto;">{{ __('Tanggal Barang Diambil/Diantar :') }}</label>
-                                    <div class="col-sm-9">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control"
-                                                style="background-color:#fff; padding-left: 8px;"
-                                                value="{{ ($paketDetail->tanggal_ambil == "") ? "-" : $paketDetail->tanggal_ambil }}"
-                                                readonly />
+                                @if ($paketDetail->tanggal_diambil != "")
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label"
+                                            style="margin-block: auto;">{{ __('Tanggal Barang Diambil :') }}</label>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    style="background-color:#fff; padding-left: 8px;"
+                                                    value="{{ ($paketDetail->tanggal_diambil == "") ? "-" : $paketDetail->tanggal_diambil }}"
+                                                    readonly />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @elseif ($paketDetail->tanggal_diantar != "")
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label"
+                                            style="margin-block: auto;">{{ __('Tanggal Barang Diantar :') }}</label>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    style="background-color:#fff; padding-left: 8px;"
+                                                    value="{{ ($paketDetail->tanggal_diantar == "") ? "-" : $paketDetail->tanggal_diantar }}"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="row">
                                     <label class="col-sm-3 col-form-label"
                                         style="margin-block: auto;">{{ __('Cara Penerimaan :') }}</label>
@@ -199,26 +217,28 @@
                                 </div>
                                 <div class="row" style="margin-top: 4rem;">
                                     <div class="col-md-8 text-left">
-                                        <a href="{{ route('paket.index', ['status' => 'unpickedup']) }}"
-                                            class="btn btn-default" role="button" aria-pressed="true">Kembali</a>
+                                        <a href="{{ route('paket.index') }}" class="btn btn-default" role="button"
+                                            aria-pressed="true">Kembali</a>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-row">
-                                            <div class="col-md-7 text-center">
-                                                <button class="btn btn-primary btn-block" role="button"
-                                                    data-toggle="modal" data-target="#modalPenerimaanAmbilSendiri"
-                                                    aria-pressed="true"
-                                                    {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Ambil
-                                                    Sendiri</button>
-                                            </div>
-                                            <div class="col-md-5 text-center">
-                                                <button class="btn btn-success btn-block" role="button"
-                                                    data-toggle="modal" data-target="#modalPenerimaanDiantar"
-                                                    aria-pressed="true"
-                                                    {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Diantar</button>
+                                    @if (auth()->user()->role_id == 2)
+                                        <div class="col-md-4">
+                                            <div class="form-row">
+                                                <div class="col-md-7 text-center">
+                                                    <button class="btn btn-primary btn-block" role="button"
+                                                        data-toggle="modal" data-target="#modalPenerimaanAmbilSendiri"
+                                                        aria-pressed="true"
+                                                        {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Ambil
+                                                        Sendiri</button>
+                                                </div>
+                                                <div class="col-md-5 text-center">
+                                                    <button class="btn btn-success btn-block" role="button"
+                                                        data-toggle="modal" data-target="#modalPenerimaanDiantar"
+                                                        aria-pressed="true"
+                                                        {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Diantar</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -228,7 +248,8 @@
         </div>
     </div>
 </div>
+
 <!-- List of modals -->
-@include('paket/karyawan/modal_penerimaan_diantar', ['paketDetail' => $paketDetail])
-@include('paket/karyawan/modal_penerimaan_ambil_sendiri', ['paketDetail' => $paketDetail])
+@include('paket/modal_penerimaan_diantar', ['paketDetail' => $paketDetail])
+@include('paket/modal_penerimaan_ambil_sendiri', ['paketDetail' => $paketDetail])
 @endsection

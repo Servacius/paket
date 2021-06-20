@@ -1,7 +1,7 @@
 @extends('layouts.app', [
 'class' => '',
-'activePage' => 'paketku',
-'titlePage' => 'Sistem Penerimaan Paket Barang'
+'activePage' => 'listSemuaPaket',
+'titlePage' => __('Sistem Penerimaan Paket Barang'),
 ])
 
 @section('content')
@@ -10,16 +10,16 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>
-                    <b>Paketku</b>
-                    <br>
-                    <small class="font-weight-light">Daftar Paket Anda yang Belum Diambil/Diantar</small>
+                    <b>{{ __('List Semua Paket') }}</b>
                 </h3>
                 <br>
-
-                @foreach ($pakets as $paket)
-                @include('paket/karyawan/card_unpicked_up', ['paket' => $paket])
-                @endforeach
             </div>
+
+            <div class="w-100"></div>
+
+            @foreach ($pakets as $paket)
+            @include('paket/card', ['paket' => $paket])
+            @endforeach
         </div>
     </div>
 </div>

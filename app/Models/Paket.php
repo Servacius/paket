@@ -10,6 +10,7 @@ class Paket extends Model
     use HasFactory;
 
     const STATUS_UNPICKED_UP = "unpickedup";
+    const STATUS_CARA_PENERIMAAN_CONFIRMED = "confirmed";
 
     /**
      * Table of Paket model.

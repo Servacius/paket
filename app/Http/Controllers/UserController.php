@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Direktorat;
 use App\Models\Divisi;
 use App\Models\Unit;
+use App\Models\UserRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -50,6 +51,7 @@ class UserController extends Controller
             $search = $request->q;
             $users = User::select('id', 'name')
                 ->where('name', 'LIKE', "%$search%")
+                ->where('role_id', '=', UserRole::ROLE_ID_KARYAWAN)
                 ->get();
         }
 

@@ -15,7 +15,9 @@
                     <input name="nik_petugas" type="hidden" value="{{ auth()->user()->nik }}">
                     <div class="card" style="margin-top: 8px;">
                         <div class="card-header card-header-success">
-                            <h4 class="card-title">{{ __('Form Tambah Paket Baru') }}</h4>
+                            <h4 class="card-title">
+                                <b>{{ __('Form Tambah Paket Baru') }}</b>
+                            </h4>
                         </div>
                         <div class="card-body text-left">
                             <div class="row">
@@ -27,7 +29,8 @@
                                                     <img src="{{ asset('default-image.jpeg') }}" alt="..."
                                                         style="width: 15rem; height: 11rem;">
                                                 </div>
-                                                <div class="fileinput-preview fileinput-exists thumbnail img-raised">
+                                                <div class="fileinput-preview fileinput-exists thumbnail img-raised"
+                                                    style="max-width: 15rem; max-height: 11rem; line-height: 20px;">
                                                 </div>
                                                 <div>
                                                     <span class="btn btn-raised btn-round btn-info btn-file">
@@ -35,7 +38,7 @@
                                                         <span class="fileinput-exists">Change</span>
                                                         <input type="file" name="picture" />
                                                     </span>
-                                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
+                                                    <a href="" class="btn btn-danger btn-round fileinput-exists"
                                                         data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                                                 </div>
                                             </div>
@@ -314,5 +317,27 @@
     jQuery.validator.addMethod("phoneIDN", function(phone_number, element) {
         return phone_number.match(/^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{3,8}$/);
     }, "No. Telepon Penerima tidak valid.");
+
+    $(document).ready(function () {
+        var isError = '{{ $errors->any() }}';
+        if (isError) {
+            var message = '{!! $errors->first() !!}';
+            showNotification('top', 'center', message);
+        }
+    });
+
+    function showNotification(from, align, message) {
+        $.notify({
+            icon: "",
+            message: message
+        },{
+            type: 'danger',
+            timer: 4000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    };
 </script>
 @endpush
