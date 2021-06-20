@@ -17,7 +17,6 @@ class PenerimaanController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('is_karyawan');
     }
 
     /**
@@ -48,6 +47,7 @@ class PenerimaanController extends Controller
      */
     public function store(Request $request)
     {
+        // Prevent to store null.
         $catatan = json_encode("");
         if ($request->cara_penerimaan === Penerimaan::PENERIMAAN_DIANTAR) {
             $app = app();

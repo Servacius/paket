@@ -1,7 +1,7 @@
 @extends('layouts.app', [
 'class' => '',
-'activePage' => 'paketku',
-'titlePage' => 'Sistem Penerimaan Paket Barang'
+'activePage' => 'listSemuaPaket',
+'titlePage' => __('Sistem Penerimaan Paket Barang'),
 ])
 
 @section('content')
@@ -10,16 +10,16 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>
-                    <b>Paketku</b>
-                    <br>
-                    <small class="font-weight-light">Daftar Paket Anda yang Belum Diambil/Diantar</small>
+                    <b>{{ __('List Semua Paket') }}</b>
                 </h3>
                 <br>
-
-                @foreach ($pakets as $paket)
-                @include('paket/karyawan/card_unpicked_up', ['paket' => $paket])
-                @endforeach
             </div>
+
+            <div class="w-100"></div>
+
+            @foreach ($pakets as $paket)
+            @include('paket/card', ['paket' => $paket])
+            @endforeach
         </div>
     </div>
 </div>
@@ -31,16 +31,22 @@
         var isError = '{{ $errors->any() }}';
         if (isError) {
             var message = '{!! $errors->first() !!}';
-            showNotification('top', 'center', message);
+            showNotification('top', 'center', message, 'danger');
+        }
+
+        var isSuccess = '{{ session()->has("success") }}';
+        if (isSuccess) {
+            var message = '{!! session()->get("success") !!}';
+            showNotification('top', 'center', message, 'success');
         }
     });
 
-    function showNotification(from, align, message){
+    function showNotification(from, align, message, type){
         $.notify({
             icon: "",
             message: message
         },{
-            type: 'danger',
+            type: type,
             timer: 4000,
             placement: {
                 from: from,

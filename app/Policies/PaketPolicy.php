@@ -36,12 +36,23 @@ class PaketPolicy
     }
 
     /**
+     * Determine whether the user can view all paket.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function viewFilterCaraPenerimaanConfirmed(User $user)
+    {
+        return $user->role_id === UserRole::ROLE_ID_PETUGAS;
+    }
+
+    /**
      * Determine whether the user can view all unpicked-up paket.
      *
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function viewUnpickedUp(User $user)
+    public function viewFilterUnpickedUp(User $user)
     {
         return $user->role_id === UserRole::ROLE_ID_KARYAWAN;
     }
@@ -54,7 +65,8 @@ class PaketPolicy
      */
     public function detail(User $user)
     {
-        return $user->role_id === UserRole::ROLE_ID_KARYAWAN;
+        return $user->role_id === UserRole::ROLE_ID_KARYAWAN ||
+            $user->role_id === UserRole::ROLE_ID_PETUGAS;
     }
 
     /**

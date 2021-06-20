@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li class="nav-item{{ $activePage == 'notifikasi' ? ' active' : '' }}">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('paket.index', ['penerimaan' => 'true']) }}">
                     <i class="material-icons">notifications</i>
                     <p>{{ __('Notifikasi') }}</p>
                 </a>

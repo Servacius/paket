@@ -25,7 +25,7 @@
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'paketku' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('paket.index', ['status' => 'unpickedup']) }}">
+        <a class="nav-link" href="{{ route('paket.index', ['unpickedup' => 'true']) }}">
           <i class="material-icons">shopping_bag</i>
           <p>{{ __('Paketku') }}</p>
         </a>

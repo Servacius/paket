@@ -68,7 +68,8 @@ Route::get('paket', [PaketController::class, 'index'])->name('paket.index');
 Route::get('paket/create', [PaketController::class, 'create'])->name('paket.create');
 Route::post('paket', [PaketController::class, 'store'])->name('paket.store');
 Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail');
-// Route::put('paket/{id}', [PaketController::class, 'update'])->name('paket.update');
+
+Route::get('notifikasi', [PaketController::class, 'notifications'])->name('notifikasi');
 
 /*
 |--------------------------------------------------------------------------

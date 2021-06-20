@@ -8,11 +8,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form action="{{ route('penerimaan.store') }}" id="formUpdatePenerimaanDiantar" method="POST">
-                            @csrf
+            <form action="{{ route('penerimaan.store') }}" id="formUpdatePenerimaanDiantar" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
                             <input name="cara_penerimaan" type="hidden" value="diantar">
                             <input name="paket_id" type="hidden" value="{{ $paketDetail->id }}">
                             <div class="col-sm-12">
@@ -20,8 +21,8 @@
                                     <label class="col-sm-3 col-form-label">{{ __('Tanggal Pengantaran :') }}</label>
                                     <div class="col-sm-9">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="tanggal_pengantaran"
-                                                id="datepickerTanggalPengantaran" />
+                                            <input type="text" class="form-control datetimepicker"
+                                                name="tanggal_pengantaran" id="datepickerTanggalPengantaran" />
                                         </div>
                                     </div>
                                 </div>
@@ -29,8 +30,9 @@
                                     <label class="col-sm-3 col-form-label">{{ __('Waktu Pengantaran :') }}</label>
                                     <div class="col-sm-9">
                                         <div class="form-group">
-                                            <select class="form-control selectpicker" data-style="btn btn-link"
-                                                name="waktu_pengantaran" id="selectWaktuPengantaran" title="">
+                                            <select class="form-control selectpicker show-tick"
+                                                data-style="btn btn-link" name="waktu_pengantaran"
+                                                id="selectWaktuPengantaran" title="">
                                                 <option>09:00 - 11:00 WIB</option>
                                                 <option>14:00 - 16:00 WIB</option>
                                             </select>
@@ -54,15 +56,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-round"
-                    onclick="document.getElementById('formUpdatePenerimaanDiantar').submit();">Ya</button>
-                <button type="button" class="btn btn-default btn-round" data-dismiss="modal">Tidak</button>
-            </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary btn-round" value="Ya" />
+                    <button type="button" class="btn btn-default btn-round" data-dismiss="modal">Tidak</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -82,6 +83,36 @@
             close: 'fa fa-remove'
         },
         format: 'DD-MM-YYYY',
+    });
+
+    $().ready(function() {
+        $('#formUpdatePenerimaanDiantar').validate({
+            rules: {
+                tanggal_pengantaran: {
+                    required: true
+                },
+                waktu_pengantaran: {
+                    required: true
+                },
+            },
+            messages: {
+                tanggal_pengantaran: {
+                    required: "Tanggal pengantaran tidak boleh kosong."
+                },
+                waktu_pengantaran: {
+                    required: "Waktu pengantaran tidak boleh kosong."
+                }
+            },
+            errorPlacement: function (error, element) {
+                if ( element.is('input') ) {
+                    error.insertAfter(element.parents('.form-group'));
+                } else if ( element.is('select') ) {
+                    error.insertAfter(element.parents('.form-group'));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+        });
     });
 </script>
 @endpush
