@@ -53,7 +53,7 @@ class LoginController extends Controller
         if (auth()->attempt(array('nik' => $input['nik'], 'password' => $input['password']))) {
             switch (auth()->user()->role_id) {
                 case UserRole::ROLE_ID_ADMINISTRATOR:
-                    return redirect()->route('admin.home');
+                    return redirect()->route('index');
 
                 case UserRole::ROLE_ID_KARYAWAN:
                     return redirect()->route('index');

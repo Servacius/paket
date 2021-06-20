@@ -26,7 +26,8 @@ class HomeController extends Controller
     {
         switch (auth()->user()->role_id) {
             case UserRole::ROLE_ID_ADMINISTRATOR:
-                return view('admin.home');
+                $dataPaket = $this->getDataPaket(UserRole::ROLE_ID_ADMINISTRATOR);
+                return view('admin.index', ['dataPaket' => $dataPaket]);
 
             case UserRole::ROLE_ID_KARYAWAN:
                 $dataPaket = $this->getDataPaket(UserRole::ROLE_ID_KARYAWAN);
@@ -40,17 +41,6 @@ class HomeController extends Controller
         return redirect()
             ->route('login')
             ->withErrors(['Pasangan email dan password salah. Silahkan coba lagi.']);
-    }
-
-    /**
-     * Show the application admin dashboard.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function adminHome()
-    {
-        // dd("nyampe cuk");
-        return view('pages.adminHome');
     }
 
     /**
@@ -85,6 +75,7 @@ class HomeController extends Controller
 
                 break;
 
+            case UserRole::ROLE_ID_ADMINISTRATOR:
             case UserRole::ROLE_ID_PETUGAS:
                 $allPaket = Paket::all()->count();
                 $allPaketPickedup = Paket::whereNotNull('tanggal_diambil')->count();

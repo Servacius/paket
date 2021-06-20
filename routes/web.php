@@ -50,7 +50,7 @@ Route::get('index', [HomeController::class, 'index'])->name('index');
 | Administrator routes.
 |--------------------------------------------------------------------------
 */
-Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+// Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 
 /*
 |--------------------------------------------------------------------------

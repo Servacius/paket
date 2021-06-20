@@ -1,6 +1,9 @@
 <div class="wrapper ">
+  {{-- Admin --}}
+  @if(auth()->user()->role_id === 1)
+  @include('layouts.navbars.sidebar.admin')
   {{-- Karyawan --}}
-  @if(auth()->user()->role_id === 2)
+  @elseif(auth()->user()->role_id === 2)
   @include('layouts.navbars.sidebar.karyawan')
   {{-- Petugas --}}
   @elseif(auth()->user()->role_id === 3)

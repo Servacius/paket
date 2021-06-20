@@ -11,9 +11,8 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="{{ route('paket.create') }}" class="btn btn-success pull-right">
-                            <i class="material-icons" style="padding-right: 8px;">add_circle</i>Tambah
-                            Paket
+                        <a href="{{ route('paket.create') }}" class="btn btn-info pull-right">
+                            <i class="material-icons" style="padding-right: 8px;">article</i>Buat Report
                         </a>
                     </div>
                 </div>
@@ -48,18 +47,18 @@
                                     <div class="col-md-12">
                                         <div class="card-icon" style="padding-bottom: 8px;">
                                             <span style="display: block; font-size: 18px;">
-                                                <i class="pull-right material-icons text-info"
-                                                    style="padding-right: 8px;">notifications</i>
-                                                Notifikasi
+                                                <i class="pull-right material-icons text-success"
+                                                    style="padding-right: 8px;">account_circle</i>
+                                                User
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                                 <h2 class="card-title">
-                                    {!! $dataPaket->count_all_notifikasi . ' <b style="font-size: 18px;"></b>' !!}
+                                    {!! '...' . ' <b style="font-size: 18px;"></b>' !!}
                                 </h2>
                                 <a href="{{ route('paket.index', ['penerimaan' => 'true']) }}"
-                                    class="btn btn-info btn-round">Cek Sekarang</a>
+                                    class="btn btn-success btn-round">Cek Sekarang</a>
                             </div>
                         </div>
                     </div>
