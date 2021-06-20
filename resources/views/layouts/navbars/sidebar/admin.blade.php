@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li class="nav-item{{ $activePage == 'user' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('paket.create') }}">
+                <a class="nav-link" href="{{ route('user.index') }}">
                     <i class="material-icons">account_circle</i>
                     <p>{{ __('User') }}</p>
                 </a>

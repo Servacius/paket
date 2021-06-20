@@ -57,6 +57,7 @@ Route::get('index', [HomeController::class, 'index'])->name('index');
 | Administrator routes.
 |--------------------------------------------------------------------------
 */
+Route::get('user', [UserController::class, 'index'])->name('user.index');
 Route::get('user/search', [UserController::class, 'search'])->name('user.search');
 Route::get('user/{id}/response', [UserController::class, 'detail'])->name('user.detail.response');
 

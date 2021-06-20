@@ -19,9 +19,18 @@ class UserController extends Controller
      * @param  \App\Models\User  $model
      * @return \Illuminate\View\View
      */
+    /**
     public function index(User $model)
     {
         return view('users.index', ['users' => $model->paginate(15)]);
+    }
+     **/
+
+    public function index()
+    {
+        $users = $this->fetchAllUser();
+
+        return view('user.index', ['users' => $users]);
     }
 
     public function autocomplete(Request $request)
@@ -101,5 +110,31 @@ class UserController extends Controller
         }
 
         return response()->json($userDetail);
+    }
+
+    private function fetchAllUser()
+    {
+        $users = User::select('id', 'nik', 'role_id', 'name', 'email', 'no_telp')
+            ->whereIn('role_id', [2, 3])
+            ->orderByDesc('created_at')
+            ->get();
+
+        $app = app();
+
+        $userDetails = array();
+        foreach ($users as $user) {
+            $userDetail = $app->make('stdClass');
+
+            $userDetail->id = $user->id;
+            $userDetail->nik = $user->nik;
+            $userDetail->role = (new UserRole())->getRole($user->role_id);
+            $userDetail->nama = $user->name;
+            $userDetail->email = $user->email;
+            $userDetail->no_telepon = $user->no_telp;
+
+            array_push($userDetails, $userDetail);
+        }
+
+        return $userDetails;
     }
 }

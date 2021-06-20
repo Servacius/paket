@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-<div class="content">
+<div class="content" style="padding-top: 0px;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -177,31 +177,31 @@
                                     </div>
                                 </div>
                                 @if ($paketDetail->tanggal_diambil != "")
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{{ __('Tanggal Barang Diambil :') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control"
-                                                    style="background-color:#fff; padding-left: 8px;"
-                                                    value="{{ ($paketDetail->tanggal_diambil == "") ? "-" : $paketDetail->tanggal_diambil }}"
-                                                    readonly />
-                                            </div>
+                                <div class="row">
+                                    <label class="col-sm-3 col-form-label"
+                                        style="margin-block: auto;">{{ __('Tanggal Barang Diambil :') }}</label>
+                                    <div class="col-sm-9">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control"
+                                                style="background-color:#fff; padding-left: 8px;"
+                                                value="{{ ($paketDetail->tanggal_diambil == "") ? "-" : $paketDetail->tanggal_diambil }}"
+                                                readonly />
                                         </div>
                                     </div>
+                                </div>
                                 @elseif ($paketDetail->tanggal_diantar != "")
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{{ __('Tanggal Barang Diantar :') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control"
-                                                    style="background-color:#fff; padding-left: 8px;"
-                                                    value="{{ ($paketDetail->tanggal_diantar == "") ? "-" : $paketDetail->tanggal_diantar }}"
-                                                    readonly />
-                                            </div>
+                                <div class="row">
+                                    <label class="col-sm-3 col-form-label"
+                                        style="margin-block: auto;">{{ __('Tanggal Barang Diantar :') }}</label>
+                                    <div class="col-sm-9">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control"
+                                                style="background-color:#fff; padding-left: 8px;"
+                                                value="{{ ($paketDetail->tanggal_diantar == "") ? "-" : $paketDetail->tanggal_diantar }}"
+                                                readonly />
                                         </div>
                                     </div>
+                                </div>
                                 @endif
                                 <div class="row">
                                     <label class="col-sm-3 col-form-label"
@@ -221,23 +221,23 @@
                                             aria-pressed="true">Kembali</a>
                                     </div>
                                     @if (auth()->user()->role_id == 2)
-                                        <div class="col-md-4">
-                                            <div class="form-row">
-                                                <div class="col-md-7 text-center">
-                                                    <button class="btn btn-primary btn-block" role="button"
-                                                        data-toggle="modal" data-target="#modalPenerimaanAmbilSendiri"
-                                                        aria-pressed="true"
-                                                        {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Ambil
-                                                        Sendiri</button>
-                                                </div>
-                                                <div class="col-md-5 text-center">
-                                                    <button class="btn btn-success btn-block" role="button"
-                                                        data-toggle="modal" data-target="#modalPenerimaanDiantar"
-                                                        aria-pressed="true"
-                                                        {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Diantar</button>
-                                                </div>
+                                    <div class="col-md-4">
+                                        <div class="form-row">
+                                            <div class="col-md-7 text-center">
+                                                <button class="btn btn-primary btn-block" role="button"
+                                                    data-toggle="modal" data-target="#modalPenerimaanAmbilSendiri"
+                                                    aria-pressed="true"
+                                                    {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Ambil
+                                                    Sendiri</button>
+                                            </div>
+                                            <div class="col-md-5 text-center">
+                                                <button class="btn btn-success btn-block" role="button"
+                                                    data-toggle="modal" data-target="#modalPenerimaanDiantar"
+                                                    aria-pressed="true"
+                                                    {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Diantar</button>
                                             </div>
                                         </div>
+                                    </div>
                                     @endif
                                 </div>
                             </div>
