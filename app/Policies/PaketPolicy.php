@@ -38,7 +38,7 @@ class PaketPolicy
     }
 
     /**
-     * Determine whether the user can view all paket.
+     * Determine whether the user can view all paket with cara penerimaan confirmed.
      *
      * @param  \App\Models\User  $user
      * @return mixed
@@ -46,6 +46,17 @@ class PaketPolicy
     public function viewFilterCaraPenerimaanConfirmed(User $user)
     {
         return $user->role_id === UserRole::ROLE_ID_PETUGAS;
+    }
+
+    /**
+     * Determine whether the user can view report page.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function report(User $user)
+    {
+        return $user->role_id === UserRole::ROLE_ID_ADMINISTRATOR;
     }
 
     /**

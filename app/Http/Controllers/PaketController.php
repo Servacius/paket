@@ -108,6 +108,24 @@ class PaketController extends Controller
     }
 
     /**
+     * Display a listing of all paket.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function report(Request $request)
+    {
+        if (auth()->user()->cannot('report', Paket::class)) {
+            abort(403);
+        }
+
+        $pakets = $this->fetchPaket([]);
+
+        return view('paket.admin.report', [
+            'pakets' => $pakets
+        ]);
+    }
+
+    /**
      * Show the form for creating a new paket.
      *
      * @return \Illuminate\Http\Response
@@ -338,14 +356,20 @@ class PaketController extends Controller
             $paketDetail->nama_paket = $paket->name;
             $paketDetail->jenis_paket = $paket->jenis_barang;
             $paketDetail->nama_pemilik = $karyawans[$paket->nik_karyawan]->name;
+            $paketDetail->nik_pemilik = $karyawans[$paket->nik_karyawan]->nik;
             $paketDetail->no_telepon = $karyawans[$paket->nik_karyawan]->no_telp;
             $paketDetail->gambar = $paket->picture;
             $paketDetail->tanggal_sampai = (new DateTime($paket->tanggal_sampai))->format('d-m-Y');
             $paketDetail->tanggal_pengantaran = "";
+            $paketDetail->tanggal_diambil = "";
             $paketDetail->waktu_pengantaran = "";
             $paketDetail->cara_penerimaan = "";
             $paketDetail->telat_diambil = false;
             $paketDetail->telat_diantar = false;
+
+            if ($paket->tanggal_diambil != null) {
+                $paketDetail->tanggal_diambil = (new DateTime($paket->tanggal_diambil))->format('d-m-Y');
+            }
 
             // Set 'cara_penerimaan' and status 'telat_diambil'.
             if ($paket->penerimaan_id > 0) {

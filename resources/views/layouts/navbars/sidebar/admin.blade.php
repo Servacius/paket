@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li class="nav-item{{ $activePage == 'report' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('paket.index', ['penerimaan' => 'true']) }}">
+                <a class="nav-link" href="{{ route('paket.report') }}">
                     <i class="material-icons">article</i>
                     <p>{{ __('Report') }}</p>
                 </a>

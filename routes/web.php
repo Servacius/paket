@@ -67,6 +67,7 @@ Route::get('user/{id}/response', [UserController::class, 'detail'])->name('user.
 |--------------------------------------------------------------------------
 */
 Route::get('paket', [PaketController::class, 'index'])->name('paket.index');
+Route::get('paket/report', [PaketController::class, 'report'])->name('paket.report');
 Route::get('paket/create', [PaketController::class, 'create'])->name('paket.create');
 Route::post('paket', [PaketController::class, 'store'])->name('paket.store');
 Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail');
