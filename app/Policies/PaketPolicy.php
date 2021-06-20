@@ -19,7 +19,8 @@ class PaketPolicy
      */
     public function view(User $user)
     {
-        return $user->role_id === UserRole::ROLE_ID_KARYAWAN ||
+        return $user->role_id === UserRole::ROLE_ID_ADMINISTRATOR ||
+            $user->role_id === UserRole::ROLE_ID_KARYAWAN ||
             $user->role_id === UserRole::ROLE_ID_PETUGAS;
     }
 
@@ -31,7 +32,8 @@ class PaketPolicy
      */
     public function viewAll(User $user)
     {
-        return $user->role_id === UserRole::ROLE_ID_KARYAWAN ||
+        return $user->role_id === UserRole::ROLE_ID_ADMINISTRATOR ||
+            $user->role_id === UserRole::ROLE_ID_KARYAWAN ||
             $user->role_id === UserRole::ROLE_ID_PETUGAS;
     }
 
