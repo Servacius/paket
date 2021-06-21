@@ -5,10 +5,11 @@
     <td>{{ $user->no_telepon }}</td>
     <td>{{ $user->email }}</td>
     <td class="td-actions text-center">
-        <a href="" type="button" rel="tooltip" class="btn btn-info">
+        {{-- <a href="" type="button" rel="tooltip" class="btn btn-info">
             <i class="material-icons">person</i>
-        </a>
-        <a href="" type="button" rel="tooltip" class="btn btn-success">
+        </a> --}}
+        <a href="{{ route('user.edit.custom', ['id' => $user->id]) }}" type="button" rel="tooltip"
+            class="btn btn-success">
             <i class="material-icons">edit</i>
         </a>
         {{-- <a href="" type="button" rel="tooltip" class="btn btn-danger">

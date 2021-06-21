@@ -147,7 +147,7 @@ class UserController extends Controller
         $unit = Unit::select('id', 'name')->get();
         $department = Department::select('id', 'name')->get();
 
-        return view('user.form_register_user', [
+        return view('user.form_register', [
             'direktorat' => $direktorat,
             'divisi' => $divisi,
             'unit' => $unit,
@@ -160,7 +160,7 @@ class UserController extends Controller
         $now = Carbon::now();
 
         $user = new User();
-        $user->name = $request->name;
+        $user->name = $request->nama;
         $user->nik = $request->nik;
         $user->role_id = $request->role;
         $user->password = Hash::make('secret');
@@ -179,5 +179,46 @@ class UserController extends Controller
         return redirect()
             ->route('user.index')
             ->with('success', 'User berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $user = User::find($id);
+        $direktorat = Direktorat::select('id', 'name')->get();
+        $divisi = Divisi::select('id', 'name')->get();
+        $unit = Unit::select('id', 'name')->get();
+        $department = Department::select('id', 'name')->get();
+
+        return view('user.form_update', [
+            'user' => $user,
+            'direktorat' => $direktorat,
+            'divisi' => $divisi,
+            'unit' => $unit,
+            'department' => $department,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $now = Carbon::now();
+
+        $user = User::find($id);
+        $user->name = $request->nama;
+        $user->nik = $request->nik;
+        $user->role_id = $request->role;
+        $user->email = $request->email;
+        $user->no_telp = $request->no_telepon;
+        $user->direktorat_id = ($request->direktorat != 0) ? $request->direktorat : null;
+        $user->divisi_id = ($request->divisi != 0) ? $request->divisi : null;
+        $user->department_id = ($request->department != 0) ? $request->department : null;
+        $user->unit_id = ($request->unit != 0) ? $request->unit : null;
+        $user->updated_at = $now;
+        $user->deleted_at = null;
+
+        $user->save();
+
+        return redirect()
+            ->route('user.index')
+            ->with('success', 'User berhasil di-update.');
     }
 }

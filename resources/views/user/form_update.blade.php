@@ -9,9 +9,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{ route('user.store') }}" id="formCreateNewUser" method="POST"
+                <form action="{{ route('user.update.custom', ['id' => $user->id]) }}" id="formUpdateUser" method="POST"
                     enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <input name="nik_petugas" type="hidden" value="{{ auth()->user()->nik }}">
                     <div class="card" style="margin-top: 8px;">
                         <div class="card-header card-header-success">
@@ -27,8 +28,8 @@
                                             style="margin-block: auto;">{{ __('Nama :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name"
-                                                    id="nama" style="padding-left: 8px;" />
+                                                <input type="text" class="form-control" name="nama"
+                                                    id="nama" style="padding-left: 8px;" value="{{ ($user->name != "") ? $user->name : "" }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -38,7 +39,7 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="nik"
-                                                    id="nik" style="padding-left: 8px;" />
+                                                    id="nik" style="padding-left: 8px;" value="{{ ($user->nik != "") ? $user->nik : "" }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +49,7 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="email" class="form-control" name="email" id="email"
-                                                    style="padding-left: 8px;" />
+                                                    style="padding-left: 8px;" value="{{ ($user->email != "") ? $user->email : "" }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +59,7 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="no_telepon" id="telp"
-                                                    style="padding-left: 8px;" />
+                                                    style="padding-left: 8px;" value="{{ ($user->no_telp != "") ? $user->no_telp : "" }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -69,10 +70,10 @@
                                             <div class="form-group">
                                                 <select class="form-control selectpicker"
                                                     data-style="btn btn-link" name="direktorat"
-                                                    id="direktorat" title="">
+                                                    id="direktorat" title="" >
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($direktorat as $d)
-                                                        <option value="{{ $d->id }}">{{ $d->name }}</option>
+                                                        <option value="{{ $d->id }}" {{ ($user->direktorat_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -88,7 +89,7 @@
                                                     id="divisi" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($divisi as $d)
-                                                        <option value="{{ $d->id }}">{{ $d->name }}</option>
+                                                        <option value="{{ $d->id }}" {{ ($user->divisi_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -104,7 +105,7 @@
                                                     id="depeartment" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($department as $d)
-                                                        <option value="{{ $d->id }}">{{ $d->name }}</option>
+                                                        <option value="{{ $d->id }}" {{ ($user->department_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -120,7 +121,7 @@
                                                     id="unit" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($unit as $u)
-                                                        <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                        <option value="{{ $u->id }}" {{ ($user->unit_id == $u->id) ? "selected" : "" }}>{{ $u->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -134,8 +135,8 @@
                                                 <select class="form-control selectpicker"
                                                     data-style="btn btn-link" name="role"
                                                     id="role" title="">
-                                                    <option value="2">{{ "Karyawan" }}</option>
-                                                    <option value="3">{{ "Petugas" }}</option>
+                                                    <option value="2" {{ ($user->role_id == 2) ? "selected" : "" }}>{{ "Karyawan" }}</option>
+                                                    <option value="3" {{ ($user->role_id == 3) ? "selected" : "" }}>{{ "Petugas" }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -146,7 +147,7 @@
                                                 aria-pressed="true">Kembali</a>
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <input class="submit btn btn-success" type="submit" value="Tambah" />
+                                            <input class="submit btn btn-success" type="submit" value="Update" />
                                         </div>
                                     </div>
                                 </div>

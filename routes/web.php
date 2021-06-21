@@ -61,6 +61,8 @@ Route::get('user', [UserController::class, 'index'])->name('user.index');
 Route::get('user/register', [UserController::class, 'register'])->name('user.register');
 Route::get('user/search', [UserController::class, 'search'])->name('user.search');
 Route::post('user', [UserController::class, 'store'])->name('user.store');
+Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('user.edit.custom');
+Route::put('user/{id}', [UserController::class, 'update'])->name('user.update.custom');
 Route::get('user/{id}/response', [UserController::class, 'detail'])->name('user.detail.response');
 
 /*
