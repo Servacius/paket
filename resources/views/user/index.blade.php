@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-<div class="content">
+<div class="content" style="padding-top: 0px;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">

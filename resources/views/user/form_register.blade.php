@@ -44,10 +44,10 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{{ __('Email :') }}</label>
+                                            style="margin-block: auto;">{!! __('Email<sup class="text-danger">*</sup> :') !!}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <input type="email" class="form-control" name="email" id="email"
+                                                <input type="text" class="form-control" name="email" id="email"
                                                     style="padding-left: 8px;" />
                                             </div>
                                         </div>
@@ -168,6 +168,10 @@
                 nik: {
                     required: true
                 },
+                email: {
+                    required: true,
+                    email: true
+                },
                 no_telepon: {
                     required: true,
                     phoneIDN: true
@@ -176,6 +180,10 @@
             messages: {
                 nik: {
                     required: "NIK tidak boleh kosong."
+                },
+                email: {
+                    required: "Email tidak boleh kosong.",
+                    email: "Format email tidak valid."
                 },
                 no_telepon: {
                     required: "No. Telepon tidak boleh kosong."

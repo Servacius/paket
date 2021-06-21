@@ -55,9 +55,9 @@
                                     </div>
                                 </div>
                                 <h2 class="card-title">
-                                    {!! '...' . ' <b style="font-size: 18px;"></b>' !!}
+                                    {!! $dataPaket->count_all_user . ' <b style="font-size: 18px;"></b>' !!}
                                 </h2>
-                                <a href="{{ route('paket.index', ['penerimaan' => 'true']) }}"
+                                <a href="{{ route('user.index') }}"
                                     class="btn btn-success btn-round">Cek Sekarang</a>
                             </div>
                         </div>

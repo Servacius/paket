@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paket;
+use App\Models\User;
 use App\Models\UserRole;
 
 class HomeController extends Controller
@@ -76,6 +77,9 @@ class HomeController extends Controller
                 break;
 
             case UserRole::ROLE_ID_ADMINISTRATOR:
+                $allUser = User::all()->count();
+                $dataPaket->count_all_user = $allUser;
+
             case UserRole::ROLE_ID_PETUGAS:
                 $allPaket = Paket::all()->count();
                 $allPaketPickedup = Paket::whereNotNull('tanggal_diambil')->count();

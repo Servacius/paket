@@ -9,7 +9,7 @@
             <i class="material-icons">person</i>
         </a> --}}
         <a href="{{ route('user.edit.custom', ['id' => $user->id]) }}" type="button" rel="tooltip"
-            class="btn btn-success">
+            class="btn btn-warning">
             <i class="material-icons">edit</i>
         </a>
         {{-- <a href="" type="button" rel="tooltip" class="btn btn-danger">
