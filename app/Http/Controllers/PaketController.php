@@ -118,10 +118,41 @@ class PaketController extends Controller
             abort(403);
         }
 
-        $pakets = $this->fetchPaket([]);
+        $app = app();
+        $filters = $app->make('stdClass');
+        $filters->nama = "";
+        $filters->tanggal_sampai_from = "";
+        $filters->tanggal_sampai_to = "";
+        $filters->tanggal_diambil_from = "";
+        $filters->tanggal_diambil_to = "";
+
+        $filter = [];
+        if ($request->nama != "") {
+            $filter['nama'] = $request->nama;
+            $filters->nama = $filter['nama'];
+        }
+        if ($request->tanggal_sampai_from != "") {
+            $filter['tanggal_sampai_from'] = $request->tanggal_sampai_from;
+            $filters->tanggal_sampai_from = $filter['tanggal_sampai_from'];
+        }
+        if ($request->tanggal_sampai_to != "") {
+            $filter['tanggal_sampai_to'] = $request->tanggal_sampai_to;
+            $filters->tanggal_sampai_to = $filter['tanggal_sampai_to'];
+        }
+        if ($request->tanggal_diambil_from != "") {
+            $filter['tanggal_diambil_from'] = $request->tanggal_diambil_from;
+            $filters->tanggal_diambil_from = $filter['tanggal_diambil_from'];
+        }
+        if ($request->tanggal_diambil_to != "") {
+            $filter['tanggal_diambil_to'] = $request->tanggal_diambil_to;
+            $filters->tanggal_diambil_to = $filter['tanggal_diambil_to'];
+        }
+
+        $pakets = $this->fetchPaket($filter);
 
         return view('paket.admin.report', [
-            'pakets' => $pakets
+            'pakets' => $pakets,
+            'filters' => $filters,
         ]);
     }
 
@@ -400,6 +431,61 @@ class PaketController extends Controller
             }
 
             array_push($paketDetails, $paketDetail);
+        }
+
+        if (Arr::exists($filter, 'nama')) {
+            $resultFiltered = array();
+            foreach ($paketDetails as $paketDetail) {
+                if (str_contains($paketDetail->nama_pemilik, $filter['nama'])) {
+                    array_push($resultFiltered, $paketDetail);
+                }
+            }
+
+            $paketDetails = $resultFiltered;
+        }
+        if (Arr::exists($filter, 'tanggal_sampai_from')) {
+            $resultFiltered = array();
+            $from = (new DateTime($filter['tanggal_sampai_from']))->format('d-m-Y');
+            foreach ($paketDetails as $paketDetail) {
+                if ($paketDetail->tanggal_sampai >= $from) {
+                    array_push($resultFiltered, $paketDetail);
+                }
+            }
+
+            $paketDetails = $resultFiltered;
+        }
+        if (Arr::exists($filter, 'tanggal_sampai_to')) {
+            $resultFiltered = array();
+            $to = (new DateTime($filter['tanggal_sampai_to']))->format('d-m-Y');
+            foreach ($paketDetails as $paketDetail) {
+                if ($paketDetail->tanggal_sampai  <= $to) {
+                    array_push($resultFiltered, $paketDetail);
+                }
+            }
+
+            $paketDetails = $resultFiltered;
+        }
+        if (Arr::exists($filter, 'tanggal_diambil_from')) {
+            $resultFiltered = array();
+            $from = (new DateTime($filter['tanggal_diambil_from']))->format('d-m-Y');
+            foreach ($paketDetails as $paketDetail) {
+                if ($paketDetail->tanggal_diambil >= $from) {
+                    array_push($resultFiltered, $paketDetail);
+                }
+            }
+
+            $paketDetails = $resultFiltered;
+        }
+        if (Arr::exists($filter, 'tanggal_diambil_to')) {
+            $resultFiltered = array();
+            $to = (new DateTime($filter['tanggal_diambil_to']))->format('d-m-Y');
+            foreach ($paketDetails as $paketDetail) {
+                if ($paketDetail->tanggal_diambil  <= $to) {
+                    array_push($resultFiltered, $paketDetail);
+                }
+            }
+
+            $paketDetails = $resultFiltered;
         }
 
         return $paketDetails;

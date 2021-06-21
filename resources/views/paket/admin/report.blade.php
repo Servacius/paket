@@ -27,26 +27,29 @@
                                 <div class="col-md-10 offset-md-1">
                                     <h4>Filter</h4>
                                     <br>
-                                    <form action="{{ route('penerimaan.store') }}" id="formUpdatePenerimaanDiantar"
-                                        method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('paket.report') }}" id="formReport" method="GET"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="inputName">{{ __('Nama:') }}</label>
-                                            <input type="text" class="form-control" id="inputName" name="name"
-                                                placeholder="">
+                                            <label for="inputNama">{{ __('Nama:') }}</label>
+                                            <input type="text" class="form-control" id="inputNama" name="nama"
+                                                placeholder=""
+                                                value="{{ ($filters->nama != "") ? $filters->nama : "" }}">
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label
                                                     for="inputTanggalSampaiFrom">{{ __('Tanggal Barang Sampai (From):') }}</label>
                                                 <input type="text" class="form-control datetimepicker"
-                                                    id="inputTanggalSampaiFrom" name="tanggal_sampai_from">
+                                                    id="inputTanggalSampaiFrom" name="tanggal_sampai_from"
+                                                    value="{{ ($filters->tanggal_sampai_from != "") ? $filters->tanggal_sampai_from : "" }}">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label
                                                     for="inputTanggalSampaiTo">{{ __('Tanggal Barang Sampai (From):') }}</label>
                                                 <input type="text" class="form-control datetimepicker"
-                                                    id="inputTanggalSampaiTo" name="tanggal_sampai_to">
+                                                    id="inputTanggalSampaiTo" name="tanggal_sampai_to"
+                                                    value="{{ ($filters->tanggal_sampai_to != "") ? $filters->tanggal_sampai_to : "" }}">
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -54,13 +57,15 @@
                                                 <label
                                                     for="inputTanggalDiambilFrom">{{ __('Tanggal Barang Diambil (From):') }}</label>
                                                 <input type="text" class="form-control datetimepicker"
-                                                    id="inputTanggalDiambilFrom" name="tanggal_diambil_from">
+                                                    id="inputTanggalDiambilFrom" name="tanggal_diambil_from"
+                                                    value="{{ ($filters->tanggal_diambil_from != "") ? $filters->tanggal_diambil_from : "" }}">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label
                                                     for="inputTanggalDiambilTo">{{ __('Tanggal Barang Diambil (From):') }}</label>
                                                 <input type="text" class="form-control datetimepicker"
-                                                    id="inputTanggalDiambilTo" name="tanggal_diambil_to">
+                                                    id="inputTanggalDiambilTo" name="tanggal_diambil_to"
+                                                    value="{{ ($filters->tanggal_diambil_to != "") ? $filters->tanggal_diambil_to : "" }}">
                                             </div>
                                         </div>
                                         <div class="form-row pull-right">
