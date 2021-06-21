@@ -18,28 +18,30 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card">
-                        <h4 class="card-header card-header-info">
-                            <b>{{ __('Daftar Petugas dan Karyawan') }}</b>
-                        </h4>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">NIK</th>
-                                        <th class="text-center">Nama</th>
-                                        <th class="text-center">Posisi</th>
-                                        <th class="text-center">No. Telepon</th>
-                                        <th class="text-center">Email</th>
-                                        <th class="text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user)
-                                    @include('user/row', ['user' => $user])
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <h4 class="card-header card-header-info">
+                                <b>{{ __('Daftar Petugas dan Karyawan') }}</b>
+                            </h4>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center font-weight-bold">NIK</th>
+                                            <th class="text-center font-weight-bold">Nama</th>
+                                            <th class="text-center font-weight-bold">Posisi</th>
+                                            <th class="text-center font-weight-bold">No. Telepon</th>
+                                            <th class="text-center font-weight-bold">Email</th>
+                                            <th class="text-center font-weight-bold">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                        @include('user/row', ['user' => $user])
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
