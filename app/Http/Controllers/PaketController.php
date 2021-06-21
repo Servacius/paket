@@ -17,6 +17,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Excel;
 
+use App\Http\Controllers\MailTrait;
+use App\Mail\PaketEmail;
+use Illuminate\Support\Facades\Mail;
+
 class PaketController extends Controller
 {
     /**
@@ -247,6 +251,15 @@ class PaketController extends Controller
 
         $paket->save();
 
+        try {
+            $data = ['nama' => $userPenerima->name];
+            $this->sendEmail($userPenerima->email, $data);
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('paket.index')
+                ->with('success', 'Paket berhasil ditambahkan.');
+        }
+
         return redirect()
             ->route('paket.index')
             ->with('success', 'Paket berhasil ditambahkan.');
@@ -341,6 +354,13 @@ class PaketController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function sendEmail($email, $data)
+    {
+        Mail::to($email)->send(new PaketEmail($data));
+
+        return true;
     }
 
     /**
