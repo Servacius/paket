@@ -8,8 +8,10 @@ use App\Models\Direktorat;
 use App\Models\Divisi;
 use App\Models\Unit;
 use App\Models\UserRole;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -136,5 +138,46 @@ class UserController extends Controller
         }
 
         return $userDetails;
+    }
+
+    public function register()
+    {
+        $direktorat = Direktorat::select('id', 'name')->get();
+        $divisi = Divisi::select('id', 'name')->get();
+        $unit = Unit::select('id', 'name')->get();
+        $department = Department::select('id', 'name')->get();
+
+        return view('user.form_register_user', [
+            'direktorat' => $direktorat,
+            'divisi' => $divisi,
+            'unit' => $unit,
+            'department' => $department,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $now = Carbon::now();
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->nik = $request->nik;
+        $user->role_id = $request->role;
+        $user->password = Hash::make('secret');
+        $user->email = $request->email;
+        $user->no_telp = $request->no_telepon;
+        $user->direktorat_id = ($request->direktorat != 0) ? $request->direktorat : null;
+        $user->divisi_id = ($request->divisi != 0) ? $request->divisi : null;
+        $user->department_id = ($request->department != 0) ? $request->department : null;
+        $user->unit_id = ($request->unit != 0) ? $request->unit : null;
+        $user->created_at = $now;
+        $user->updated_at = null;
+        $user->deleted_at = null;
+
+        $user->save();
+
+        return redirect()
+            ->route('user.index')
+            ->with('success', 'User berhasil ditambahkan.');
     }
 }

@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="" class="btn btn-success pull-right">
+                        <a href="{{ route('user.register') }}" class="btn btn-success pull-right">
                             <i class="material-icons" style="padding-right: 8px;">add_circle</i>Tambah
                             User
                         </a>
@@ -51,5 +51,32 @@
 
 @push('js')
 <script>
+    $(document).ready(function () {
+        var isError = '{{ $errors->any() }}';
+        if (isError) {
+            var message = '{!! $errors->first() !!}';
+            showNotification('top', 'center', message, 'danger');
+        }
+
+        var isSuccess = '{{ session()->has("success") }}';
+        if (isSuccess) {
+            var message = '{!! session()->get("success") !!}';
+            showNotification('top', 'center', message, 'success');
+        }
+    });
+
+    function showNotification(from, align, message, type){
+        $.notify({
+            icon: "",
+            message: message
+        },{
+            type: type,
+            timer: 4000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    };
 </script>
 @endpush
