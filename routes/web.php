@@ -71,6 +71,7 @@ Route::get('paket/report', [PaketController::class, 'report'])->name('paket.repo
 Route::get('paket/create', [PaketController::class, 'create'])->name('paket.create');
 Route::post('paket', [PaketController::class, 'store'])->name('paket.store');
 Route::get('paket/{id}', [PaketController::class, 'detail'])->name('paket.detail');
+Route::get('paket/{id}/done', [PaketController::class, 'done'])->name('paket.done');
 
 /*
 |--------------------------------------------------------------------------

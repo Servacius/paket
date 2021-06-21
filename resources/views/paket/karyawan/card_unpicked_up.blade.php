@@ -104,8 +104,12 @@
                         </div>
                     </div>
                     <div class="col-md-2 text-right">
-                        <a href="{{ route('paket.detail', ['id' => $paket->id]) }}" class="btn btn-info"
+                        <a href="{{ route('paket.detail', ['id' => $paket->id]) }}" class="btn btn-info btn-block"
                             style="margin-top: 0rem;">Lihat Detail</a>
+                        @if ($paket->cara_penerimaan != "")
+                            <a href="{{ route('paket.done', ['id' => $paket->id]) }}" class="btn btn-success btn-block"
+                                style="margin-top: 0rem;">Selesai</a>
+                        @endif
                     </div>
                 </div>
             </div>

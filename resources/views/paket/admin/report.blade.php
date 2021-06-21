@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-<div class="content" style="padding-top: 0px;">
+<div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -69,8 +69,8 @@
                                             </div>
                                         </div>
                                         <div class="form-row pull-right">
-                                            <input type="submit" class="btn btn-info" value="Search" />
-                                            <input type="submit" class="btn btn-primary" value="Export" />
+                                            <input type="submit" class="btn btn-info" name="action" value="Search" />
+                                            <input type="submit" class="btn btn-primary" name="action" value="Export" />
                                         </div>
                                     </form>
                                 </div>

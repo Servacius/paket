@@ -94,6 +94,17 @@ class PaketPolicy
     }
 
     /**
+     * Determine whether the user can set paket to done.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function done(User $user)
+    {
+        return $user->role_id === UserRole::ROLE_ID_KARYAWAN;
+    }
+
+    /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user

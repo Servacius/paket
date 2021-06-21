@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-<div class="content" style="padding-top: 0px;">
+<div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -223,19 +223,26 @@
                                     @if (auth()->user()->role_id == 2)
                                     <div class="col-md-4">
                                         <div class="form-row">
-                                            <div class="col-md-7 text-center">
-                                                <button class="btn btn-primary btn-block" role="button"
-                                                    data-toggle="modal" data-target="#modalPenerimaanAmbilSendiri"
-                                                    aria-pressed="true"
-                                                    {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Ambil
-                                                    Sendiri</button>
-                                            </div>
-                                            <div class="col-md-5 text-center">
-                                                <button class="btn btn-success btn-block" role="button"
-                                                    data-toggle="modal" data-target="#modalPenerimaanDiantar"
-                                                    aria-pressed="true"
-                                                    {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Diantar</button>
-                                            </div>
+                                            @if ($paketDetail->cara_penerimaan != "" && $paketDetail->tanggal_diambil == "")
+                                                <div class="col-md-12 text-right">
+                                                    <a href="{{ route('paket.done', ['id' => $paketDetail->id]) }}" class="btn btn-success"
+                                                        style="margin-top: 0rem;">Selesai</a>
+                                                </div>
+                                            @elseif ($paketDetail->cara_penerimaan == "" && $paketDetail->tanggal_diambil == "")
+                                                <div class="col-md-7 text-center">
+                                                    <button class="btn btn-primary btn-block" role="button"
+                                                        data-toggle="modal" data-target="#modalPenerimaanAmbilSendiri"
+                                                        aria-pressed="true"
+                                                        {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Ambil
+                                                        Sendiri</button>
+                                                </div>
+                                                <div class="col-md-5 text-center">
+                                                    <button class="btn btn-success btn-block" role="button"
+                                                        data-toggle="modal" data-target="#modalPenerimaanDiantar"
+                                                        aria-pressed="true"
+                                                        {{ ($paketDetail->cara_penerimaan != "") ? "disabled" : "" }}>Diantar</button>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                     @endif

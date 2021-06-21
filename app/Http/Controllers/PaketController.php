@@ -150,6 +150,9 @@ class PaketController extends Controller
 
         $pakets = $this->fetchPaket($filter);
 
+        if ($request->input('action') == 'Export') {
+        }
+
         return view('paket.admin.report', [
             'pakets' => $pakets,
             'filters' => $filters,
@@ -279,6 +282,28 @@ class PaketController extends Controller
         return redirect()
             ->route('paket.index')
             ->withErrors(['Paket dengan ID <strong class="font-weight-bold">' . $id . '</strong> tidak ditemukan.']);
+    }
+
+    /**
+     * Update status paket to done.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function done($id)
+    {
+        if (auth()->user()->cannot('done', Paket::class)) {
+            abort(403);
+        }
+
+        $now = Carbon::now();
+
+        // Update paket record.
+        Paket::where('id', $id)
+            ->update(['tanggal_diambil' => $now->toDateTimeString()]);
+
+        return redirect()
+            ->route('paket.index', ['unpickedup' => 'true']);
     }
 
     /**
