@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PaketExport;
 use App\Models\Department;
 use App\Models\Direktorat;
 use App\Models\Divisi;
@@ -14,6 +15,7 @@ use DateTime;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Excel;
 
 class PaketController extends Controller
 {
@@ -148,10 +150,13 @@ class PaketController extends Controller
             $filters->tanggal_diambil_to = $filter['tanggal_diambil_to'];
         }
 
-        $pakets = $this->fetchPaket($filter);
-
-        if ($request->input('action') == 'Export') {
+        if ($request->input('action') == 'export-xslx') {
+            return Excel::download(new PaketExport($filter), 'Report Penerimaan Paket.xlsx');
+        } else if ($request->input('action') == 'export-csv') {
+            return Excel::download(new PaketExport($filter), 'Report Penerimaan Paket.csv');
         }
+
+        $pakets = $this->fetchPaket($filter);
 
         return view('paket.admin.report', [
             'pakets' => $pakets,
@@ -198,8 +203,6 @@ class PaketController extends Controller
         );
 
         if ($validator->fails()) {
-            // print_r($validator);
-            // die();
             return redirect()
                 ->route('paket.create')
                 ->withErrors($validator);
@@ -461,7 +464,7 @@ class PaketController extends Controller
         if (Arr::exists($filter, 'nama')) {
             $resultFiltered = array();
             foreach ($paketDetails as $paketDetail) {
-                if (str_contains($paketDetail->nama_pemilik, $filter['nama'])) {
+                if (str_contains(strtolower($paketDetail->nama_pemilik), strtolower($filter['nama']))) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
