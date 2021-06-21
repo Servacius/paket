@@ -60,8 +60,11 @@
                                         </div>
                                     </div>
                                     <div class="form-row pull-right">
-                                        <input type="submit" class="btn btn-info" name="action" value="Search" />
-                                        <input type="submit" class="btn btn-primary" name="action" value="Export" />
+                                        <div class="btn-group" role="group" aria-label="Action Button">
+                                            <button type="submit" class="btn btn-info" name="action" value="search">Search</button>
+                                            <button type="submit" class="btn btn-primary" name="action" value="export-csv">Export .csv</button>
+                                            <button type="submit" class="btn btn-warning" name="action" value="export-xslx">Export .xslx</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
