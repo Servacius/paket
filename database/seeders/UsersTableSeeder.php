@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        DB::table('users')->truncate();
+
         DB::table('users')->insert([
             [
                 'id' => 1,
@@ -46,8 +51,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
-            ]
-            ,
+            ],
             [
                 'id' => 3,
                 'nik' => 'P001',

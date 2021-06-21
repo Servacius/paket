@@ -14,13 +14,19 @@ class PenerimaanSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        DB::table('penerimaan')->truncate();
+
         DB::table('penerimaan')->insert([
-            [   'name' => 'Ambil Sendiri',
+            [
+                'name' => 'Ambil Sendiri',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
             ],
-            [   'name' => 'Diantar',
+            [
+                'name' => 'Diantar',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL

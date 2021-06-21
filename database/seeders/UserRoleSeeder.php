@@ -14,18 +14,25 @@ class UserRoleSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        DB::table('user_role')->truncate();
+
         DB::table('user_role')->insert([
-            [   'name' => 'Administrator',
+            [
+                'name' => 'Administrator',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
             ],
-            [   'name' => 'Karyawan',
+            [
+                'name' => 'Karyawan',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
             ],
-            [    'name' => 'Petugas',
+            [
+                'name' => 'Petugas',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL

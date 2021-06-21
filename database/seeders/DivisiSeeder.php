@@ -14,33 +14,43 @@ class DivisiSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        DB::table('divisi')->truncate();
+
         DB::table('divisi')->insert([
-            [   'name' => 'IT Enablement',
+            [
+                'name' => 'IT Enablement',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
             ],
-            [   'name' => 'IT Digital Service Enablement',
+            [
+                'name' => 'IT Digital Service Enablement',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
             ],
-            [   'name' => 'IT Business Enablement',
+            [
+                'name' => 'IT Business Enablement',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
             ],
-            [   'name' => 'HC Strategy Development',
+            [
+                'name' => 'HC Strategy Development',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
             ],
-            [   'name' => 'HC Technology & Operations (109725)',
+            [
+                'name' => 'HC Technology & Operations (109725)',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
             ],
-            [   'name' => 'HC Management IT & Functions (109732)',
+            [
+                'name' => 'HC Management IT & Functions (109732)',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => NULL
