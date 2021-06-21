@@ -19,6 +19,8 @@
 
 ## Migration
 
+-   Import database schema.
+-   Update database config in `.env` file.
 -   Run `php artisan migrate --seed` to generate the database schema and run the database seeder.
 
 ## Run
