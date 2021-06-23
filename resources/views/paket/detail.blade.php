@@ -10,9 +10,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card" style="margin-top: 8px;">
-                    <h4 class="card-header card-header-info">
-                        <b>{{ __('Detail Informasi Paket dengan ID: ') . $paketDetail->id}}</b>
-                    </h4>
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">
+                            <b>{{ __('Detail Informasi Paket dengan ID: ') . $paketDetail->id}}</b>
+                        </h4>
+                    </div>
                     <div class="card-body text-left">
                         <div class="row">
                             <div class="col-md-10 offset-md-1">

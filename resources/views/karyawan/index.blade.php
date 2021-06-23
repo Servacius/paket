@@ -9,45 +9,48 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-pricing">
+                <div class="card card-pricing bg-warning">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-icon" style="padding-bottom: 8px;">
-                                    <span style="display: block; font-size: 18px;">
-                                        <i class="pull-right material-icons text-warning"
-                                            style="padding-right: 8px;">view_list</i>
-                                        List Semua Paket
+                                    <span style="display: block;">
+                                        <i class="pull-right material-icons text-white"
+                                            style="padding-right: 8px; font-size: 48px;">view_list</i>
                                     </span>
+                                    <h4 style="font-size: 20px">Daftar Paket</h4>
                                 </div>
                             </div>
                         </div>
-                        <h2 class="card-title">
-                            {!! $dataPaket->count_all . '/<b style="font-size: 18px;">' . ($dataPaket->count_all -
-                                $dataPaket->count_all_pickedup) . ' belum diambil</b>' !!}
-                        </h2>
-                        <a href="{{ route('paket.index') }}" class="btn btn-warning btn-round">Cek Sekarang</a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{{ route('paket.index') }}" class="btn btn-white btn-round">Cek Sekarang</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-pricing">
+                <div class="card card-pricing bg-info">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-icon" style="padding-bottom: 8px;">
-                                    <span style="display: block; font-size: 18px;">
-                                        <i class="pull-right material-icons text-info"
-                                            style="padding-right: 8px;">shopping_bag</i>
-                                        Paketku
+                                    <span style="display: block;">
+                                        <i class="pull-right material-icons text-white"
+                                            style="padding-right: 8px; font-size: 48px;">shopping_bag
+                                        </i>
                                     </span>
+                                    <h4 style="font-size: 20px;">Paketku</h4>
                                 </div>
                             </div>
                         </div>
-                        <h2 class="card-title">
-                            {!! $dataPaket->count_user . '/<b style="font-size: 18px;">' . ($dataPaket->count_user - $dataPaket->count_user_pickedup) . ' belum diambil</b>' !!}
-                        </h2>
-                        <a href="{{ route('paket.index', ['unpickedup' => 'true']) }}" class="btn btn-info btn-round">Cek Sekarang</a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{{ route('paket.index', ['unpickedup' => 'true']) }}"
+                                    class="btn btn-white btn-round">Cek Sekarang</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

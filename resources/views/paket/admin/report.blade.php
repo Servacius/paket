@@ -10,9 +10,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card" style="margin-top: 8px;">
-                    <h4 class="card-header card-header-info">
-                        <b>{{ __('Report Paket') }}</b>
-                    </h4>
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">
+                            <b>{{ __('Report Paket') }}</b>
+                        </h4>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-10 offset-md-1">
@@ -62,9 +64,20 @@
                                     <div class="form-row pull-right">
                                         <div class="btn-group" role="group" aria-label="Action Button">
                                             <button type="submit" class="btn btn-info" name="action" value="search">Search</button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                              Export
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a href="" class="dropdown-item" name="action" value="export-csv">.csv</a>
+                                                <a href="" class="dropdown-item" name="action" value="export-xslx">.xslx</a>
+                                            </div>
+                                          </div>
+                                        {{-- <div class="btn-group" role="group" aria-label="Action Button">
                                             <button type="submit" class="btn btn-primary" name="action" value="export-csv">Export .csv</button>
                                             <button type="submit" class="btn btn-warning" name="action" value="export-xslx">Export .xslx</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </form>
                             </div>

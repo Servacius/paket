@@ -10,56 +10,72 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-12">
-                        <a href="{{ route('paket.create') }}" class="btn btn-success pull-right">
-                            <i class="material-icons" style="padding-right: 8px;">add_circle</i>Tambah
-                            Paket
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card card-pricing">
+                        <div class="card card-pricing bg-warning">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-icon" style="padding-bottom: 8px;">
-                                            <span style="display: block; font-size: 18px;">
-                                                <i class="pull-right material-icons text-warning"
-                                                    style="padding-right: 8px;">view_list</i>
-                                                List Semua Paket
+                                            <span style="display: block;">
+                                                <i class="pull-right material-icons text-white"
+                                                    style="padding-right: 8px; font-size: 48px;">view_list</i>
                                             </span>
+                                            <h4 style="font-size: 20px">Daftar Paket</h4>
                                         </div>
                                     </div>
                                 </div>
-                                <h2 class="card-title">
-                                    {!! $dataPaket->count_all . '/<b style="font-size: 18px;">' . ($dataPaket->count_all
-                                        -
-                                        $dataPaket->count_all_pickedup) . ' belum diambil</b>' !!}
-                                </h2>
-                                <a href="{{ route('paket.index') }}" class="btn btn-warning btn-round">Cek Sekarang</a>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="{{ route('paket.index') }}" class="btn btn-white btn-round">Cek
+                                            Sekarang</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card card-pricing">
+                        <div class="card card-pricing bg-info">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-icon" style="padding-bottom: 8px;">
-                                            <span style="display: block; font-size: 18px;">
-                                                <i class="pull-right material-icons text-info"
-                                                    style="padding-right: 8px;">notifications</i>
-                                                Notifikasi
+                                            <span style="display: block;">
+                                                <i class="pull-right material-icons text-white"
+                                                    style="padding-right: 8px; font-size: 48px;">notifications</i>
                                             </span>
+                                            <h4 style="font-size: 20px">Notifikasi</h4>
                                         </div>
                                     </div>
                                 </div>
-                                <h2 class="card-title">
-                                    {!! $dataPaket->count_all_notifikasi . ' <b style="font-size: 18px;"></b>' !!}
-                                </h2>
-                                <a href="{{ route('paket.index', ['penerimaan' => 'true']) }}"
-                                    class="btn btn-info btn-round">Cek Sekarang</a>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="{{ route('paket.index', ['penerimaan' => 'true']) }}"
+                                            class="btn btn-white btn-round">Cek Sekarang</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-pricing bg-success">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-icon" style="padding-bottom: 8px;">
+                                            <span style="display: block;">
+                                                <i class="pull-right material-icons text-white"
+                                                    style="padding-right: 8px; font-size: 48px;">add_circle</i>
+                                            </span>
+                                            <h4 style="font-size: 20px">Form Tambah Paket</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="{{ route('paket.create') }}" class="btn btn-white btn-round">Tambah
+                                            Sekarang</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

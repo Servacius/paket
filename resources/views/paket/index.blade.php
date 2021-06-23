@@ -1,6 +1,6 @@
 @extends('layouts.app', [
 'class' => '',
-'activePage' => 'listSemuaPaket',
+'activePage' => 'daftarPaket',
 'titlePage' => __('Sistem Penerimaan Paket Barang'),
 ])
 

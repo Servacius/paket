@@ -1,4 +1,4 @@
-<div class="sidebar" data-color="orange" data-background-color="white"
+<div class="sidebar" data-color="purple" data-background-color="white"
     data-image="{{ asset('material') }}/img/sidebar-1.jpg">
     <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -24,11 +24,30 @@
                     <p>{{ __('List Semua Paket') }}</p>
                 </a>
             </li>
-            <li class="nav-item{{ $activePage == 'user' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('user.index') }}">
+            <li class="nav-item {{ ($activePage == 'daftarUser' || $activePage == 'tambahUser') ? ' active' : '' }}">
+                <a class="nav-link" data-toggle="collapse" href="#userMenu" aria-expanded="true">
                     <i class="material-icons">account_circle</i>
-                    <p>{{ __('User') }}</p>
+                    <p>{{ __('User') }}
+                        <b class="caret"></b>
+                    </p>
                 </a>
+                <div class="collapse {{ ($activePage == 'daftarUser' || $activePage == 'tambahUser') ? ' show' : '' }}"
+                    id="userMenu">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'daftarUser' ? ' active' : '' }}">
+                            <a class="nav-link" href="{{ route('user.index') }}">
+                                <i class="material-icons">group</i>
+                                <span class="sidebar-normal">{{ __('Daftar User') }} </span>
+                            </a>
+                        </li>
+                        <li class="nav-item{{ $activePage == 'tambahUser' ? ' active' : '' }}">
+                            <a class="nav-link" href="{{ route('user.register') }}">
+                                <i class="material-icons">person_add_alt_1</i>
+                                <span class="sidebar-normal"> {{ __('Tambah User') }} </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li class="nav-item{{ $activePage == 'report' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('paket.report') }}">

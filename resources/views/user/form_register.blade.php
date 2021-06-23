@@ -1,6 +1,6 @@
 @extends('layouts.app', [
 'class' => '',
-'activePage' => '',
+'activePage' => 'tambahUser',
 'titlePage' => 'Sistem Penerimaan Paket Barang'
 ])
 
@@ -16,7 +16,7 @@
                     <div class="card" style="margin-top: 8px;">
                         <div class="card-header card-header-success">
                             <h4 class="card-title">
-                                <b>{{ __('Form Tambah User Baru') }}</b>
+                                <b>{{ __('Form Tambah User') }}</b>
                             </h4>
                         </div>
                         <div class="card-body text-left">

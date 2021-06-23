@@ -16,7 +16,7 @@
                     <div class="card" style="margin-top: 8px;">
                         <div class="card-header card-header-success">
                             <h4 class="card-title">
-                                <b>{{ __('Form Tambah Paket Baru') }}</b>
+                                <b>{{ __('Form Tambah Paket') }}</b>
                             </h4>
                         </div>
                         <div class="card-body text-left">
