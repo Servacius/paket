@@ -21,27 +21,22 @@
             </p>
           </a>
         </li>
-        @if (auth()->user()->role_id == 2 || auth()->user()->role_id == 3)
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <i class="material-icons">notifications</i>
-              <span class="notification" id="totalNotifications"></span>
-              <p class="d-lg-none d-md-block">
-                {{ __('Notifikasi') }}
-              </p>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <div id="notifications"></div>
-              @if (auth()->user()->role_id == 2)
-                <a class="dropdown-item btn btn-warning font-weight-normal text-white"
-                  href="{{ route('paket.index', ['unpickedup' => 'true']) }}">{{ __('Cek Selengkapnya') }}</a>
-              @elseif (auth()->user()->role_id == 3)
-                <a class="dropdown-item btn btn-warning font-weight-normal text-white"
-                  href="{{ route('paket.index', ['penerimaan' => 'true']) }}">{{ __('Cek Selengkapnya') }}</a>
-              @endif
-            </div>
-          </li>
+        @if (auth()->user()->role_id == 2)
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="material-icons">notifications</i>
+            <span class="notification" id="totalNotifications"></span>
+            <p class="d-lg-none d-md-block">
+              {{ __('Notifikasi') }}
+            </p>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <div id="notifications"></div>
+            <a class="dropdown-item font-weight-bold"
+              href="{{ route('paket.index', ['unpickedup' => 'true']) }}">{{ __('Cek Selengkapnya') }}</a>
+          </div>
+        </li>
         @endif
         <li class="nav-item dropdown">
           <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true"
@@ -88,6 +83,7 @@
     .done(function (notifications) {
       console.dir('data notifikasi: ' + notifications);
 
+      // notification messages
       for (var i = 0; i < notifications.length; i++) {
         const a = document.createElement("a");
         const node = document.createTextNode(notifications[i].tanggal_sampai + ' - Anda memiliki paket baru, segera lakukan konfirmasi cara penerimaan.');
@@ -103,7 +99,17 @@
         elementNotifications.appendChild(a);
       }
 
-      elementTotalNotifications.textContent = "" + notifications.length;
+      // Set divider and total notifications.
+      elementTotalNotifications.style.display = "none";
+      if (notifications.length > 0) {
+        elementTotalNotifications.style.display = "";
+        elementTotalNotifications.textContent = "" + notifications.length;
+
+        const div = document.createElement("div");
+        div.classList = ["dropdown-divider"];
+
+        elementNotifications.appendChild(div);
+      }
     });
   }
 
