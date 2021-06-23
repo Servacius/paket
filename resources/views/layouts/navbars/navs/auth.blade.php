@@ -66,8 +66,6 @@
 
     if (roleID == 2) {
       showNotifikasiKaryawan();
-    } else if (roleID == 3) {
-      showNotifikasiPetugas();
     }
   });
 
@@ -110,36 +108,6 @@
 
         elementNotifications.appendChild(div);
       }
-    });
-  }
-
-  function showNotifikasiPetugas() {
-    var elementTotalNotifications = document.getElementById("totalNotifications");
-    var elementNotifications = document.getElementById("notifications");
-    var url = '{{ route("notifikasi") }}';
-
-    $.ajax({
-        method: 'GET',
-        url: url,
-    })
-    .done(function (notifications) {
-      console.dir('data notifikasi: ' + notifications);
-      for (var i = 0; i < notifications.length; i++) {
-        const a = document.createElement("a");
-        const node = document.createTextNode('Cara penerimaan paket dengan ID ' + notifications[i].id + ' telah dikonfirmasi.');
-
-        var detailURL = '{{ route("paket.detail", ["id" => ":paketID"]) }}';
-        detailURL = detailURL.replace(':paketID', notifications[i].id);
-
-        a.appendChild(node);
-        a.title = 'Cara penerimaan paket dengan ID ' + notifications[i].id + ' telah dikonfirmasi.';
-        a.href = detailURL;
-        a.classList = ['dropdown-item'];
-
-        elementNotifications.appendChild(a);
-      }
-
-      elementTotalNotifications.textContent = "" + notifications.length;
     });
   }
 </script>
