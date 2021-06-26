@@ -1,7 +1,13 @@
 <tr>
     <td class="text-center">{{ $user->nik }}</td>
     <td>{{ $user->nama }}</td>
-    <td>{{ $user->role }}</td>
+    @if ($user->role == 'petugas')
+        <td>{{ 'Petugas' }}</td>
+    @elseif ($user->role == 'admin')
+        <td>{{ 'Admin' }}</td>
+    @else
+        <td>{{ 'Karyawan' }}</td>
+    @endif
     <td>{{ $user->no_telepon }}</td>
     <td>{{ $user->email }}</td>
     <td class="td-actions text-center">

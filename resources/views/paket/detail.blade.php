@@ -178,33 +178,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($paketDetail->tanggal_diambil != "")
-                                <div class="row">
-                                    <label class="col-sm-3 col-form-label"
-                                        style="margin-block: auto;">{{ __('Tanggal Barang Diambil :') }}</label>
-                                    <div class="col-sm-9">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control"
-                                                style="background-color:#fff; padding-left: 8px;"
-                                                value="{{ ($paketDetail->tanggal_diambil == "") ? "-" : $paketDetail->tanggal_diambil }}"
-                                                readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                @elseif ($paketDetail->tanggal_diantar != "")
-                                <div class="row">
-                                    <label class="col-sm-3 col-form-label"
-                                        style="margin-block: auto;">{{ __('Tanggal Barang Diantar :') }}</label>
-                                    <div class="col-sm-9">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control"
-                                                style="background-color:#fff; padding-left: 8px;"
-                                                value="{{ ($paketDetail->tanggal_diantar == "") ? "-" : $paketDetail->tanggal_diantar }}"
-                                                readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
                                 <div class="row">
                                     <label class="col-sm-3 col-form-label"
                                         style="margin-block: auto;">{{ __('Cara Penerimaan :') }}</label>
@@ -217,6 +190,67 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if ($paketDetail->tanggal_diambil != "")
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label"
+                                            style="margin-block: auto;">{{ __('Tanggal Pengambilan Barang :') }}</label>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    style="background-color:#fff; padding-left: 8px;"
+                                                    value="{{ ($paketDetail->tanggal_diambil == "") ? "-" : $paketDetail->tanggal_diambil }}"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                @elseif ($paketDetail->tanggal_diantar != "")
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label"
+                                            style="margin-block: auto;">{{ __('Tanggal Pengantaran Barang :') }}</label>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    style="background-color:#fff; padding-left: 8px;"
+                                                    value="{{ ($paketDetail->tanggal_diantar == "") ? "-" : $paketDetail->tanggal_diantar }}"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label"
+                                            style="margin-block: auto;">{{ __('Waktu Pengantaran Barang :') }}</label>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    style="background-color:#fff; padding-left: 8px;"
+                                                    value="{{ ($paketDetail->waktu_diantar == "") ? "-" : $paketDetail->waktu_diantar }}"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label"
+                                            style="margin-block: auto;">{{ __('Lantai :') }}</label>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    style="background-color:#fff; padding-left: 8px;"
+                                                    value="{{ ($paketDetail->lantai_diantar == "") ? "-" : $paketDetail->lantai_diantar }}"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label"
+                                            style="margin-block: auto;">{{ __('Lantai :') }}</label>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <textarea class="form-control" style="background-color:#fff; padding-left: 8px;"
+                                                    rows="3" readonly>{{ ($paketDetail->keterangan_diantar == "") ? "-" : $paketDetail->keterangan_diantar }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="row" style="margin-top: 4rem;">
                                     <div class="col-md-8 text-left">
                                         <a href="{{ route('paket.index') }}" class="btn btn-default" role="button"

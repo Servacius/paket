@@ -22,7 +22,8 @@
                                     <div class="col-sm-9">
                                         <div class="form-group">
                                             <input type="text" class="form-control datetimepicker"
-                                                name="tanggal_pengantaran" id="datepickerTanggalPengantaran" />
+                                                style="padding-left: 8px;" name="tanggal_pengantaran"
+                                                id="datepickerTanggalPengantaran" />
                                         </div>
                                     </div>
                                 </div>
@@ -30,8 +31,8 @@
                                     <label class="col-sm-3 col-form-label">{{ __('Waktu Pengantaran :') }}</label>
                                     <div class="col-sm-9">
                                         <div class="form-group">
-                                            <select class="form-control selectpicker show-tick"
-                                                data-style="btn btn-link" name="waktu_pengantaran"
+                                            <select class="selectpicker form-control show-tick"
+                                                data-style="btn btn-link bg-white text-dark" name="waktu_pengantaran"
                                                 id="selectWaktuPengantaran" title="">
                                                 <option>09:00 - 11:00 WIB</option>
                                                 <option>14:00 - 16:00 WIB</option>
@@ -43,7 +44,8 @@
                                     <label class="col-sm-3 col-form-label">{{ __('Lantai :') }}</label>
                                     <div class="col-sm-9">
                                         <div class="form-group">
-                                            <input type="number" class="form-control" name="lantai" min="1" />
+                                            <input type="number" class="form-control" style="padding-left: 8px;"
+                                                name="lantai" min="1" />
                                         </div>
                                     </div>
                                 </div>
@@ -51,7 +53,8 @@
                                     <label class="col-sm-3 col-form-label">{{ __('Keterangan :') }}</label>
                                     <div class="col-sm-9">
                                         <div class="form-group">
-                                            <textarea class="form-control" name="keterangan" rows="3"></textarea>
+                                            <textarea class="form-control" style="padding-left: 8px;" name="keterangan"
+                                                rows="3"></textarea>
                                         </div>
                                     </div>
                                 </div>

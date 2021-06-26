@@ -15,37 +15,21 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
-     * Display a listing of the users
+     * Return index page of user model.
      *
-     * @param  \App\Models\User  $model
      * @return \Illuminate\View\View
      */
-    /**
-    public function index(User $model)
-    {
-        return view('users.index', ['users' => $model->paginate(15)]);
-    }
-     **/
-
     public function index()
     {
         $users = $this->fetchAllUser();
 
         return view('user.index', ['users' => $users]);
-    }
-
-    public function autocomplete(Request $request)
-    {
-        $data = DB::table('users')
-            ->select('users.name', 'users.nik', 'users.email', 'department.name as department', 'direktorat.name as direktorat', 'divisi.name as divisi', 'unit.name as unit')
-            ->join('department', 'department.id', '=', 'users.department_id')
-            ->join('direktorat', 'direktorat.id', '=', 'users.direktorat_id')
-            ->join('divisi', 'divisi.id', '=', 'users.divisi_id')
-            ->join('unit', 'unit.id', '=', 'users.unit_id')
-            ->get();
-
-        return response()->json($data);
     }
 
     /**
@@ -114,6 +98,11 @@ class UserController extends Controller
         return response()->json($userDetail);
     }
 
+    /**
+     * Fetch all user.
+     *
+     * @return array $userDetails
+     */
     private function fetchAllUser()
     {
         $users = User::select('id', 'nik', 'role_id', 'name', 'email', 'no_telp')
@@ -140,6 +129,11 @@ class UserController extends Controller
         return $userDetails;
     }
 
+    /**
+     * Return register user form.
+     *
+     * @return \Illuminate\View\View
+     */
     public function register()
     {
         $direktorat = Direktorat::select('id', 'name')->get();
@@ -155,6 +149,12 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Store new user data.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function store(Request $request)
     {
         $now = Carbon::now();
@@ -181,9 +181,25 @@ class UserController extends Controller
             ->with('success', 'User berhasil ditambahkan.');
     }
 
+    /**
+     * Return update user form.
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
     public function edit($id)
     {
+        if (auth()->user()->cannot('update', User::class)) {
+            abort(403);
+        }
+
         $user = User::find($id);
+        if ($user == null) {
+            return redirect()
+                ->route('user.index')
+                ->withErrors(['User dengan tidak ditemukan.']);
+        }
+
         $direktorat = Direktorat::select('id', 'name')->get();
         $divisi = Divisi::select('id', 'name')->get();
         $unit = Unit::select('id', 'name')->get();
@@ -198,8 +214,27 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Update user data.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
     public function update(Request $request, $id)
     {
+        if (auth()->user()->cannot('update', User::class)) {
+            abort(403);
+        }
+
+        if ($request->input('action') == 'update-user-role') {
+            User::where('id', $id)->update(['role_id' => $request->role]);
+
+            return redirect()
+                ->route('user.index')
+                ->with('success', 'Hak akses user berhasil diubah.');
+        }
+
         $now = Carbon::now();
 
         $user = User::find($id);
@@ -219,6 +254,6 @@ class UserController extends Controller
 
         return redirect()
             ->route('user.index')
-            ->with('success', 'User berhasil di-update.');
+            ->with('success', 'User berhasil diubah.');
     }
 }

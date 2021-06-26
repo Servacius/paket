@@ -62,8 +62,6 @@
 <script>
   $(document).ready(function () {
     var roleID = '{{ auth()->user()->role_id }}';
-    console.dir(roleID);
-
     if (roleID == 2) {
       showNotifikasiKaryawan();
     }
@@ -79,8 +77,6 @@
         url: url,
     })
     .done(function (notifications) {
-      console.dir('data notifikasi: ' + notifications);
-
       // notification messages
       for (var i = 0; i < notifications.length; i++) {
         const a = document.createElement("a");

@@ -20,7 +20,7 @@
                                                 <i class="pull-right material-icons text-white"
                                                     style="padding-right: 8px; font-size: 48px;">view_list</i>
                                             </span>
-                                            <h4 style="font-size: 20px">List Semua Paket</h4>
+                                            <h4 style="font-size: 20px">Daftar Paket</h4>
                                         </div>
                                     </div>
                                 </div>

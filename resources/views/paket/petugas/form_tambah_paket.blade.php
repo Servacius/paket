@@ -60,7 +60,8 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="nik_penerima"
-                                                    id="nikPenerima" style="padding-left: 8px;" />
+                                                    id="nikPenerima" style="padding-left: 8px;"
+                                                    value="{{ ($request->nik_penerima != "") ? $request->nik_penerima : "" }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -70,7 +71,8 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="email" id="email"
-                                                    style="padding-left: 8px;" />
+                                                    style="padding-left: 8px;"
+                                                    value="{{ ($request->email != "") ? $request->email : "" }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +82,8 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="telp" id="telp"
-                                                    style="padding-left: 8px;" />
+                                                    style="padding-left: 8px;"
+                                                    value="{{ ($request->telp != "") ? $request->telp : "" }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -90,7 +93,8 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="direktorat"
-                                                    id="direktorat" style="padding-left: 8px;" />
+                                                    id="direktorat" style="padding-left: 8px;"
+                                                    value="{{ ($request->direktorat != "") ? $request->direktorat : "" }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -100,7 +104,8 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="divisi"
-                                                    style="padding-left: 8px;" />
+                                                    style="padding-left: 8px;"
+                                                    {{ ($request->divisi != "") ? $request->divisi : "" }} />
                                             </div>
                                         </div>
                                     </div>

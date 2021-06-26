@@ -67,8 +67,8 @@
                                             style="margin-block: auto;">{{ __('Direktorat :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="direktorat"
+                                                <select class="selectpicker form-control show-tick"
+                                                    data-style="btn btn-link bg-white text-dark" name="direktorat"
                                                     id="direktorat" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($direktorat as $d)
@@ -83,8 +83,8 @@
                                             style="margin-block: auto;">{{ __('Divisi :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="divisi"
+                                                <select class="selectpicker form-control show-tick"
+                                                    data-style="btn btn-link bg-white text-dark" name="divisi"
                                                     id="divisi" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($divisi as $d)
@@ -99,9 +99,9 @@
                                             style="margin-block: auto;">{{ __('Departement :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="department"
-                                                    id="depeartment" title="">
+                                                <select class="selectpicker form-control show-tick"
+                                                    data-style="btn btn-link bg-white text-dark" name="department"
+                                                    id="department" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($department as $d)
                                                         <option value="{{ $d->id }}">{{ $d->name }}</option>
@@ -115,8 +115,8 @@
                                             style="margin-block: auto;">{{ __('Unit :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="unit"
+                                                <select class="selectpicker form-control show-tick"
+                                                    data-style="btn btn-link bg-white text-dark" name="unit"
                                                     id="unit" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($unit as $u)
@@ -131,8 +131,8 @@
                                             style="margin-block: auto;">{{ __('Role :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="role"
+                                                <select class="selectpicker form-control show-tick"
+                                                    data-style="btn btn-link bg-white text-dark" name="role"
                                                     id="role" title="">
                                                     <option value="2">{{ "Karyawan" }}</option>
                                                     <option value="3">{{ "Petugas" }}</option>

@@ -13,11 +13,10 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input name="nik_petugas" type="hidden" value="{{ auth()->user()->nik }}">
                     <div class="card" style="margin-top: 8px;">
-                        <div class="card-header card-header-success">
+                        <div class="card-header card-header-info">
                             <h4 class="card-title">
-                                <b>{{ __('Form Tambah User Baru') }}</b>
+                                <b>{{ __('Form Ubah Hak Akses User') }}</b>
                             </h4>
                         </div>
                         <div class="card-body text-left">
@@ -68,8 +67,8 @@
                                             style="margin-block: auto;">{{ __('Direktorat :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="direktorat"
+                                                <select class="selectpicker form-control"
+                                                    data-style="btn btn-link bg-white text-dark" name="direktorat"
                                                     id="direktorat" title="" >
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($direktorat as $d)
@@ -84,8 +83,8 @@
                                             style="margin-block: auto;">{{ __('Divisi :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="divisi"
+                                                <select class="selectpicker form-control"
+                                                    data-style="btn btn-link bg-white text-dark" name="divisi"
                                                     id="divisi" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($divisi as $d)
@@ -100,9 +99,9 @@
                                             style="margin-block: auto;">{{ __('Departement :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="department"
-                                                    id="depeartment" title="">
+                                                <select class="selectpicker form-control"
+                                                    data-style="btn btn-link bg-white text-dark" name="department"
+                                                    id="department" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($department as $d)
                                                         <option value="{{ $d->id }}" {{ ($user->department_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
@@ -116,8 +115,8 @@
                                             style="margin-block: auto;">{{ __('Unit :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="unit"
+                                                <select class="selectpicker form-control"
+                                                    data-style="btn btn-link bg-white text-dark" name="unit"
                                                     id="unit" title="">
                                                     <option value="0">{{ "None" }}</option>
                                                     @foreach ($unit as $u)
@@ -132,8 +131,8 @@
                                             style="margin-block: auto;">{{ __('Role :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select class="form-control selectpicker"
-                                                    data-style="btn btn-link" name="role"
+                                                <select class="selectpicker form-control"
+                                                    data-style="btn btn-link bg-white text-dark" name="role"
                                                     id="role" title="">
                                                     <option value="2" {{ ($user->role_id == 2) ? "selected" : "" }}>{{ "Karyawan" }}</option>
                                                     <option value="3" {{ ($user->role_id == 3) ? "selected" : "" }}>{{ "Petugas" }}</option>
@@ -147,7 +146,7 @@
                                                 aria-pressed="true">Kembali</a>
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <input class="submit btn btn-success" type="submit" value="Update" />
+                                            <button class="submit btn btn-info" type="submit" name="action" value="update-user-role">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -163,46 +162,14 @@
 
 @push('js')
 <script>
-    $().ready(function() {
-        $('#formCreateNewUser').validate({
-            rules: {
-                nik: {
-                    required: true
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                no_telepon: {
-                    required: true,
-                    phoneIDN: true
-                }
-            },
-            messages: {
-                nik: {
-                    required: "NIK tidak boleh kosong."
-                },
-                email: {
-                    required: "Email tidak boleh kosong.",
-                    email: "Format email tidak valid."
-                },
-                no_telepon: {
-                    required: "No. Telepon tidak boleh kosong."
-                }
-            },
-            errorPlacement: function(error, element) {
-                if ( element.is(":radio") ) {
-                    error.insertAfter( element.parents('.form-group') );
-                } else if ( element.is(":text") ) {
-                    error.insertAfter( element.parents('.form-group') );
-                } else if ( element.is(":file") ) {
-                    error.insertAfter( element.parents('.fileinput') );
-                } else { // This is the default behavior
-                    error.insertAfter( element );
-                }
-            }
-        });
-    });
+    $('#nama').attr('disabled', true);
+    $('#nik').attr('disabled', true);
+    $('#email').attr('disabled', true);
+    $('#telp').attr('disabled', true);
+    $('#direktorat').attr('disabled', true);
+    $('#department').attr('disabled', true);
+    $('#divisi').attr('disabled', true);
+    $('#unit').attr('disabled', true);
 
     jQuery.validator.addMethod("phoneIDN", function(phone_number, element) {
         return phone_number.match(/^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{3,8}$/);

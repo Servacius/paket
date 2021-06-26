@@ -1,4 +1,4 @@
-<div class="sidebar" data-color="purple" data-background-color="white"
+<div class="sidebar" data-color="purple" data-background-color="black"
     data-image="{{ asset('material') }}/img/sidebar-1.jpg">
     <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -18,10 +18,10 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
-            <li class="nav-item{{ $activePage == 'listSemuaPaket' ? ' active' : '' }}">
+            <li class="nav-item{{ $activePage == 'daftarPaket' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('paket.index') }}">
                     <i class="material-icons">view_list</i>
-                    <p>{{ __('List Semua Paket') }}</p>
+                    <p>{{ __('Daftar Paket') }}</p>
                 </a>
             </li>
             <li class="nav-item {{ ($activePage == 'daftarUser' || $activePage == 'tambahUser') ? ' active' : '' }}">

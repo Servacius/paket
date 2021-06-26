@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PaketExport;
+use App\Mail\PaketEmail;
 use App\Models\Department;
 use App\Models\Direktorat;
 use App\Models\Divisi;
@@ -16,28 +17,20 @@ use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Excel;
-
-use App\Http\Controllers\MailTrait;
-use App\Mail\PaketEmail;
 use Illuminate\Support\Facades\Mail;
 
 class PaketController extends Controller
 {
-    /**
-     * Instantiate a new paket controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
     /**
-     * Display a listing of the paket.
+     * Redirect into index page by conditions.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
+     * @param Request $request
+     * @return void
      */
     public function index(Request $request)
     {
@@ -55,7 +48,7 @@ class PaketController extends Controller
     }
 
     /**
-     * Display a listing of all paket.
+     * Return page contains all paket.
      *
      * @return \Illuminate\View\View
      */
@@ -73,7 +66,7 @@ class PaketController extends Controller
     }
 
     /**
-     * Display a listing of all paket.
+     * Return page contains paket with cara penerimaan confirmed.
      *
      * @return \Illuminate\View\View
      */
@@ -92,7 +85,7 @@ class PaketController extends Controller
     }
 
     /**
-     * Display a listing of unpicked up paket.
+     * Return page contains unpickedup paket.
      *
      * @return \Illuminate\View\View
      */
@@ -114,8 +107,9 @@ class PaketController extends Controller
     }
 
     /**
-     * Display a listing of all paket.
+     * Return report page.
      *
+     * @param Request $request
      * @return \Illuminate\View\View
      */
     public function report(Request $request)
@@ -169,9 +163,39 @@ class PaketController extends Controller
     }
 
     /**
-     * Show the form for creating a new paket.
+     * Return search response.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return json $pakets
+     */
+    public function search(Request $request)
+    {
+        $filter = [];
+        if ($request->nama != "") {
+            $filter['nama'] = $request->nama;
+        }
+        if ($request->tanggal_sampai_from != "") {
+            $filter['tanggal_sampai_from'] = $request->tanggal_sampai_from;
+        }
+        if ($request->tanggal_sampai_to != "") {
+            $filter['tanggal_sampai_to'] = $request->tanggal_sampai_to;
+        }
+        if ($request->tanggal_diambil_from != "") {
+            $filter['tanggal_diambil_from'] = $request->tanggal_diambil_from;
+        }
+        if ($request->tanggal_diambil_to != "") {
+            $filter['tanggal_diambil_to'] = $request->tanggal_diambil_to;
+        }
+
+        $pakets = $this->fetchPaket($filter);
+
+        return response()->json($pakets);
+    }
+
+    /**
+     * Return create paket form.
+     *
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -183,10 +207,10 @@ class PaketController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store new paket.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -266,21 +290,10 @@ class PaketController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Return detail page of paket.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Display the specified paket.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
     public function detail($id)
     {
@@ -303,8 +316,8 @@ class PaketController extends Controller
     /**
      * Update status paket to done.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
     public function done($id)
     {
@@ -322,40 +335,6 @@ class PaketController extends Controller
             ->route('paket.index', ['unpickedup' => 'true']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function sendEmail($email, $data)
     {
         Mail::to($email)->send(new PaketEmail($data));
@@ -364,10 +343,10 @@ class PaketController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Fetch paket by filters.
      *
-     * @param  array  $filter
-     * @return array  $paketDetails
+     * @param array $filter
+     * @return json $arrayDetails
      */
     private function fetchPaket($filter)
     {
@@ -540,10 +519,10 @@ class PaketController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Get detail paket by paket id.
      *
-     * @param  int  $id
-     * @return object $paketDetail
+     * @param int $id
+     * @return null | $paketDetails
      */
     private function getPaket($id)
     {
