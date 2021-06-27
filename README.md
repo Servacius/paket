@@ -27,3 +27,17 @@
 
 -   Run `php artisan serve` to start PHP server.
 -   Run `npm run watch` to start Node.js server.
+
+## Mail Configuration
+
+In this project we support to send email in feature: **tambah paket**.
+To ensure this function works, the mail set-up in `.env` should be like this.
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.googlemail.com
+MAIL_PORT=465
+MAIL_USERNAME=YOUR_EMAIL_ADDRESS(GMAIL)
+MAIL_PASSWORD=YOUR_EMAIL_PASSWORD
+MAIL_ENCRYPTION=ssl
+```
