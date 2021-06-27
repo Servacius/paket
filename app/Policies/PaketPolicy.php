@@ -106,6 +106,17 @@ class PaketPolicy
     }
 
     /**
+     * Determine whether the user can export data paket.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function export(User $user)
+    {
+        return $user->role_id === UserRole::ROLE_ID_ADMINISTRATOR;
+    }
+
+    /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user

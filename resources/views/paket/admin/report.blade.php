@@ -17,73 +17,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-10 offset-md-1">
-                                <h4>Filter</h4>
-                                <br>
-                                <form action="{{ route('paket.report') }}" id="formReport" method="GET"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="inputNama">{{ __('Nama:') }}</label>
-                                        <input type="text" class="form-control" id="inputNama" name="nama"
-                                            placeholder="" value="{{ ($filters->nama != "") ? $filters->nama : "" }}">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label
-                                                for="inputTanggalSampaiFrom">{{ __('Tanggal Barang Sampai (From):') }}</label>
-                                            <input type="text" class="form-control datetimepicker"
-                                                id="inputTanggalSampaiFrom" name="tanggal_sampai_from"
-                                                value="{{ ($filters->tanggal_sampai_from != "") ? $filters->tanggal_sampai_from : "" }}">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label
-                                                for="inputTanggalSampaiTo">{{ __('Tanggal Barang Sampai (To):') }}</label>
-                                            <input type="text" class="form-control datetimepicker"
-                                                id="inputTanggalSampaiTo" name="tanggal_sampai_to"
-                                                value="{{ ($filters->tanggal_sampai_to != "") ? $filters->tanggal_sampai_to : "" }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label
-                                                for="inputTanggalDiambilFrom">{{ __('Tanggal Barang Diambil (From):') }}</label>
-                                            <input type="text" class="form-control datetimepicker"
-                                                id="inputTanggalDiambilFrom" name="tanggal_diambil_from"
-                                                value="{{ ($filters->tanggal_diambil_from != "") ? $filters->tanggal_diambil_from : "" }}">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label
-                                                for="inputTanggalDiambilTo">{{ __('Tanggal Barang Diambil (To):') }}</label>
-                                            <input type="text" class="form-control datetimepicker"
-                                                id="inputTanggalDiambilTo" name="tanggal_diambil_to"
-                                                value="{{ ($filters->tanggal_diambil_to != "") ? $filters->tanggal_diambil_to : "" }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-row pull-right">
-                                        <div class="btn-group" role="group" aria-label="Action Button">
-                                            <button type="button" class="btn btn-info" id="btnSearch" name="action"
-                                                value="search">Search</button>
-                                        </div>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Export
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a href="" class="dropdown-item" name="action"
-                                                    value="export-csv">.csv</a>
-                                                <a href="" class="dropdown-item" name="action"
-                                                    value="export-xslx">.xslx</a>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="btn-group" role="group" aria-label="Action Button">
-                                            <button type="submit" class="btn btn-primary" name="action" value="export-csv">Export .csv</button>
-                                            <button type="submit" class="btn btn-warning" name="action" value="export-xslx">Export .xslx</button>
-                                        </div> --}}
-                                    </div>
-                                </form>
-                            </div>
+                            @include('paket/admin/search')
                         </div>
                         <br><br>
                         <div class="row">
@@ -103,9 +37,6 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tablePaket">
-                                            {{-- @foreach ($pakets as $paket)
-                                            @include('paket/admin/row', ['paket' => $paket])
-                                            @endforeach --}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -121,6 +52,14 @@
 
 @push('js')
 <script>
+    $('#formSearch').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
     $('#inputTanggalSampaiFrom').datetimepicker({
         icons: {
             time: "fa fa-clock-o",

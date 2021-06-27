@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Excel;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class PaketController extends Controller
 {
@@ -119,46 +120,31 @@ class PaketController extends Controller
         }
 
         $app = app();
-        $filters = $app->make('stdClass');
-        $filters->nama = "";
-        $filters->tanggal_sampai_from = "";
-        $filters->tanggal_sampai_to = "";
-        $filters->tanggal_diambil_from = "";
-        $filters->tanggal_diambil_to = "";
+        $filter = $app->make('stdClass');
+        $filter->nama = "";
+        $filter->tanggal_sampai_from = "";
+        $filter->tanggal_sampai_to = "";
+        $filter->tanggal_diambil_from = "";
+        $filter->tanggal_diambil_to = "";
 
-        $filter = [];
         if ($request->nama != "") {
-            $filter['nama'] = $request->nama;
-            $filters->nama = $filter['nama'];
+            $filter->nama = $request->nama;
         }
         if ($request->tanggal_sampai_from != "") {
-            $filter['tanggal_sampai_from'] = $request->tanggal_sampai_from;
-            $filters->tanggal_sampai_from = $filter['tanggal_sampai_from'];
+            $filter->tanggal_sampai_from = $request->tanggal_sampai_from;
         }
         if ($request->tanggal_sampai_to != "") {
-            $filter['tanggal_sampai_to'] = $request->tanggal_sampai_to;
-            $filters->tanggal_sampai_to = $filter['tanggal_sampai_to'];
+            $filter->tanggal_sampai_to = $request->tanggal_sampai_to;
         }
         if ($request->tanggal_diambil_from != "") {
-            $filter['tanggal_diambil_from'] = $request->tanggal_diambil_from;
-            $filters->tanggal_diambil_from = $filter['tanggal_diambil_from'];
+            $filter->tanggal_diambil_from = $request->tanggal_diambil_from;
         }
         if ($request->tanggal_diambil_to != "") {
-            $filter['tanggal_diambil_to'] = $request->tanggal_diambil_to;
-            $filters->tanggal_diambil_to = $filter['tanggal_diambil_to'];
+            $filter->tanggal_diambil_to = $request->tanggal_diambil_to;
         }
-
-        if ($request->input('action') == 'export-xslx') {
-            return Excel::download(new PaketExport($filter), 'Report Penerimaan Paket.xlsx');
-        } else if ($request->input('action') == 'export-csv') {
-            return Excel::download(new PaketExport($filter), 'Report Penerimaan Paket.csv');
-        }
-
-        $pakets = $this->fetchPaket($filter);
 
         return view('paket.admin.report', [
-            'pakets' => $pakets,
-            'filters' => $filters,
+            'filter' => $filter
         ]);
     }
 
@@ -190,6 +176,36 @@ class PaketController extends Controller
         $pakets = $this->fetchPaket($filter);
 
         return response()->json($pakets);
+    }
+
+    public function export(Request $request)
+    {
+        if (auth()->user()->cannot('export', Paket::class)) {
+            abort(403);
+        }
+
+        $filter = [];
+        if ($request->nama != "") {
+            $filter['nama'] = $request->nama;
+        }
+        if ($request->tanggal_sampai_from != "") {
+            $filter['tanggal_sampai_from'] = $request->tanggal_sampai_from;
+        }
+        if ($request->tanggal_sampai_to != "") {
+            $filter['tanggal_sampai_to'] = $request->tanggal_sampai_to;
+        }
+        if ($request->tanggal_diambil_from != "") {
+            $filter['tanggal_diambil_from'] = $request->tanggal_diambil_from;
+        }
+        if ($request->tanggal_diambil_to != "") {
+            $filter['tanggal_diambil_to'] = $request->tanggal_diambil_to;
+        }
+
+        if ($request->input('action') == 'export-xslx') {
+            return Excel::download(new PaketExport($filter), 'Report Penerimaan Paket.xlsx');
+        } else if ($request->input('action') == 'export-csv') {
+            return Excel::download(new PaketExport($filter), 'Report Penerimaan Paket.csv');
+        }
     }
 
     /**
@@ -276,12 +292,18 @@ class PaketController extends Controller
         $paket->save();
 
         try {
-            $data = ['nama' => $userPenerima->name];
+            $data = [
+                'nik' => $userPenerima->nik,
+                'nama' => $userPenerima->name,
+                'tanggal_sampai' => $paket->tanggal_sampai,
+                'link' => URL::signedRoute('paket.detail', ['id' => $paket->id])
+            ];
             $this->sendEmail($userPenerima->email, $data);
         } catch (\Exception $e) {
             return redirect()
                 ->route('paket.index')
-                ->with('success', 'Paket berhasil ditambahkan.');
+                ->with('success', 'Paket berhasil ditambahkan.')
+                ->withErrors(['Email kepada karyawan gagal dikirimkan.']);
         }
 
         return redirect()
@@ -335,6 +357,13 @@ class PaketController extends Controller
             ->route('paket.index', ['unpickedup' => 'true']);
     }
 
+    /**
+     * Send email.
+     *
+     * @param string $email
+     * @param array $data
+     * @return bool
+     */
     public function sendEmail($email, $data)
     {
         Mail::to($email)->send(new PaketEmail($data));
@@ -474,7 +503,7 @@ class PaketController extends Controller
             $resultFiltered = array();
             $from = (new DateTime($filter['tanggal_sampai_from']))->format('d-m-Y');
             foreach ($paketDetails as $paketDetail) {
-                if ($paketDetail->tanggal_sampai >= $from) {
+                if ($paketDetail->tanggal_sampai != "" && $paketDetail->tanggal_sampai >= $from) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
@@ -485,7 +514,7 @@ class PaketController extends Controller
             $resultFiltered = array();
             $to = (new DateTime($filter['tanggal_sampai_to']))->format('d-m-Y');
             foreach ($paketDetails as $paketDetail) {
-                if ($paketDetail->tanggal_sampai  <= $to) {
+                if ($paketDetail->tanggal_sampai != "" && $paketDetail->tanggal_sampai  <= $to) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
@@ -496,7 +525,12 @@ class PaketController extends Controller
             $resultFiltered = array();
             $from = (new DateTime($filter['tanggal_diambil_from']))->format('d-m-Y');
             foreach ($paketDetails as $paketDetail) {
-                if ($paketDetail->tanggal_diambil >= $from) {
+                $date = $paketDetail->tanggal_diambil;
+                if ($paketDetail->cara_penerimaan == Penerimaan::PENERIMAAN_DIANTAR) {
+                    $date = $paketDetail->tanggal_pengantaran;
+                }
+
+                if ($date != "" && $date >= $from) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
@@ -507,7 +541,12 @@ class PaketController extends Controller
             $resultFiltered = array();
             $to = (new DateTime($filter['tanggal_diambil_to']))->format('d-m-Y');
             foreach ($paketDetails as $paketDetail) {
-                if ($paketDetail->tanggal_diambil  <= $to) {
+                $date = $paketDetail->tanggal_diambil;
+                if ($paketDetail->cara_penerimaan == Penerimaan::PENERIMAAN_DIANTAR) {
+                    $date = $paketDetail->tanggal_pengantaran;
+                }
+
+                if ($date != "" && $date  <= $to) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
@@ -551,15 +590,44 @@ class PaketController extends Controller
             $paketDetail->gambar = $paket->picture;
             $paketDetail->barang_berbahaya = ($paket->barang_berbahaya == 1) ? "ya" : "tidak";
             $paketDetail->tanggal_sampai = (new DateTime($paket->tanggal_sampai))->format('d-m-Y');
-            $paketDetail->tanggal_diambil = ($paket->tanggal_diambil == null) ? "" : (new DateTime($paket->tanggal_diambil))->format('d-m-Y');
+            $paketDetail->tanggal_diambil = "";
             $paketDetail->tanggal_diantar = "";
+            $paketDetail->waktu_diantar = "";
+            $paketDetail->lantai_diantar = "";
+            $paketDetail->keterangan_diantar = "";
             $paketDetail->cara_penerimaan = "";
 
             if ($penerimaan != null) {
                 $paketDetail->cara_penerimaan = (new Penerimaan())->getPenerimaanText($penerimaan->name);
 
-                if ($paketDetail->cara_penerimaan == Penerimaan::PENERIMAAN_AMBIL_SENDIRI_TEXT) {
-                    $paketDetail->tanggal_diantar = (new DateTime($paket->tanggal_pengantaran))->format('d-m-Y');
+                switch ($penerimaan->name) {
+                    case Penerimaan::PENERIMAAN_DIANTAR:
+                        if ($penerimaan->catatan != null) {
+                            $catatan = json_decode($penerimaan->catatan);
+                            if (property_exists($catatan, 'tanggal_pengantaran')) {
+                                $paketDetail->tanggal_diantar = (new DateTime($catatan->tanggal_pengantaran))->format('d-m-Y');
+                            }
+                            if (property_exists($catatan, 'waktu_pengantaran')) {
+                                $paketDetail->waktu_diantar = $catatan->waktu_pengantaran;
+                            }
+                            if (property_exists($catatan, 'lantai')) {
+                                $paketDetail->lantai_diantar = $catatan->lantai;
+                            }
+                            if (property_exists($catatan, 'keterangan')) {
+                                $paketDetail->keterangan_diantar = $catatan->keterangan;
+                            }
+                        }
+
+                        if ($paket->tanggal_diambil != null) {
+                            $paketDetail->tanggal_diantar = (new DateTime($paket->tanggal_diambil))->format('d-m-Y');
+                        }
+                        break;
+
+                    case Penerimaan::PENERIMAAN_AMBIL_SENDIRI:
+                        if ($paket->tanggal_diambil != null) {
+                            $paketDetail->tanggal_diambil = (new DateTime($paket->tanggal_diambil))->format('d-m-Y');
+                        }
+                        break;
                 }
             }
 
@@ -570,6 +638,15 @@ class PaketController extends Controller
                 $catatan = json_decode($paket->catatan);
                 if (property_exists($catatan, 'no_telepon')) {
                     $paketDetail->no_telepon = $catatan->no_telepon;
+                }
+                if (property_exists($catatan, 'waktu_pengantaran')) {
+                    $paketDetail->waktu_diantar = $catatan->waktu_pengantaran;
+                }
+                if (property_exists($catatan, 'lantai')) {
+                    $paketDetail->lantai_diantar = $catatan->lantai;
+                }
+                if (property_exists($catatan, 'keterangan')) {
+                    $paketDetail->keterangan_diantar = $catatan->keterangan;
                 }
             }
 

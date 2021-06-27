@@ -49,7 +49,7 @@
                                     @else
                                         <div class="row">
                                             <div class="col-auto text-center" style="padding-right: 0px;">
-                                                <span class="material-icons text-success" style="font-szie: 20px;">
+                                                <span class="material-icons text-success" style="font-size: 20px;">
                                                     schedule
                                                 </span>
                                             </div>
@@ -76,7 +76,7 @@
                                     @else
                                         <div class="row">
                                             <div class="col-auto text-center" style="padding-right: 0px;">
-                                                <span class="material-icons text-success" style="font-size: 8px;">
+                                                <span class="material-icons text-success" style="font-size: 20px;">
                                                     schedule
                                                 </span>
                                             </div>

@@ -55,7 +55,7 @@ class PenerimaanController extends Controller
             $detailPenerimaan->tanggal_pengantaran = $request->tanggal_pengantaran;
             $detailPenerimaan->waktu_pengantaran = $request->waktu_pengantaran;
             $detailPenerimaan->lantai = $request->lantai;
-            $detailPenerimaan->keterangan = $request->keterangan;
+            $detailPenerimaan->keterangan = trim($request->keterangan, " ");
 
             $catatan = json_encode($detailPenerimaan);
         }

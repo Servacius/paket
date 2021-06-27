@@ -242,7 +242,7 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{{ __('Lantai :') }}</label>
+                                            style="margin-block: auto;">{{ __('Keterangan :') }}</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <textarea class="form-control" style="background-color:#fff; padding-left: 8px;"

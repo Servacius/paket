@@ -22,6 +22,11 @@
                         <div class="card-body text-left">
                             <div class="row">
                                 <div class="col-md-10 offset-md-1">
+                                    <div class="row" id="accordion" style="margin-bottom: 18px;">
+                                        <button class="btn btn-primary" data-toggle="collapse" data-target="#collapseDetailUser" aria-expanded="true" aria-controls="collapseDetailUser" type="button">
+                                            Detail User
+                                        </button>
+                                    </div>
                                     <div class="row" style="margin-top: 16px;">
                                         <label class="col-sm-3 col-form-label"
                                             style="margin-block: auto;">{{ __('Nama :') }}</label>
@@ -42,87 +47,89 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{!! __('Email<sup class="text-danger">*</sup> :') !!}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="email" id="email"
-                                                    style="padding-left: 8px;" value="{{ ($user->email != "") ? $user->email : "" }}" />
+                                    <div id="collapseDetailUser" class="collapse" data-parent="#accordion">
+                                        <div class="row">
+                                            <label class="col-sm-3 col-form-label"
+                                                style="margin-block: auto;">{!! __('Email<sup class="text-danger">*</sup> :') !!}</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="email" id="email"
+                                                        style="padding-left: 8px;" value="{{ ($user->email != "") ? $user->email : "" }}" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label" style="margin-block: auto;">
-                                            {!! __('No. Telepon<sup class="text-danger">*</sup> :') !!}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="no_telepon" id="telp"
-                                                    style="padding-left: 8px;" value="{{ ($user->no_telp != "") ? $user->no_telp : "" }}" />
+                                        <div class="row">
+                                            <label class="col-sm-3 col-form-label" style="margin-block: auto;">
+                                                {!! __('No. Telepon<sup class="text-danger">*</sup> :') !!}</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="no_telepon" id="telp"
+                                                        style="padding-left: 8px;" value="{{ ($user->no_telp != "") ? $user->no_telp : "" }}" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{{ __('Direktorat :') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <select class="selectpicker form-control"
-                                                    data-style="btn btn-link bg-white text-dark" name="direktorat"
-                                                    id="direktorat" title="" >
-                                                    <option value="0">{{ "None" }}</option>
-                                                    @foreach ($direktorat as $d)
-                                                        <option value="{{ $d->id }}" {{ ($user->direktorat_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                        <div class="row">
+                                            <label class="col-sm-3 col-form-label"
+                                                style="margin-block: auto;">{{ __('Direktorat :') }}</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                    <select class="selectpicker form-control"
+                                                        data-style="btn btn-link bg-white text-dark" name="direktorat"
+                                                        id="direktorat" title="" >
+                                                        <option value="0">{{ "None" }}</option>
+                                                        @foreach ($direktorat as $d)
+                                                            <option value="{{ $d->id }}" {{ ($user->direktorat_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{{ __('Divisi :') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <select class="selectpicker form-control"
-                                                    data-style="btn btn-link bg-white text-dark" name="divisi"
-                                                    id="divisi" title="">
-                                                    <option value="0">{{ "None" }}</option>
-                                                    @foreach ($divisi as $d)
-                                                        <option value="{{ $d->id }}" {{ ($user->divisi_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                        <div class="row">
+                                            <label class="col-sm-3 col-form-label"
+                                                style="margin-block: auto;">{{ __('Divisi :') }}</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                    <select class="selectpicker form-control"
+                                                        data-style="btn btn-link bg-white text-dark" name="divisi"
+                                                        id="divisi" title="">
+                                                        <option value="0">{{ "None" }}</option>
+                                                        @foreach ($divisi as $d)
+                                                            <option value="{{ $d->id }}" {{ ($user->divisi_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{{ __('Departement :') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <select class="selectpicker form-control"
-                                                    data-style="btn btn-link bg-white text-dark" name="department"
-                                                    id="department" title="">
-                                                    <option value="0">{{ "None" }}</option>
-                                                    @foreach ($department as $d)
-                                                        <option value="{{ $d->id }}" {{ ($user->department_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                        <div class="row">
+                                            <label class="col-sm-3 col-form-label"
+                                                style="margin-block: auto;">{{ __('Departement :') }}</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                    <select class="selectpicker form-control"
+                                                        data-style="btn btn-link bg-white text-dark" name="department"
+                                                        id="department" title="">
+                                                        <option value="0">{{ "None" }}</option>
+                                                        @foreach ($department as $d)
+                                                            <option value="{{ $d->id }}" {{ ($user->department_id == $d->id) ? "selected" : "" }}>{{ $d->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label"
-                                            style="margin-block: auto;">{{ __('Unit :') }}</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <select class="selectpicker form-control"
-                                                    data-style="btn btn-link bg-white text-dark" name="unit"
-                                                    id="unit" title="">
-                                                    <option value="0">{{ "None" }}</option>
-                                                    @foreach ($unit as $u)
-                                                        <option value="{{ $u->id }}" {{ ($user->unit_id == $u->id) ? "selected" : "" }}>{{ $u->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                        <div class="row">
+                                            <label class="col-sm-3 col-form-label"
+                                                style="margin-block: auto;">{{ __('Unit :') }}</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                    <select class="selectpicker form-control"
+                                                        data-style="btn btn-link bg-white text-dark" name="unit"
+                                                        id="unit" title="">
+                                                        <option value="0">{{ "None" }}</option>
+                                                        @foreach ($unit as $u)
+                                                            <option value="{{ $u->id }}" {{ ($user->unit_id == $u->id) ? "selected" : "" }}>{{ $u->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

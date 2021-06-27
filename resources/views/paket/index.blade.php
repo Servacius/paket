@@ -30,14 +30,16 @@
     $(document).ready(function () {
         var isError = '{{ $errors->any() }}';
         if (isError) {
-            var message = '{!! $errors->first() !!}';
-            showNotification('top', 'center', message, 'danger');
+            setTimeout(() => {
+                var message = '{!! $errors->first() !!}';
+                showNotification('top', 'right', message, 'danger');
+            }, 2000);
         }
 
         var isSuccess = '{{ session()->has("success") }}';
         if (isSuccess) {
             var message = '{!! session()->get("success") !!}';
-            showNotification('top', 'center', message, 'success');
+            showNotification('top', 'right', message, 'success');
         }
     });
 

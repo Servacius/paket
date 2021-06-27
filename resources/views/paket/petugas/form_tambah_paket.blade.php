@@ -60,8 +60,7 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="nik_penerima"
-                                                    id="nikPenerima" style="padding-left: 8px;"
-                                                    value="{{ ($request->nik_penerima != "") ? $request->nik_penerima : "" }}" />
+                                                    id="nikPenerima" style="padding-left: 8px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -71,8 +70,7 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="email" id="email"
-                                                    style="padding-left: 8px;"
-                                                    value="{{ ($request->email != "") ? $request->email : "" }}" />
+                                                    style="padding-left: 8px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -82,8 +80,7 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="telp" id="telp"
-                                                    style="padding-left: 8px;"
-                                                    value="{{ ($request->telp != "") ? $request->telp : "" }}" />
+                                                    style="padding-left: 8px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -93,8 +90,7 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="direktorat"
-                                                    id="direktorat" style="padding-left: 8px;"
-                                                    value="{{ ($request->direktorat != "") ? $request->direktorat : "" }}" />
+                                                    id="direktorat" style="padding-left: 8px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -104,8 +100,7 @@
                                         <div class="col-sm-9">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="divisi"
-                                                    style="padding-left: 8px;"
-                                                    {{ ($request->divisi != "") ? $request->divisi : "" }} />
+                                                    style="padding-left: 8px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -214,6 +209,8 @@
             close: 'fa fa-remove'
         },
         format: 'DD-MM-YYYY',
+        showClear: true,
+        showClose: true,
     });
 
     $('#userSearch').select2({
@@ -249,24 +246,32 @@
             url: url,
         })
         .done(function (userDetail) {
-            document.getElementById('nikPenerima').value = userDetail.nik;
-            document.getElementById('email').value = userDetail.email;
-            document.getElementById('telp').value = userDetail.telp;
-            document.getElementById('direktorat').value = userDetail.direktorat;
-            document.getElementById('divisi').value = userDetail.divisi;
-            document.getElementById('department').value = userDetail.department;
-            document.getElementById('unit').value = userDetail.unit;
+            $('#nikPenerima').val(userDetail.nik);
+            $('#email').val(userDetail.email);
+            $('#telp').val(userDetail.telp);
+            $('#direktorat').val(userDetail.direktorat);
+            $('#divisi').val(userDetail.divisi);
+            $('#department').val(userDetail.department);
+            $('#unit').val(userDetail.unit);
         })
     });
 
+    $('#nikPenerima').on('change', function() {
+        $(this).valid();
+    });
+
+    $('#telp').on('change', function() {
+        $(this).valid();
+    });
+
     $('#userSearch').on('select2:clear', function (e) {
-        document.getElementById('nikPenerima').value = "";
-        document.getElementById('email').value = "";
-        document.getElementById('telp').value = "";
-        document.getElementById('direktorat').value = "";
-        document.getElementById('divisi').value = "";
-        document.getElementById('department').value = "";
-        document.getElementById('unit').value = "";
+        $('#nikPenerima').val("");
+        $('#email').val("");
+        $('#telp').val("");
+        $('#direktorat').val("");
+        $('#divisi').val("");
+        $('#department').val("");
+        $('#unit').val("");
     });
 
     $().ready(function() {
@@ -303,7 +308,7 @@
                     required: "Jenis Barang tidak boleh kosong."
                 },
                 barang_berbahaya: {
-                    required: "Pilih salah satu."
+                    required: "Pilih status barang berbahaya."
                 },
                 email: {
                     email: "Format Email tidak valid."

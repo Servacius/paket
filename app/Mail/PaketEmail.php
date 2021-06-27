@@ -31,9 +31,13 @@ class PaketEmail extends Mailable
     public function build()
     {
         return $this->from('penitipanpaket@gmail.com')
+            ->subject('Paket Barang Diterima')
             ->view('mail.paket')
             ->with([
-                'nama' => $this->data['nama']
+                'nik' => $this->data['nik'],
+                'nama' => $this->data['nama'],
+                'tanggal_sampai' => $this->data['tanggal_sampai'],
+                'link' => $this->data['link']
             ]);
     }
 }
