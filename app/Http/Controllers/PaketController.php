@@ -385,6 +385,7 @@ class PaketController extends Controller
             'nik_karyawan',
             'penerimaan_id',
             'jenis_barang',
+            'barang_berbahaya',
             'tanggal_sampai',
             'tanggal_diambil',
             'picture',
@@ -403,7 +404,7 @@ class PaketController extends Controller
                 ->whereNull('tanggal_diambil');
         }
 
-        // Order paket by 'tanggal_sampai' DESC.
+        // Fetch and order paket by 'tanggal_sampai' DESC.
         $pakets = $query->orderBy('tanggal_sampai', 'desc')
             ->get();
 
@@ -429,6 +430,11 @@ class PaketController extends Controller
             $karyawans[$user->nik] = $user;
         }
 
+        $direktorats = $this->fetchDirektoratData();
+        $departments = $this->fetchDepartmentData();
+        $divisies = $this->fetchDivisiData();
+        $units = $this->fetchUnitData();
+
         $app = app();
 
         // Mapping paket and its user karyawan.
@@ -438,13 +444,17 @@ class PaketController extends Controller
                 continue;
             }
 
+            $karyawanPemilik = $karyawans[$paket->nik_karyawan];
+
             $paketDetail = $app->make('stdClass');
             $paketDetail->id = $paket->id;
             $paketDetail->nama_paket = $paket->name;
             $paketDetail->jenis_paket = $paket->jenis_barang;
-            $paketDetail->nama_pemilik = $karyawans[$paket->nik_karyawan]->name;
-            $paketDetail->nik_pemilik = $karyawans[$paket->nik_karyawan]->nik;
-            $paketDetail->no_telepon = $karyawans[$paket->nik_karyawan]->no_telp;
+            $paketDetail->barang_berbahaya = ($paket->barang_berbahaya == 1) ? "Ya" : "Tidak";
+            $paketDetail->nama_pemilik = $karyawanPemilik->name;
+            $paketDetail->nik_pemilik = $karyawanPemilik->nik;
+            $paketDetail->no_telepon = $karyawanPemilik->no_telp;
+            $paketDetail->email = $karyawanPemilik->email;
             $paketDetail->gambar = $paket->picture;
             $paketDetail->tanggal_sampai = (new DateTime($paket->tanggal_sampai))->format('d-m-Y');
             $paketDetail->tanggal_pengantaran = "";
@@ -453,6 +463,23 @@ class PaketController extends Controller
             $paketDetail->cara_penerimaan = "";
             $paketDetail->telat_diambil = false;
             $paketDetail->telat_diantar = false;
+
+            $paketDetail->direktorat = "";
+            if ($karyawanPemilik->direktorat_id != null) {
+                $paketDetail->direktorat = $direktorats[$karyawanPemilik->direktorat_id]->name;
+            }
+            $paketDetail->department = "";
+            if ($karyawanPemilik->department_id != null) {
+                $paketDetail->department = $departments[$karyawanPemilik->department_id]->name;
+            }
+            $paketDetail->divisi = "";
+            if ($karyawanPemilik->divisi_id != null) {
+                $paketDetail->divisi = $divisies[$karyawanPemilik->divisi_id]->name;
+            }
+            $paketDetail->unit = "";
+            if ($karyawanPemilik->unit_id != null) {
+                $paketDetail->unit = $units[$karyawanPemilik->unit_id]->name;
+            }
 
             if ($paket->tanggal_diambil != null) {
                 $paketDetail->tanggal_diambil = (new DateTime($paket->tanggal_diambil))->format('d-m-Y');
@@ -489,6 +516,19 @@ class PaketController extends Controller
             array_push($paketDetails, $paketDetail);
         }
 
+        $paketDetails = $this->cleanDataPaketByFilter($paketDetails, $filter);
+
+        return $paketDetails;
+    }
+
+    /**
+     * Clean data paket by Filter
+     *
+     * @param array $filter
+     * @return array $paketDetails
+     */
+    private function cleanDataPaketByFilter($paketDetails, $filter)
+    {
         if (Arr::exists($filter, 'nama')) {
             $resultFiltered = array();
             foreach ($paketDetails as $paketDetail) {
@@ -555,6 +595,74 @@ class PaketController extends Controller
         }
 
         return $paketDetails;
+    }
+
+    /**
+     * Fetch units.
+     *
+     * @return array $units
+     */
+    private function fetchUnitData()
+    {
+        $data = Unit::all();
+
+        $units = array();
+        foreach ($data as $d) {
+            $units[$d->id] = $d;
+        }
+
+        return $units;
+    }
+
+    /**
+     * Fetch direktorats.
+     *
+     * @return array $direktorats
+     */
+    private function fetchDirektoratData()
+    {
+        $data = Direktorat::all();
+
+        $direktorats = array();
+        foreach ($data as $d) {
+            $direktorats[$d->id] = $d;
+        }
+
+        return $direktorats;
+    }
+
+    /**
+     * Fetch departments.
+     *
+     * @return array $departments
+     */
+    private function fetchDepartmentData()
+    {
+        $data = Department::all();
+
+        $departments = array();
+        foreach ($data as $d) {
+            $departments[$d->id] = $d;
+        }
+
+        return $departments;
+    }
+
+    /**
+     * Fetch divisies.
+     *
+     * @return array $divisies
+     */
+    private function fetchDivisiData()
+    {
+        $data = Divisi::all();
+
+        $divisies = array();
+        foreach ($data as $d) {
+            $divisies[$d->id] = $d;
+        }
+
+        return $divisies;
     }
 
     /**

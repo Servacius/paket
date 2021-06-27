@@ -2,8 +2,12 @@
 
 namespace App\Exports;
 
+use App\Models\Department;
+use App\Models\Direktorat;
+use App\Models\Divisi;
 use App\Models\Paket as ModelsPaket;
 use App\Models\Penerimaan;
+use App\Models\Unit;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
@@ -25,14 +29,20 @@ class PaketExport implements FromArray
     public function array(): array
     {
         $pakets = $this->fetchPaket($this->filter);
-        $data[] = array('#', 'NIK', 'Nama', 'No. Telepon', 'Jenis Barang', 'Tanggal Sampai', 'Tanggal Diambil/Diantar', 'Cara Penerimaan');
+        $data[] = array('No.', 'NIK', 'Nama', 'No. Telepon', 'Email', 'Direktorat', 'Divisi', 'Departemen', 'Unit', 'Jenis Barang', 'Barang Berbahaya', 'Tanggal Sampai', 'Tanggal Diambil/Diantar', 'Cara Penerimaan');
         foreach ($pakets as $i => $paket) {
             $data[] = array(
-                '#' => ($i + 1),
+                'No.' => ($i + 1),
                 'NIK' => $paket->nik_pemilik,
                 'Nama' => $paket->nama_pemilik,
                 'No. Telepon' => $paket->no_telepon,
+                'Email' => $paket->email,
+                'Direktorat' => $paket->direktorat,
+                'Divisi' => $paket->divisi,
+                'Departemen' => $paket->department,
+                'Unit' => $paket->unit,
                 'Jenis Barang' => $paket->jenis_paket,
+                'Barang Berbahaya' => $paket->barang_berbahaya,
                 'Tanggal Sampai' => $paket->tanggal_sampai,
                 'Tanggal Diambil/Diantar' => $paket->tanggal_diambil,
                 'Cara Penerimaan' => $paket->cara_penerimaan,
@@ -49,6 +59,7 @@ class PaketExport implements FromArray
             'nik_karyawan',
             'penerimaan_id',
             'jenis_barang',
+            'barang_berbahaya',
             'tanggal_sampai',
             'tanggal_diambil',
             'picture',
@@ -67,7 +78,7 @@ class PaketExport implements FromArray
                 ->whereNull('tanggal_diambil');
         }
 
-        // Order paket by 'tanggal_sampai' DESC.
+        // Fetch and order paket by 'tanggal_sampai' DESC.
         $pakets = $query->orderBy('tanggal_sampai', 'desc')
             ->get();
 
@@ -93,6 +104,11 @@ class PaketExport implements FromArray
             $karyawans[$user->nik] = $user;
         }
 
+        $direktorats = $this->fetchDirektoratData();
+        $departments = $this->fetchDepartmentData();
+        $divisies = $this->fetchDivisiData();
+        $units = $this->fetchUnitData();
+
         $app = app();
 
         // Mapping paket and its user karyawan.
@@ -102,13 +118,17 @@ class PaketExport implements FromArray
                 continue;
             }
 
+            $karyawanPemilik = $karyawans[$paket->nik_karyawan];
+
             $paketDetail = $app->make('stdClass');
             $paketDetail->id = $paket->id;
             $paketDetail->nama_paket = $paket->name;
             $paketDetail->jenis_paket = $paket->jenis_barang;
-            $paketDetail->nama_pemilik = $karyawans[$paket->nik_karyawan]->name;
-            $paketDetail->nik_pemilik = $karyawans[$paket->nik_karyawan]->nik;
-            $paketDetail->no_telepon = $karyawans[$paket->nik_karyawan]->no_telp;
+            $paketDetail->barang_berbahaya = ($paket->barang_berbahaya == 1) ? "Ya" : "Tidak";
+            $paketDetail->nama_pemilik = $karyawanPemilik->name;
+            $paketDetail->nik_pemilik = $karyawanPemilik->nik;
+            $paketDetail->no_telepon = $karyawanPemilik->no_telp;
+            $paketDetail->email = $karyawanPemilik->email;
             $paketDetail->gambar = $paket->picture;
             $paketDetail->tanggal_sampai = (new DateTime($paket->tanggal_sampai))->format('d-m-Y');
             $paketDetail->tanggal_pengantaran = "";
@@ -117,6 +137,23 @@ class PaketExport implements FromArray
             $paketDetail->cara_penerimaan = "";
             $paketDetail->telat_diambil = false;
             $paketDetail->telat_diantar = false;
+
+            $paketDetail->direktorat = "";
+            if ($karyawanPemilik->direktorat_id != null) {
+                $paketDetail->direktorat = $direktorats[$karyawanPemilik->direktorat_id]->name;
+            }
+            $paketDetail->department = "";
+            if ($karyawanPemilik->department_id != null) {
+                $paketDetail->department = $departments[$karyawanPemilik->department_id]->name;
+            }
+            $paketDetail->divisi = "";
+            if ($karyawanPemilik->divisi_id != null) {
+                $paketDetail->divisi = $divisies[$karyawanPemilik->divisi_id]->name;
+            }
+            $paketDetail->unit = "";
+            if ($karyawanPemilik->unit_id != null) {
+                $paketDetail->unit = $units[$karyawanPemilik->unit_id]->name;
+            }
 
             if ($paket->tanggal_diambil != null) {
                 $paketDetail->tanggal_diambil = (new DateTime($paket->tanggal_diambil))->format('d-m-Y');
@@ -153,6 +190,13 @@ class PaketExport implements FromArray
             array_push($paketDetails, $paketDetail);
         }
 
+        $paketDetails = $this->cleanDataPaketByFilter($paketDetails, $filter);
+
+        return $paketDetails;
+    }
+
+    private function cleanDataPaketByFilter($paketDetails, $filter)
+    {
         if (Arr::exists($filter, 'nama')) {
             $resultFiltered = array();
             foreach ($paketDetails as $paketDetail) {
@@ -167,7 +211,7 @@ class PaketExport implements FromArray
             $resultFiltered = array();
             $from = (new DateTime($filter['tanggal_sampai_from']))->format('d-m-Y');
             foreach ($paketDetails as $paketDetail) {
-                if ($paketDetail->tanggal_sampai >= $from) {
+                if ($paketDetail->tanggal_sampai != "" && $paketDetail->tanggal_sampai >= $from) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
@@ -178,7 +222,7 @@ class PaketExport implements FromArray
             $resultFiltered = array();
             $to = (new DateTime($filter['tanggal_sampai_to']))->format('d-m-Y');
             foreach ($paketDetails as $paketDetail) {
-                if ($paketDetail->tanggal_sampai  <= $to) {
+                if ($paketDetail->tanggal_sampai != "" && $paketDetail->tanggal_sampai  <= $to) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
@@ -189,7 +233,12 @@ class PaketExport implements FromArray
             $resultFiltered = array();
             $from = (new DateTime($filter['tanggal_diambil_from']))->format('d-m-Y');
             foreach ($paketDetails as $paketDetail) {
-                if ($paketDetail->tanggal_diambil >= $from) {
+                $date = $paketDetail->tanggal_diambil;
+                if ($paketDetail->cara_penerimaan == Penerimaan::PENERIMAAN_DIANTAR) {
+                    $date = $paketDetail->tanggal_pengantaran;
+                }
+
+                if ($date != "" && $date >= $from) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
@@ -200,7 +249,12 @@ class PaketExport implements FromArray
             $resultFiltered = array();
             $to = (new DateTime($filter['tanggal_diambil_to']))->format('d-m-Y');
             foreach ($paketDetails as $paketDetail) {
-                if ($paketDetail->tanggal_diambil  <= $to) {
+                $date = $paketDetail->tanggal_diambil;
+                if ($paketDetail->cara_penerimaan == Penerimaan::PENERIMAAN_DIANTAR) {
+                    $date = $paketDetail->tanggal_pengantaran;
+                }
+
+                if ($date != "" && $date  <= $to) {
                     array_push($resultFiltered, $paketDetail);
                 }
             }
@@ -209,5 +263,53 @@ class PaketExport implements FromArray
         }
 
         return $paketDetails;
+    }
+
+    private function fetchUnitData()
+    {
+        $data = Unit::all();
+
+        $units = array();
+        foreach ($data as $d) {
+            $units[$d->id] = $d;
+        }
+
+        return $units;
+    }
+
+    private function fetchDirektoratData()
+    {
+        $data = Direktorat::all();
+
+        $direktorats = array();
+        foreach ($data as $d) {
+            $direktorats[$d->id] = $d;
+        }
+
+        return $direktorats;
+    }
+
+    private function fetchDepartmentData()
+    {
+        $data = Department::all();
+
+        $departments = array();
+        foreach ($data as $d) {
+            $departments[$d->id] = $d;
+        }
+
+        return $departments;
+    }
+
+    private function fetchDivisiData()
+    {
+        $data = Divisi::all();
+
+        $divisies = array();
+        foreach ($data as $d) {
+            $divisies[$d->id] = $d;
+        }
+
+        return $divisies;
     }
 }

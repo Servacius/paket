@@ -24,16 +24,36 @@
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table">
+                                        {{-- <colgroup>
+                                            <col span="1" style="width: 50%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                            <col span="1" style="width: 20%;">
+                                         </colgroup> --}}
                                         <thead>
-                                            <tr>
-                                                <th class="text-center font-weight-bold">NIK</th>
-                                                <th class="text-center font-weight-bold">Nama</th>
-                                                <th class="text-center font-weight-bold">No Telepon</th>
-                                                <th class="text-center font-weight-bold">Jenis Barang</th>
-                                                <th class="text-center font-weight-bold">Tanggal Barang Sampai</th>
-                                                <th class="text-center font-weight-bold">Tanggal Barang Diambil/Diterima
+                                            <tr class="d-flex">
+                                                <th class="text-center font-weight-bold col-1">NIK</th>
+                                                <th class="text-center font-weight-bold col-2">Nama</th>
+                                                <th class="text-center font-weight-bold col-2">No Telepon</th>
+                                                <th class="text-center font-weight-bold col-2">Email</th>
+                                                <th class="text-center font-weight-bold col-2">Direktorat</th>
+                                                <th class="text-center font-weight-bold col-2">Divisi</th>
+                                                <th class="text-center font-weight-bold col-2">Departemen</th>
+                                                <th class="text-center font-weight-bold col-2">Unit</th>
+                                                <th class="text-center font-weight-bold col-2">Jenis Barang</th>
+                                                <th class="text-center font-weight-bold col-1">Barang Berbahaya</th>
+                                                <th class="text-center font-weight-bold col-2">Tanggal Barang Sampai</th>
+                                                <th class="text-center font-weight-bold col-2">Tanggal Barang Diambil/Diterima
                                                 </th>
-                                                <th class="text-center font-weight-bold">Cara Penerimaan</th>
+                                                <th class="text-center font-weight-bold col-2">Cara Penerimaan</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tablePaket">
@@ -162,6 +182,8 @@
             success: function (data) {
                 var tableBody = $('tbody#tablePaket');
 
+                console.dir(data);
+
                 for (var i = 0; i < data.length; i++) {
                     var tanggalTerima = "";
                     if (data[i].tanggal_pengantaran != "") {
@@ -177,14 +199,20 @@
                         caraTerima = "Diantar";
                     }
 
-                    var row = '<tr>' +
-                        '<td class="text-center">' + data[i].nik_pemilik + ' </td>' +
-                        '<td>' + data[i].nama_pemilik + ' </td>' +
-                        '<td>' + data[i].no_telepon + ' </td>' +
-                        '<td>' + data[i].jenis_paket + ' </td>' +
-                        '<td class="text-center">' + data[i].tanggal_sampai + ' </td>' +
-                        '<td class="text-center">' + tanggalTerima + ' </td>' +
-                        '<td class="text-center">' + caraTerima + ' </td>' +
+                    var row = '<tr class="d-flex">' +
+                        '<td class="text-center col-1">' + data[i].nik_pemilik + ' </td>' +
+                        '<td class="col-2">' + data[i].nama_pemilik + ' </td>' +
+                        '<td class="col-2">' + data[i].no_telepon + ' </td>' +
+                        '<td class="col-2">' + data[i].email + ' </td>' +
+                        '<td class="col-2">' + data[i].direktorat + ' </td>' +
+                        '<td class="col-2">' + data[i].divisi + ' </td>' +
+                        '<td class="col-2">' + data[i].department + ' </td>' +
+                        '<td class="col-2">' + data[i].unit + ' </td>' +
+                        '<td class="col-2">' + data[i].jenis_paket + ' </td>' +
+                        '<td class="text-center col-1">' + data[i].barang_berbahaya + ' </td>' +
+                        '<td class="text-center col-2">' + data[i].tanggal_sampai + ' </td>' +
+                        '<td class="text-center col-2">' + tanggalTerima + ' </td>' +
+                        '<td class="text-center col-2">' + caraTerima + ' </td>' +
                         '</tr>';
 
                     tableBody.append(row);
