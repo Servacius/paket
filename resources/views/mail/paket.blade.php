@@ -16,6 +16,6 @@
         <td>{{ $tanggal_sampai }}</td>
     </tr>
 </table>
-<p>Silahkan melihat detail paket dan cara penerimaan melalui <b class="font-weight-bold text-primary">SISTEM PENERIMAAN PAKET BARANG KARYAWAN</b> ({{ $link }}).</p>
+<p>Silahkan melihat detail paket dan cara penerimaan melalui <a href="{{ $link }}" class="font-weight-bold text-primary">SISTEM PENERIMAAN PAKET BARANG KARYAWAN</a>.</p>
 <p>NB: Notifikasi dikirim otomatis oleh sistem. Diharapkan tidak perlu membalas email ini.</p>
 <p><b class="font-weight-bold text-primary">PENERIMAAN PAKET BARANG KARYAWAN</b></p>

@@ -24,20 +24,6 @@
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table">
-                                        {{-- <colgroup>
-                                            <col span="1" style="width: 50%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                            <col span="1" style="width: 20%;">
-                                         </colgroup> --}}
                                         <thead>
                                             <tr class="d-flex">
                                                 <th class="text-center font-weight-bold col-1">NIK</th>

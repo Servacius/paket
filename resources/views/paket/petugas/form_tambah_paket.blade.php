@@ -35,11 +35,11 @@
                                                 <div>
                                                     <span class="btn btn-raised btn-round btn-info btn-file">
                                                         <span class="fileinput-new">Pilih Gambar</span>
-                                                        <span class="fileinput-exists">Change</span>
+                                                        <span class="fileinput-exists">Ubah</span>
                                                         <input type="file" name="picture" />
                                                     </span>
                                                     <a href="" class="btn btn-danger btn-round fileinput-exists"
-                                                        data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                                        data-dismiss="fileinput"><i class="fa fa-times"></i> Hapus</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,7 +180,7 @@
                                                 aria-pressed="true">Kembali</a>
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <input class="submit btn btn-success" type="submit" value="Tambah" />
+                                            <input class="submit btn btn-success" type="submit" id="btnTambah" value="Tambah" />
                                         </div>
                                     </div>
                                 </div>

@@ -295,7 +295,7 @@ class PaketController extends Controller
             $data = [
                 'nik' => $userPenerima->nik,
                 'nama' => $userPenerima->name,
-                'tanggal_sampai' => $paket->tanggal_sampai,
+                'tanggal_sampai' => (new DateTime($paket->tanggal_sampai))->format('d-m-Y'),
                 'link' => URL::signedRoute('paket.detail', ['id' => $paket->id])
             ];
             $this->sendEmail($userPenerima->email, $data);
