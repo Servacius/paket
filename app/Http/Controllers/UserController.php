@@ -27,9 +27,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->fetchAllUser();
+        // $users = $this->fetchAllUser();
 
-        return view('user.index', ['users' => $users]);
+        $direktorat = Direktorat::select('id', 'name')->get();
+        $divisi = Divisi::select('id', 'name')->get();
+        $unit = Unit::select('id', 'name')->get();
+        $department = Department::select('id', 'name')->get();
+
+        return view('user.form_search_update', [
+            'direktorat' => $direktorat,
+            'divisi' => $divisi,
+            'unit' => $unit,
+            'department' => $department,
+        ]);
+
+        // return view('user.index', ['users' => $users]);
     }
 
     /**
@@ -44,10 +56,17 @@ class UserController extends Controller
 
         if ($request->has('q')) {
             $search = $request->q;
-            $users = User::select('id', 'name')
-                ->where('name', 'LIKE', "%$search%")
-                ->where('role_id', '=', UserRole::ROLE_ID_KARYAWAN)
-                ->get();
+            $fetchUsers = User::select('id', 'name')
+                ->where('name', 'LIKE', "%$search%");
+
+            if ($request->query('all')) {
+                $fetchUsers = $fetchUsers->where('role_id', '=', UserRole::ROLE_ID_KARYAWAN)
+                    ->orWhere('role_id', '=', UserRole::ROLE_ID_PETUGAS);
+            } else {
+                $fetchUsers = $fetchUsers->where('role_id', '=', UserRole::ROLE_ID_KARYAWAN);
+            }
+
+            $users = $fetchUsers->get();
         }
 
         return response()->json($users);
@@ -78,6 +97,7 @@ class UserController extends Controller
         $userDetail->nik = $user->nik;
         $userDetail->email = $user->email;
         $userDetail->telp = $user->no_telp;
+        $userDetail->role = $user->role_id;
         $userDetail->direktorat = "";
         if ($direktorat != null) {
             $userDetail->direktorat = $direktorat->name;
