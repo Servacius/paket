@@ -56,17 +56,15 @@ class UserController extends Controller
 
         if ($request->has('q')) {
             $search = $request->q;
-            $fetchUsers = User::select('id', 'name')
-                ->where('name', 'LIKE', "%$search%");
-
-            if ($request->query('all')) {
-                $fetchUsers = $fetchUsers->where('role_id', '=', UserRole::ROLE_ID_KARYAWAN)
-                    ->orWhere('role_id', '=', UserRole::ROLE_ID_PETUGAS);
-            } else {
-                $fetchUsers = $fetchUsers->where('role_id', '=', UserRole::ROLE_ID_KARYAWAN);
-            }
-
-            $users = $fetchUsers->get();
+            $users = User::select('id', 'name')
+                ->where('name', 'LIKE', "%$search%")
+                ->when($request->query('all'), function ($query) {
+                    return $query->whereNotIn('role_id', [UserRole::ROLE_ID_ADMINISTRATOR]);
+                })
+                ->when(!$request->query('all'), function ($query) {
+                    return $query->where('role_id', '=', UserRole::ROLE_ID_KARYAWAN);
+                })
+                ->get();
         }
 
         return response()->json($users);
