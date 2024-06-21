@@ -40,8 +40,10 @@ The above copyright notice and this permission notice shall be included in all c
     <link href="{{ asset('paper') }}/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('paper') }}/demo/demo.css" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
+    <!-- Dropdown name -->
+    {{-- <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" /> --}}
+    <!-- Datepicker -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css"
         rel="stylesheet">
 
@@ -77,9 +79,9 @@ The above copyright notice and this permission notice shall be included in all c
     <!-- Sharrre libray -->
     <script src="{{ asset('paper') }}/demo/jquery.sharrre.js"></script>
     <!-- JQuery -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
 
-    <!-- datepicker -->
+    <!-- Datepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
         $('.date').datepicker({
@@ -87,26 +89,27 @@ The above copyright notice and this permission notice shall be included in all c
      });
     </script>
 
-    <!-- name dropdown -->
+    <!-- Dropdown name -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js">
     </script>
     <script type="text/javascript">
         var path = "{{ route('autocomplete') }}";
         $('input.typeahead').typeahead({
-            source:  function (query, process) {
+            source: function (query, process) {
                 return $.get(path, { query: query }, function (data) {
                     return process(data);
                 });
             }, afterSelect: function(data){
-                $("input[name='nik']").val(data['nik']);
-                $("input[name='email']").val(data['email']);
-                $("input[name='direktorat']").val(data['direktorat']);
-                $("input[name='departemen']").val(data['department']);
-                $("input[name='divisi']").val(data['divisi']);
-                $("input[name='unit']").val(data['unit']);
-                console.log(data['nik']);
-            }
-        });
+        $("input[name='nik']").val(data['nik']);
+        $("input[name='email']").val(data['email']);
+        $("input[name='direktorat']").val(data['direktorat']);
+        $("input[name='departemen']").val(data['department']);
+        $("input[name='divisi']").val(data['divisi']);
+        $("input[name='unit']").val(data['unit']);
+
+        console.log(data['nik']);
+        }
+    });
     </script>
 
     <!-- image preview -->
